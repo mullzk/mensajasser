@@ -1,0 +1,20 @@
+2018-10-19 21:52:52.949 CEST [3570] FATAL:  lock file "postmaster.pid" already exists
+2018-10-19 21:52:52.949 CEST [3570] HINT:  Is another postmaster (PID 3560) running in data directory "/usr/local/var/postgres"?
+2018-10-19 21:53:30.035 CEST [3780] LOG:  listening on IPv6 address "::1", port 5432
+2018-10-19 21:53:30.035 CEST [3780] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2018-10-19 21:53:30.036 CEST [3780] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2018-10-19 21:53:30.050 CEST [3781] LOG:  database system was shut down at 2018-10-19 21:53:23 CEST
+2018-10-19 21:53:30.054 CEST [3780] LOG:  database system is ready to accept connections
+2018-10-19 21:53:36.447 CEST [3796] FATAL:  database "mullzk" does not exist
+2018-10-19 21:54:25.784 CEST [3960] FATAL:  database "mensajasser_development" does not exist
+2018-10-19 21:54:52.624 CEST [4102] FATAL:  database "mensajasser_development" does not exist
+2018-10-19 21:55:50.741 CEST [3780] LOG:  received fast shutdown request
+2018-10-19 21:55:50.741 CEST [3780] LOG:  aborting any active transactions
+2018-10-19 21:55:50.742 CEST [4147] FATAL:  terminating connection due to administrator command
+2018-10-19 21:55:50.742 CEST [4141] FATAL:  terminating connection due to administrator command
+2018-10-19 21:55:50.743 CEST [4145] FATAL:  terminating connection due to administrator command
+2018-10-19 21:55:50.742 CEST [4146] FATAL:  terminating connection due to administrator command
+2018-10-19 21:55:50.742 CEST [4148] FATAL:  terminating connection due to administrator command
+2018-10-19 21:55:50.744 CEST [3780] LOG:  worker process: logical replication launcher (PID 3787) exited with exit code 1
+2018-10-19 21:55:50.746 CEST [3782] LOG:  shutting down
+2018-10-19 21:55:50.757 CEST [3780] LOG:  database system is shut down
