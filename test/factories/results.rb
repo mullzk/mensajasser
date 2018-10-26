@@ -18,4 +18,8 @@
 #  round_id   :integer          not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+FactoryBot.define do
+  
+  
+end
