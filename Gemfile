@@ -45,6 +45,9 @@ gem 'will_paginate', '~> 3.1.0', git:'https://github.com/mislav/will_paginate.gi
 group :development do
   gem 'annotate'
 end
+group :development, :test do
+  gem "factory_bot_rails", "~> 4.0"
+end
 
 
 
