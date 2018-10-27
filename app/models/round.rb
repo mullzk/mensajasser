@@ -45,8 +45,13 @@ class Round < ApplicationRecord
   
 
   def unique_jasser
-    jasser_names = @results.map{|r| r.jasser.name }
-    unless (jasser_names.uniq.size == jasser_names.size && jasser_names.size > 0) then errors.add_to_base("Du musst schon vier verschiedene Jasser angeben...") end
+    ##
+    ## TODO: Decide whether there may exist round without results. Here, we only check if the jassers are unique IF there are any results/jassers
+    ##
+    unless @results.nil? then
+      jasser_names = @results.map{|r| r.jasser.name }
+      unless (jasser_names.uniq.size == jasser_names.size && jasser_names.size > 0) then errors.add(:base, "Du musst schon vier verschiedene Jasser angeben...") end
+    end     
   end
 
   def result_attributes=(result_attributes)
