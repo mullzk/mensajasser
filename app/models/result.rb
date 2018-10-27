@@ -33,4 +33,19 @@ class Result < ApplicationRecord
   def schnitt=(schnitt)
     #noop
   end
+  
+  
+  
+  
+  
+  
+  
+  #######################################
+  ### START OF OLD SMELLY CODE
+  #######################################
+
+
+  #######################################
+  ### END OF OLD SMELLY CODE
+  #######################################  
 end
