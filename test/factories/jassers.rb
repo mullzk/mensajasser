@@ -13,17 +13,14 @@
 
 FactoryBot.define do
   factory :jasser do
-    name { "Mullzk" }
   end
 
   # This will use the User class (Admin would have been guessed)
   factory :disqualifizierter_jasser, class: Jasser do
-    name { "Hannes" }
     disqualifiziert { false }
   end
 
   factory :inaktiver_jasser, class: Jasser do
-    name { "Knudi" }
     active { false }
   end
 
