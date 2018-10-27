@@ -19,4 +19,18 @@
 #
 
 class Result < ApplicationRecord
+  belongs_to :jasser
+  belongs_to :round
+  
+  validates_numericality_of :spiele, :differenz, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :max, :chimiris
+  validates_presence_of :spiele, :differenz, :jasser_id
+
+  
+  
+  def schnitt
+    if @spiele then @differenz/@spiele else 0 end
+  end
+  def schnitt=(schnitt)
+    #noop
+  end
 end

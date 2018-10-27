@@ -14,19 +14,10 @@
 require 'test_helper'
 require 'factory_bot'
 
-class JasserTest < ActiveSupport::TestCase
-   test "the truth" do
-     assert true
-   end
-   
-   test "the lie" do
-     # assert false
-   end
-   
+class JasserTest < ActiveSupport::TestCase   
    test "Setting up Jasser-Factory" do 
      jasser = FactoryBot.build(:jasser)
      assert_not(jasser.disqualifiziert, "Default Jasser is disqualifiziert")
      assert(jasser.active, "Default Jasser is not active")
-   end
-   
+   end   
 end
