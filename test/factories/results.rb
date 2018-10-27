@@ -20,6 +20,9 @@
 
 
 FactoryBot.define do
-  
+  factory :result do
+    differenz {200}
+    spiele {20}
+  end
   
 end
