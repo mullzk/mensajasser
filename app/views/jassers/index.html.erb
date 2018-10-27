@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jassers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jassers.each do |jasser| %>
+      <tr>
+        <td><%= link_to 'Show', jasser %></td>
+        <td><%= link_to 'Edit', edit_jasser_path(jasser) %></td>
+        <td><%= link_to 'Destroy', jasser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jasser', new_jasser_path %>
