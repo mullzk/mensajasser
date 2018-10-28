@@ -53,6 +53,6 @@ class RoundsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def round_params
-      params.fetch(:round, {})
+      params.fetch(:round, {}).permit(:comment, :creator, :day, :results)
     end
 end

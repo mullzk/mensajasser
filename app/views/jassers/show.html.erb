@@ -1,4 +1,24 @@
-<p id="notice"><%= notice %></p>
+<% unless notice.nil? then %><p id="notice"><%= notice %></p><% end %>
+
+<p>
+  <strong>Active:</strong>
+  <%= @jasser.active %>
+</p>
+
+<p>
+  <strong>Disqualifiziert:</strong>
+  <%= @jasser.disqualifiziert %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @jasser.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @jasser.name %>
+</p>
 
 <%= link_to 'Edit', edit_jasser_path(@jasser) %> |
 <%= link_to 'Back', jassers_path %>

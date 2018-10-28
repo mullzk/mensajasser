@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mensajasser</title>
+    <title>Mensajasser: <%= @page_title || "#{controller.controller_name} - #{controller.action_name}" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 

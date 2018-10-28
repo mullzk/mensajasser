@@ -53,6 +53,6 @@ class JassersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def jasser_params
-      params.fetch(:jasser, {})
+      params.fetch(:jasser, {}).permit(:active, :disqualifiziert, :name, :email)
     end
 end
