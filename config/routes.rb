@@ -5,4 +5,9 @@ root 'welcome#index'
 
 
 resources :rounds, :jassers, :users
+
+get 'ranking/' => "ranking#year"
+get 'ranking/:action', controller: "ranking"
+get 'ranking/:action/:date', controller: "ranking"
+
 end
