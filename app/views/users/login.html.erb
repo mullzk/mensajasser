@@ -1,0 +1,20 @@
+<% unless notice.nil? then %><p id="notice"><%= notice %></p><% end %>
+
+<div class="login-form">
+	<fieldset>
+		<legend>Bitte einloggen</legend>
+		<%= form_with url: '/login', local: true do |form| %>
+			<table class="login-angaben">
+				<tr>
+					<td class="legend">Name:</td>
+					<td class="data"><%= form.text_field :name %></td>
+				</tr>
+				<tr>
+					<td class="legend">Passwort:</td>
+					<td class="data"><%= form.password_field :password %></td>
+				</tr>
+			</table>
+			<%= form.submit "Login" %>
+		<%end%>
+	</fieldset>
+</div>

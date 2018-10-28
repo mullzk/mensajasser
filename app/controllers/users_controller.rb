@@ -1,5 +1,52 @@
 class UsersController < ApplicationController
+  before_action :authorize, :except => :login
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+
+
+  def login
+    puts "inside login"
+    if request.post?
+      user = User.authenticate(params[:name], params[:password])
+      if user
+        puts "inside user with #{user.username}"
+        session[:user_id] = user.id
+        redirect_to :controller => "rounds", :action => "new"
+      else
+        puts "inside invalid user"
+        flash[:notice] = "Ungültige user/passwort Kombination"
+        puts flash[:notice]
+      end
+    end
+  end
+
+  def logout
+    session[:user_id] = nil
+    session[:user_is_admin] = nil
+    flash[:notice] = "Logged out"
+    redirect_to :controller => :ranking, :action => :year
+  end
+
+  def change_own_password
+    @user = User.find_by_id(session[:user_id])    
+    if request.post?
+      user = User.authenticate(@user.username, params[:old_password])
+      if user
+        if @user.update_attributes(params[:user])
+          flash[:notice] = 'Password geändert'
+          redirect_to :controller => "rounds", :action => "new" 
+        end
+      else
+        flash[:notice] = "Altes Passwort ist ungültig"
+      end
+    end
+  end
+
+
+
+
+
 
   # GET /users
   def index
