@@ -29,6 +29,9 @@ class UsersController < ApplicationController
   end
 
   def change_own_password
+    
+    # TODO #BUG: We can change the password even if the old one is wrong. 
+    
     @user = User.find_by_id(session[:user_id])    
     if request.post?
       user = User.authenticate(@user.username, params[:old_password])

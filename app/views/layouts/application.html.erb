@@ -9,7 +9,47 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+<body id="jasser-app">
+	<div id="banner">
+		<p><%= @page_title || "Die NichtMehrInDerMensaMensaJasser" %></p>
+	</div>
+	<div id="columns">
+		<div id="main">
+			<% if flash[:notice] -%>
+				<div id="notice">
+					<%= flash[:notice] %>
+				</div>
+			<% end -%>
     <%= yield %>
-  </body>
+			<p style="margin-top:20px">
+				Neuste Runde: <%= link_to last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :id => last_entered_round.day}, {:class => "decent"} %>
+				<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :encode => "javascript", :class => "decent"%>
+			</p>
+		</div>
+		<div id="side">
+			<ul>
+				<li><%= link_to "Haupt-Rangliste", :controller => "ranking", :action => "year" %></li>
+				<li><%= link_to "Monats-Rangliste", :controller => "ranking", :action => "month" %></li>
+				<li><%= link_to "12-Monats-Ranking", :controller => "ranking", :action => "last_12_months" %></li>
+				<li><%= link_to "Quartals-Ranking", :controller => "ranking", :action => "last_3_months" %></li>
+				<br />
+				<li><%= link_to "Versenker + R&ouml;sis", :controller => "ranking", :action => "versenker_und_roesis"%></li>
+				<li><%= link_to "Ewige Rangliste", :controller => "ranking", :action => "ewig" %></li>
+				<br />
+				<li><%= link_to "Tableaus", :controller => "rounds", :action => "index" %></li>
+				<% if session[:user_id].nil? %>
+					<li>&nbsp;</li>
+					<li><%= link_to "Login", :controller => "users", :action => "login" %></li>
+				<% else %>
+					<li><%= link_to "Neues Tableau", :controller => "rounds", :action => "new" %></li>					
+					<li>&nbsp;</li>
+					<li><%= link_to "Jasser verwalten", :controller => "jassers", :action => "index" %></li>
+					<li><%= link_to "User verwalten", :controller => "users", :action => "index" %></li>
+					<li><%= link_to "Passwort ändern", :controller => "users", :action => "change_own_password" %></li>
+					<li><%= link_to "Logout", :controller => "users", :action => "logout" %></li>
+				<% end%>
+			</ul>
+		</div>
+	</div>
+</body>
 </html>
