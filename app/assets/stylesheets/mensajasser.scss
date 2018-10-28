@@ -1,0 +1,17 @@
+body {
+  font-family:'trebuchet ms', verdana, geneva, lucida, 'lucida grande', 'Arial Unicode MS', arial, helvetica, sans-serif;	
+  /* font-family:Helvetica, 'Verdana', 'Lucida Grande', Arial, sans-serif; */
+  font-size:smaller;
+}
+
+table, tr, td, th {
+	vertical-align:top;
+	border-collapse:collapse;
+}
+#notice {
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+  font: bold smaller sans-serif;
+}
