@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+
+
   protect_from_forgery 
 
   helper :all # include all helpers, all the time
@@ -8,6 +10,7 @@ class ApplicationController < ActionController::Base
   
   def initialize
     @last_entered_round = Round.order(created_at: :desc).first
+    super
   end
     
   

@@ -3,6 +3,7 @@ require 'test_helper'
 class JassersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @jasser = FactoryBot.create(:jasser)
+    @latest_round = FactoryBot.create(:round_with_date) # Default Layout needs a dated round for @last_entered_round.day
   end
 
   test "should get index" do

@@ -3,6 +3,8 @@ require 'test_helper'
 class RoundsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @round = FactoryBot.create(:round)
+    @latest_round = FactoryBot.create(:round_with_date) # Default Layout needs a dated round for @last_entered_round.day
+    
   end
 
   test "should get index" do

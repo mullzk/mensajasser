@@ -22,7 +22,7 @@
 			<% end -%>
     <%= yield %>
 			<p style="margin-top:20px">
-				Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :id => last_entered_round.day}, {:class => "decent"} %>
+				Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :id => @last_entered_round.day}, {:class => "decent"} %>
 				<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :encode => "javascript", :class => "decent"%>
 			</p>
 		</div>
@@ -33,7 +33,7 @@
 				<li><%= link_to "12-Monats-Ranking", :controller => "ranking", :action => "last_12_months" %></li>
 				<li><%= link_to "Quartals-Ranking", :controller => "ranking", :action => "last_3_months" %></li>
 				<br />
-				<li><%= link_to "Versenker + R&ouml;sis", :controller => "ranking", :action => "versenker_und_roesis"%></li>
+				<li><%= link_to "Versenker + Rösis", :controller => "ranking", :action => "versenker_und_roesis"%></li>
 				<li><%= link_to "Ewige Rangliste", :controller => "ranking", :action => "ewig" %></li>
 				<br />
 				<li><%= link_to "Tableaus", :controller => "rounds", :action => "index" %></li>

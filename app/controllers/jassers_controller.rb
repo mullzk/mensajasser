@@ -1,6 +1,8 @@
 class JassersController < ApplicationController
   before_action :set_jasser, only: [:show, :edit, :update, :destroy]
 
+  
+  
   # GET /jassers
   def index
     @jassers = Jasser.all
