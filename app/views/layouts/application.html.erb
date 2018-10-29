@@ -22,7 +22,7 @@
 			<% end -%>
     <%= yield %>
 			<p style="margin-top:20px">
-				Neuste Runde: <%= link_to last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :id => last_entered_round.day}, {:class => "decent"} %>
+				Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :id => last_entered_round.day}, {:class => "decent"} %>
 				<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :encode => "javascript", :class => "decent"%>
 			</p>
 		</div>

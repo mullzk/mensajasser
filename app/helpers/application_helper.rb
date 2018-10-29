@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def last_entered_round 
-    Round.order(created_at: :desc).first
-  end
-
   def short_date(date)
     date.strftime("%d.%m.%y")
   end

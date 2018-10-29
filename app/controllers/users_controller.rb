@@ -6,15 +6,12 @@ class UsersController < ApplicationController
 
 
   def login
-    puts "inside login"
     if request.post?
       user = User.authenticate(params[:name], params[:password])
       if user
-        puts "inside user with #{user.username}"
         session[:user_id] = user.id
         redirect_to :controller => "rounds", :action => "new"
       else
-        puts "inside invalid user"
         flash[:notice] = "Ungültige user/passwort Kombination"
         puts flash[:notice]
       end

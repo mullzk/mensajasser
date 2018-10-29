@@ -2,10 +2,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery 
 
   helper :all # include all helpers, all the time
-
   
 
   private
+  
+  def initialize
+    @last_entered_round = Round.order(created_at: :desc).first
+  end
+    
   
   def parse_day_param(param)
     if param
