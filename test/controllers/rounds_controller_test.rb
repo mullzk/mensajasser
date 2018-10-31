@@ -8,6 +8,7 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    @round.date = Date.today  # A round without a date leads to a nil-error in the view
     get rounds_url
     assert_response :success
   end
