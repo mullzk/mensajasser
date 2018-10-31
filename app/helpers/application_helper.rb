@@ -9,7 +9,7 @@ module ApplicationHelper
 
   
   def n(decimals, number)
-    if number && number.to_f > 0
+    if number && number.to_f != 0
       "%.#{decimals}f" % number
     end    
   end

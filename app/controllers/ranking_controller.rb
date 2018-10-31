@@ -63,10 +63,10 @@ class RankingController < ApplicationController
 
   def day
     @date = parse_day_param(params[:id])
-    @rounds = Round.find(:all, :conditions => ["day = ?", @date])
+    @rounds = Round.where("day = ?", @date)
     if @rounds.empty?
-      @date = Round.find(:first, :order => "created_at desc").day
-      @rounds = Round.find(:all, :conditions => ["day = ?", @date])
+      @date = Round.order(created_at: :desc).first.day
+      @rounds = Round.where("day = ?", @date)
     end
 
     #Calculating Tagesstatistik
@@ -78,8 +78,7 @@ class RankingController < ApplicationController
     @totals = calculate_total(@ranking, @additional_columns)
     
     #Calcultating Rangverschiebung (big magic inside round.rb)
-    @all_ranks = Round.new.calculate_rangeverschiebungs_table(@date)
-      
+    @rangverschiebung = Round.calculate_rangeverschiebungs_table(@date)
   end
 
 
