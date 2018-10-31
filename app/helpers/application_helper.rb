@@ -27,7 +27,7 @@ module ApplicationHelper
   end
   
   def cyc_color_class
-    "class=\"#{cyc_color}\""
+    raw "class=\"#{cyc_color}\""
   end
   
   def cyc_color

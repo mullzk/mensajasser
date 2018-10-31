@@ -1,8 +1,8 @@
 <h1>Quartals-Ranking vom <%=short_date(@date)%> </h1>
-<p><%= link_to "&lt;&lt;Vorheriges Jahr", :action => "last_3_months", :id => @date - 1.year %> &nbsp; 
-<%= link_to "&lt;Vorheriger Monat", :action => "last_3_months", :id => @date - 1.month %> &nbsp; 
-<%= link_to "&gt;Nächster Monat", :action => "last_3_months", :id => @date + 1.month %> &nbsp; 
-<%= link_to "&gt;&gt;Nächstes Jahr", :action => "last_3_months", :id => @date + 1.year %></p>
+<p class="headlinks"><%= link_to "<<Vorheriges Jahr", :action => "last_3_months", :id => @date - 1.year %> &nbsp; 
+<%= link_to  "<Vorheriger Monat", :action => "last_3_months", :id => @date - 1.month %> &nbsp; 
+<%= link_to  ">Nächster Monat", :action => "last_3_months", :id => @date + 1.month %> &nbsp; 
+<%= link_to  ">>Nächstes Jahr", :action => "last_3_months", :id => @date + 1.year %></p>
 <table class="ranking">
 	<tr >
 		<th>Rang</th>
