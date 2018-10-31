@@ -11,11 +11,9 @@ get 'ranking/:action', controller: "ranking"
 get 'ranking/:action/:date', controller: "ranking"
 
 
-get 'login' => "users#login"
-post 'login' => "users#login"
-get 'logout' => "users#logout"
-get 'change_password' => "users#change_own_password"
-post 'change_password' => "users#change_own_password"
+match 'login' => "users#login", via: [:get, :post], as: :login
+match 'logout' => "users#logout", via: :get, as: :logout
+match 'change_password' => "users#change_own_password", via: [:get, :patch], as: :change_password
 
 
 end

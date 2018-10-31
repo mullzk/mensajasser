@@ -13,7 +13,6 @@ class UsersController < ApplicationController
         redirect_to :controller => "rounds", :action => "new"
       else
         flash[:notice] = "Ungültige user/passwort Kombination"
-        puts flash[:notice]
       end
     end
   end
@@ -30,12 +29,18 @@ class UsersController < ApplicationController
     # TODO #BUG: We can change the password even if the old one is wrong. 
     
     @user = User.find_by_id(session[:user_id])    
-    if request.post?
+    if request.patch?
       user = User.authenticate(@user.username, params[:old_password])
       if user
-        if @user.update_attributes(params[:user])
-          flash[:notice] = 'Password geändert'
-          redirect_to :controller => "rounds", :action => "new" 
+        if params[:user][:password] == params[:user][:password_confirmation]
+          if @user.update_attribute(:password, params[:user][:password])
+            flash[:notice] = 'Password geändert'
+            redirect_to root_path 
+          else
+            flash[:notice] = "Passwort konnte nicht geändert werden, der Grund ist unklar"
+          end
+        else
+          flash[:notice] = "Passwort und Bestätigung stimmen nicht überein"
         end
       else
         flash[:notice] = "Altes Passwort ist ungültig"
