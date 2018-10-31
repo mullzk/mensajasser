@@ -7,8 +7,13 @@ root 'ranking#year'
 resources :rounds, :jassers, :users
 
 get 'ranking/' => "ranking#year"
-get 'ranking/:action', controller: "ranking"
-get 'ranking/:action/:date', controller: "ranking"
+get 'ranking/year' => "ranking#year"
+get 'ranking/month' => "ranking#month"
+get 'ranking/versenker_und_roesis' => "ranking#versenker_und_roesis"
+get 'ranking/last_12_months' => "ranking#last_12_months"
+get 'ranking/last_3_months' => "ranking#last_3_months"
+get 'ranking/ewig' => "ranking#ewig"
+get 'ranking/day' => "ranking#day"
 
 
 match 'login' => "users#login", via: [:get, :post], as: :login
