@@ -3,7 +3,7 @@ class RoundsController < ApplicationController
 
   # GET /rounds
   def index
-    @rounds = Round.all
+    @rounds = Round.order("day desc").page(params[:page])
   end
 
   # GET /rounds/1

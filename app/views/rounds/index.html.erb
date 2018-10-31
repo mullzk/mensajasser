@@ -3,6 +3,10 @@
 <table>
   <thead>
     <tr>
+  	  	<th>Tag</th>
+	  	<th>Spieler</th>
+  		<th>Eingabe</th>
+  		<th>Kommentar</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -10,7 +14,10 @@
   <tbody>
     <% @rounds.each do |round| %>
       <tr>
-        <td><%= link_to 'Show', round %></td>
+		 <td style="padding-right:10px; white-space:nowrap;"><%= link_to short_date(round.day), :controller => "ranking", :action => "day", :id => round.day %></td>
+		<td style="padding-right:10px; white-space:nowrap;"><%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => "& ")) %></td>
+    	<td style="padding-right:10px; white-space:nowrap;"><%=h round.creator %></td>
+		<td><%=h round.comment %></td>
         <td><%= link_to 'Edit', edit_round_path(round) %></td>
         <td><%= link_to 'Destroy', round, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -19,5 +26,6 @@
 </table>
 
 <br>
+<%= will_paginate @rounds, :previous_label => '&laquo; Jünger', :next_label => 'Älter &raquo;' %>
 
 <%= link_to 'New Round', new_round_path %>
