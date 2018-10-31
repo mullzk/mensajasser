@@ -1,0 +1,136 @@
+<h1>Die Jasserei am <%=@date.strftime("%d. %b %Y")%></h1>
+ 
+<h3>Eingegebene Tableaus</h3>
+<% for round in @rounds -%>
+	Tableau eingegeben von <%= h round.creator %>: <%=h(round.jassers.map{|a| a.name}.to_sentence(:connector => "&", :skip_last_comma => true)) %><br />
+<% end -%>
+
+<h3>Die Ergebnisse der Spieler</h3>
+<table class="ranking">
+	<tr >
+		<th>Rang</th>
+		<th class="string <%= cyc_color%>">Jasser</th>
+		<th <%=cyc_color_class %>>Spiele</th>
+		<th <%=cyc_color_class %>>Differenz</th>
+		<th <%=cyc_color_class %>>Schnitt</th>
+		<th <%=cyc_color_class %>>Max</th>
+		<th <%=cyc_color_class %>>Rösi</th>
+		<th <%=cyc_color_class %>>2xRösi</th>
+		<th <%=cyc_color_class %>>Versenkt</th>
+		<th <%=cyc_color_class %>>Match</th>
+		<th <%=cyc_color_class %>>H.Match</th>
+		<th <%=cyc_color_class %>>Dähler-Ris</th>
+	</tr>
+	<% if @ranking.size > 0 -%>
+		<% for stat in @ranking -%>
+			<% reset_cycle("colors") -%>
+			<tr <% if @rank==0 || @rank==3 %>class="trennung_top"<% end %> >
+				<td><%= n 0, @rank +=1 %></td>
+				<td class="string <%= cyc_color%>"><%= stat["jasser"].name %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["spiele"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["differenz"] %></td>
+				<td <%=cyc_color_class %>><%= n 2, stat["schnitt"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["maximum"] %></td>
+				<% for col in @additional_columns -%>
+					<td <%=cyc_color_class %>><%= n 0, stat[col] %></td>
+				<% end -%>
+			<tr>
+		<% end -%>
+		<tr class="trennung_top">
+			<% reset_cycle("colors") -%>
+			<td></td>
+			<td class="string <%= cyc_color%>">Total</td>
+			<td <%=cyc_color_class %>><%= @totals["spiele"] %></td>
+			<td <%=cyc_color_class %>><%= @totals["differenz"] %></td>
+			<td <%=cyc_color_class %>> </td>
+			<td <%=cyc_color_class %>><%= @totals["maximum"] %></td>
+			<% for col in @additional_columns -%>
+				<td <%=cyc_color_class %>><%= n 0, @totals[col] %></td>
+			<% end -%>
+		</tr>
+		<tr>
+			<td></td>
+			<% reset_cycle("colors") -%>
+			<td class="string <%= cyc_color%>">Schnitt</td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["spiele"]/@rank %></td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["differenz"]/@rank %></td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["differenz"]/@totals["spiele"].to_f %></td>
+			<td <%=cyc_color_class %>> </td>
+			<% for col in @additional_columns -%>
+				<td <%=cyc_color_class %>><%= n 2, @totals[col]/@rank %></td>
+			<% end -%>
+		</tr>
+	<% else %>
+		<tr>
+			<td colspan=12 style="padding:15px;text-align:center;">In diesem Jahr wurde kein Spiel eingetragen</td>
+		</tr>
+	<% end -%>
+</table>
+
+
+
+<h3>Rangverschiebungen</h3>
+<table class="ranking">
+	<% reset_cycle("colors") -%>
+	<tr>
+		<th>Rang</th>
+		<th class="string <%= cyc_color%>">Jasser</th>
+		<th class="string <%= cyc_color%>">Grüner Tisch</th>
+		<th class="string <%= cyc_color%>">Rang-Sprung</th>
+		<th <%=cyc_color_class %>>Rang vorher</th>
+		<th <%=cyc_color_class %>>Rang nachher</th>
+		<th <%=cyc_color_class %>>Spiele vorher</th>
+		<th <%=cyc_color_class %>>Spiele nachher</th>
+		<th <%=cyc_color_class %>>Differenz vorher</th>
+		<th <%=cyc_color_class %>>Differenz nachher</th>
+		<th <%=cyc_color_class %>>Schnitt vorher</th>
+		<th <%=cyc_color_class %>>Schnitt nachher</th>
+	</tr>
+	<% for stat in @all_ranks -%>
+	<% reset_cycle("colors") -%>
+		<tr>
+			<td ><%= stat["rankpo"]%></td>
+			<td class="string <%= cyc_color%>"><%= h  stat["name"]%></td>
+			<td class="string <%= cyc_color%>"><%= h stat["gtisch"]%></td>
+			<td class="string <%= cyc_color%>"><%= n 0, stat["rankjump"]%></td>
+			<td <%=cyc_color_class %>><%= stat["rankpr"]%></td>
+			<td <%=cyc_color_class %>><%= stat["rankpo"]%></td>
+			<td <%=cyc_color_class %>><%= stat["spielepr"]%></td>
+			<td <%=cyc_color_class %>><%= stat["spielepo"]%></td>
+			<td <%=cyc_color_class %>><%= stat["diffpr"]%></td>
+			<td <%=cyc_color_class %>><%= stat["diffpo"]%></td>
+			<td <%=cyc_color_class %>><%= n 2, stat["schnittpr"]%></td>
+			<td <%=cyc_color_class %>><%= n 2, stat["schnittpo"]%></td>
+		</tr>
+	<% end -%>
+	<% reset_cycle("colors") -%>
+	<tr>
+		<td></td>
+		<td class="string <%= cyc_color%>">Total</td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>><%= spielepr = @all_ranks.sum{|x| x["spielepr"].to_i}%></td>
+		<td <%=cyc_color_class %>><%= spielepo = @all_ranks.sum{|x| x["spielepo"].to_i}%></td>
+		<td <%=cyc_color_class %>><%= diffpr = @all_ranks.sum{|x| x["diffpr"].to_i}%></td>
+		<td <%=cyc_color_class %>><%= diffpo = @all_ranks.sum{|x| x["diffpo"].to_i}%></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+	</tr>
+	<tr>
+		<% reset_cycle("colors") -%>
+		<td></td>
+		<td class="string <%= cyc_color%>">Schnitt</td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>></td>
+		<td <%=cyc_color_class %>><%= n 1, spielepr/@all_ranks.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= n 1, spielepo/@all_ranks.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= n 1, diffpr/@all_ranks.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= n 1, diffpo/@all_ranks.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= n 2, diffpr/spielepr.to_f %></td>
+		<td <%=cyc_color_class %>><%= n 2, diffpo/spielepo.to_f %></td>
+	</tr>
+</table>

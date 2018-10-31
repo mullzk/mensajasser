@@ -48,18 +48,17 @@ class Jasser < ApplicationRecord
     raise "Expected a date, got something else" unless options[:to].gregorian?
     raise "Expected a date, got something else" unless options[:from].gregorian?
     
-    stat = Result.find(:first, 
-                        :select => "sum(spiele) spiele, 
-                                    sum(differenz) differenz, 
-                                    max(max) maximum,
-                                    sum(roesi) roesi, 
-                                    sum(droesi) droesi, 
-                                    sum(versenkt) versenkt, 
-                                    sum(gematcht) gematcht, 
-                                    sum(huebimatch) huebimatch, 
-                                    sum(chimiris) chimiris", 
-                        :conditions => [ "jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, options[:from], options[:to] ], 
-                        :joins=> " INNER JOIN rounds on rounds.id = results.round_id").attributes
+    stat = Result.where("jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, options[:from], options[:to] ).select("sum(spiele) spiele, 
+                                        sum(differenz) differenz, 
+                                        max(max) maximum,
+                                        sum(roesi) roesi, 
+                                        sum(droesi) droesi, 
+                                        sum(versenkt) versenkt, 
+                                        sum(gematcht) d_gematcht, 
+                                        sum(huebimatch) huebimatch, 
+                                        sum(chimiris) chimiris").joins(:round).order("sum(differenz)")
+    stat = stat.first.attributes
+    
     stat["jasser"] = self
     if stat["spiele"] && stat["spiele"] > 0
       stat["schnitt"] = stat["differenz"] / stat["spiele"].to_f
@@ -90,13 +89,18 @@ class Jasser < ApplicationRecord
     raise "Expected a date, got something else" unless options[:to].gregorian?
     raise "Expected a date, got something else" unless options[:from].gregorian?
     
-    stat = Result.find(:first, 
-                        :select => "sum(spiele) spiele, 
-                                    sum(roesi) roesi, 
-                                    sum(droesi) droesi, 
-                                    sum(versenkt) versenkt", 
-                        :conditions => [ "jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, options[:from], options[:to] ], 
-                        :joins=> " INNER JOIN rounds on rounds.id = results.round_id").attributes
+
+    stat = Result.where("jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, options[:from], options[:to] ).select("sum(spiele) spiele, 
+                                        sum(differenz) differenz, 
+                                        max(max) maximum,
+                                        sum(roesi) roesi, 
+                                        sum(droesi) droesi, 
+                                        sum(versenkt) versenkt, 
+                                        sum(gematcht) gematcht, 
+                                        sum(huebimatch) huebimatch, 
+                                        sum(chimiris) chimiris").joins(:round).order("sum(differenz)")
+    stat = stat.first.attributes
+
     stat["jasser"] = self
     if stat["spiele"] && stat["spiele"] > 0
       stat["roesi_ps"] = stat["roesi"] / stat["spiele"].to_f

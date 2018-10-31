@@ -1,0 +1,72 @@
+<h1>Jasser des Jahres 
+	<% for delta in [-2, -1, 0, 1, 2]%>
+		<span class="headlinks" style="font-size:<%= 100/2**delta.abs %>%; padding:<%= 20-5*delta.abs%>px;">
+			<% if delta == 0 -%>
+				<%=@date.year %>
+			<% else -%>
+				<%= link_to @date.year + delta, :action => "year", :id => @date.year + delta %>
+			<% end -%>
+		</span>
+	
+	<% end %>
+</h1>
+<table class="ranking">
+	<tr >
+		<th>Rang</th>
+		<th class="string <%= cyc_color%>">Jasser</th>
+		<th <%=cyc_color_class %>><%= link_to "Spiele", :id => @date.year, :order => "spiele" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Differenz", :id => @date.year, :order => "differenz" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Schnitt", :id => @date.year, :order => "schnitt" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Max", :id => @date.year, :order => "maximum" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Rösi", :id => @date.year, :order => "roesi" %></th>
+		<th <%=cyc_color_class %>><%= link_to "2xRösi", :id => @date.year, :order => "droesi" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Versenkt", :id => @date.year, :order => "versenkt" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Match", :id => @date.year, :order => "gematcht" %></th>
+		<th <%=cyc_color_class %>><%= link_to "H.Match", :id => @date.year, :order => "huebimatch" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Dähler-Ris", :id => @date.year, :order => "chimiris" %></th>
+	</tr>
+	<% if @ranking.size > 0 -%>
+		<% for stat in @ranking -%>
+			<% reset_cycle("colors") -%>
+			<tr <% if @rank==0 || @rank==3 %>class="trennung_top"<% end %> >
+				<td><%= n 0, @rank +=1 %></td>
+				<td class="string <%= cyc_color%>"><%= stat["jasser"].name %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["spiele"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["differenz"] %></td>
+				<td <%=cyc_color_class %>><%= n 2, stat["schnitt"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["maximum"] %></td>
+				<% for col in @additional_columns -%>
+					<td <%=cyc_color_class %>><%= n 0, stat[col] %></td>
+				<% end -%>
+			<tr>
+		<% end -%>
+		<tr class="trennung_top">
+			<% reset_cycle("colors") -%>
+			<td></td>
+			<td class="string <%= cyc_color%>">Total</td>
+			<td <%=cyc_color_class %>><%= @totals["spiele"] %></td>
+			<td <%=cyc_color_class %>><%= @totals["differenz"] %></td>
+			<td <%=cyc_color_class %>> </td>
+			<td <%=cyc_color_class %>><%= @totals["maximum"] %></td>
+			<% for col in @additional_columns -%>
+				<td <%=cyc_color_class %>><%= n 0, @totals[col] %></td>
+			<% end -%>
+		</tr>
+		<tr>
+			<td></td>
+			<% reset_cycle("colors") -%>
+			<td class="string <%= cyc_color%>">Schnitt</td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["spiele"]/@rank %></td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["differenz"]/@rank %></td>
+			<td <%=cyc_color_class %>><%= n 2, @totals["differenz"]/@totals["spiele"].to_f %></td>
+			<td <%=cyc_color_class %>> </td>
+			<% for col in @additional_columns -%>
+				<td <%=cyc_color_class %>><%= n 2, @totals[col]/@rank %></td>
+			<% end -%>
+		</tr>
+	<% else %>
+		<tr>
+			<td colspan=12 style="padding:15px;text-align:center;">In diesem Jahr wurde kein Spiel eingetragen</td>
+		</tr>
+	<% end -%>
+</table>

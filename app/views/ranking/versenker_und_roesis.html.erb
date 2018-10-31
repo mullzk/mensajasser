@@ -1,0 +1,49 @@
+<h1>Versenker und R&ouml;sischlecker <br />des Jahres 
+	<% for delta in [-2, -1, 0, 1, 2]
+		next_year = @date + delta.years
+	%>
+		<span class="headlinks" style="font-size:<%= 100/2**delta.abs %>%; padding:<%= 20-5*delta.abs%>px;">
+			<% if delta == 0 -%>
+				<%= next_year.strftime("%Y") %>
+			<% else -%>
+				<%= link_to next_year.strftime("%Y"), :action => "versenker_und_roesis", :id => next_year %>
+			<% end -%>
+		</span>
+	
+	<% end %>
+</h1>
+<table class="ranking">
+	<tr >
+		<th>Rang</th>
+		<th class="string <%= cyc_color%>">Jasser</th>
+		<th <%=cyc_color_class %>><%= link_to "Spiele", :id => @date, :order => "spiele" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Versenker", :id => @date, :order => "versenkt" %></th>
+		<th <%=cyc_color_class %>><%= link_to "Versenker p. Spiel", :id => @date, :order => "versenkt_ps" %></th>
+		<th <%=cyc_color_class %>><%= link_to "R&ouml;si", :id => @date, :order => "roesi" %></th>
+		<th <%=cyc_color_class %>><%= link_to "R&ouml;si p. Spiel", :id => @date, :order => "roesi_ps" %></th>
+		<th <%=cyc_color_class %>><%= link_to "2R&ouml;si", :id => @date, :order => "droesi" %></th>
+		<th <%=cyc_color_class %>><%= link_to "2xR&ouml;si p. Spiel", :id => @date, :order => "droesi_ps" %></th>
+		<th <%=cyc_color_class %>><%= link_to "R&ouml;si-Quote", :id => @date, :order => "roesi_quote" %></th>
+	</tr>
+	<% if @ranking.size > 0 -%>
+		<% for stat in @ranking -%>
+			<% reset_cycle("colors") -%>
+			<tr <% if @rank==0 || @rank==3 %>class="trennung_top"<% end %> >
+				<td><%= n 0, @rank +=1 %></td>
+				<td class="string <%= cyc_color%>"><%= stat["jasser"].name %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["spiele"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["versenkt"] %></td>
+				<td <%=cyc_color_class %>><%= n 3, stat["versenkt_ps"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["roesi"] %></td>
+				<td <%=cyc_color_class %>><%= n 2, stat["roesi_ps"] %></td>
+				<td <%=cyc_color_class %>><%= n 0, stat["droesi"] %></td>
+				<td <%=cyc_color_class %>><%= n 2, stat["droesi_ps"] %></td>
+				<td <%=cyc_color_class %>><%= n 2, stat["roesi_quote"] %></td>
+			<tr>
+		<% end -%>
+	<% else %>
+		<tr>
+			<td colspan=12 style="padding:15px;text-align:center;">In diesem Jahr wurde kein Spiel eingetragen</td>
+		</tr>
+	<% end -%>
+</table>
