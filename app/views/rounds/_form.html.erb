@@ -1,4 +1,4 @@
-<%= form_with(model: round, local: true) do |form| %>
+<%= form_with(model: @round, local: true) do |form| %>
   <% if round.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(round.errors.count, "error") %> prohibited this round from being saved:</h2>
@@ -10,6 +10,57 @@
       </ul>
     </div>
   <% end %>
+
+
+	<p>
+		<%= form.label "Tag" %><br />
+		<%= form.date_select :day %>
+	</p>
+	<p>
+		<%= form.label "Eingegeben durch" %><br />
+		<%= form.text_field :creator %>
+	</p>
+
+
+<table class="tableau">
+	<tr>
+		<th>Jasser</th>
+		<th>Spiele</th>
+		<th>Diff</th>
+		<th>Max</th>
+		<th>Roesi</th>
+		<th>2xRoesi</th>
+		<th>Versenkt</th>
+		<th>Match</th>
+		<th>H.Match</th>
+		<th>Dählerris</th>
+	</tr>
+	<% form.fields :results do |result_form| %>
+   	 	<tr>
+			<td><%= result_form.collection_select(:jasser_id , @jassers, :id, :name) %></td>
+        	<td><%= result_form.text_field :spiele, :onchange => "update_spiele();", :size => 3 %></td>
+        	<td><%= result_form.text_field :differenz, :onchange => "update_diffs();", :size => 3 %></td>
+        	<td><%= result_form.text_field :max, :size => 3 %></td>
+        	<td><%= result_form.text_field :roesi, :size => 3 %></td>
+        	<td><%= result_form.text_field :droesi, :size => 3 %></td>
+        	<td><%= result_form.text_field :versenkt, :size => 3 %></td>
+        	<td><%= result_form.text_field :gematcht, :size => 3 %></td>
+        	<td><%= result_form.text_field :huebimatch, :size => 3 %></td>
+        	<td><%= result_form.text_field :chimiris, :size => 3 %></td>
+		</tr>
+    <% end %>
+
+</table>
+
+
+
+
+	<p>
+    	<%= form.label :Bemerkungen %><br />
+    	<%= form.text_field :comment %>
+  	</p>
+
+
 
   <div class="actions">
     <%= form.submit %>

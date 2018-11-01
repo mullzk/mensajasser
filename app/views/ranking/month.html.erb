@@ -7,7 +7,7 @@
 			<% if delta == 0 -%>
 				<%=short_month(next_month) %>
 			<% else -%>
-				<%= link_to short_month(next_month), :action => "month", :id => next_month %>
+				<%= link_to short_month(next_month), :action => "month", :date => next_month %>
 			<% end -%>
 		</span>
 	

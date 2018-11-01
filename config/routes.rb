@@ -8,12 +8,18 @@ resources :rounds, :jassers, :users
 
 get 'ranking/' => "ranking#year"
 get 'ranking/year' => "ranking#year"
+get 'ranking/year/:date', controller: "ranking", action: "year"
 get 'ranking/month' => "ranking#month"
+get 'ranking/month/:date', controller: "ranking", action: "month"
 get 'ranking/versenker_und_roesis' => "ranking#versenker_und_roesis"
+get 'ranking/versenker_und_roesis/:date', controller: "ranking", action: "versenker_und_roesis"
 get 'ranking/last_12_months' => "ranking#last_12_months"
+get 'ranking/last_12_months/:date', controller: "ranking", action: "last_12_months"
 get 'ranking/last_3_months' => "ranking#last_3_months"
+get 'ranking/last_3_months/:date', controller: "ranking", action: "last_3_months"
 get 'ranking/ewig' => "ranking#ewig"
 get 'ranking/day' => "ranking#day"
+get 'ranking/day/:date', controller: "ranking", action: "day"
 
 
 match 'login' => "users#login", via: [:get, :post], as: :login

@@ -6,7 +6,7 @@
 			<% if delta == 0 -%>
 				<%= next_year.strftime("%Y") %>
 			<% else -%>
-				<%= link_to next_year.strftime("%Y"), :action => "versenker_und_roesis", :id => next_year %>
+				<%= link_to next_year.strftime("%Y"), :action => "versenker_und_roesis", :date => next_year %>
 			<% end -%>
 		</span>
 	

@@ -1,7 +1,7 @@
 class RankingController < ApplicationController
 
   def year
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     sortkey, sortorder = parse_sort_params
     @ranking = Jasser.all.map{|jasser| jasser.result_stats(:year => @date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
 
@@ -11,7 +11,7 @@ class RankingController < ApplicationController
   end
 
   def month
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     sortkey, sortorder = parse_sort_params
     @ranking = Jasser.all.map{|jasser| jasser.result_stats(:month => @date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
 
@@ -21,7 +21,7 @@ class RankingController < ApplicationController
   end
   
   def versenker_und_roesis
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     sortkey, sortorder = parse_sort_params_versenker
     @ranking = Jasser.all.map{|jasser| jasser.versenker_stats(:year => @date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
 
@@ -29,7 +29,7 @@ class RankingController < ApplicationController
   end
 
   def last_12_months
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     @from_date = @date - 1.year
     sortkey, sortorder = parse_sort_params
     @ranking = Jasser.all.map{|jasser| jasser.result_stats(:to => @date, :from => @from_date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
@@ -40,7 +40,7 @@ class RankingController < ApplicationController
   end
 
   def last_3_months
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     @from_date = @date - 3.months
     sortkey, sortorder = parse_sort_params
     @ranking = Jasser.all.map{|jasser| jasser.result_stats(:to => @date, :from => @from_date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
@@ -62,7 +62,7 @@ class RankingController < ApplicationController
 
 
   def day
-    @date = parse_day_param(params[:id])
+    @date = parse_day_param(params[:date])
     @rounds = Round.where("day = ?", @date)
     if @rounds.empty?
       @date = Round.order(created_at: :desc).first.day

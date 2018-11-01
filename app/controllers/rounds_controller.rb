@@ -13,11 +13,16 @@ class RoundsController < ApplicationController
   # GET /rounds/new
   def new
     @round = Round.new
+    @round.creator = User.find(session[:user_id]).username
+    4.times { @round.results.build }
+    @jassers = Jasser.where(active: true).sort {|a,b| a.name <=> b.name}
   end
 
   # GET /rounds/1/edit
   def edit
-  end
+    @jassers = Jasser.where(active: true).sort {|a,b| a.name <=> b.name}
+    @round = Round.find(params[:id])
+ end
 
   # POST /rounds
   def create

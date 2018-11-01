@@ -14,7 +14,7 @@
   <tbody>
     <% @rounds.each do |round| %>
       <tr>
-		 <td style="padding-right:10px; white-space:nowrap;"><%= link_to short_date(round.day), :controller => "ranking", :action => "day", :id => round.day %></td>
+		 <td style="padding-right:10px; white-space:nowrap;"><%= link_to short_date(round.day), :controller => "ranking", :action => "day", :date => round.day %></td>
 		<td style="padding-right:10px; white-space:nowrap;"><%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => "& ")) %></td>
     	<td style="padding-right:10px; white-space:nowrap;"><%=h round.creator %></td>
 		<td><%=h round.comment %></td>

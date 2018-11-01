@@ -15,6 +15,8 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
+    login_as_admin
+    
     get new_round_url
     assert_response :success
   end
@@ -49,4 +51,18 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to rounds_url
   end
+  
+  
+  private
+
+  def login_as_admin
+    @admin = FactoryBot.create(:user)
+    @admin.username = "admin"
+    @admin.password = "password"
+    @admin.save
+    post "/login", params: {name: @admin.username, password: @admin.password }
+    
+  end
+  
+  
 end
