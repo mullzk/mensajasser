@@ -35,7 +35,7 @@
 		<th>H.Match</th>
 		<th>Dählerris</th>
 	</tr>
-	<% form.fields :results do |result_form| %>
+	<%= form.fields :results do |result_form| %>
    	 	<tr>
 			<td><%= result_form.collection_select(:jasser_id , @jassers, :id, :name) %></td>
         	<td><%= result_form.text_field :spiele, :onchange => "update_spiele();", :size => 3 %></td>
