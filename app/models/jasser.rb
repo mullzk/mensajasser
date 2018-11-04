@@ -13,7 +13,7 @@
 
 class Jasser < ApplicationRecord
   has_many :results
-  has_many :rounds, :through => :results
+  has_many :rounds, through: :results
   
 
 
@@ -21,15 +21,6 @@ class Jasser < ApplicationRecord
   ### START OF OLD SMELLY CODE
   #######################################
 
-  ##
-  # Sums and maxes all Results of Jasser inside Timerange
-  # @param [Hash] options The options hash.
-  # @option options [Date] :to The last day where results are included for Computing. Defaults to today.
-  # @option options [Date] :from The first day where results are included. Default to beginnen of :to's year.
-  # @option options [Date] :day Set :to and :from to first and last day in month.
-  # @option options [Date] :month Set :to and :from to first and last day in month.
-  # @option options [Date] :year Set :to and :from to first and last day in year.
-  # Precedence: Year, Month, day, To/From, Date.today().year
   def result_stats(options={})
     from_date, to_date = parse_date_from_options(options)
     

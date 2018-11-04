@@ -27,7 +27,7 @@ class RoundsController < ApplicationController
   # POST /rounds
   def create
     @round = Round.new(round_params)
-
+    @jassers = Jasser.where(active: true).sort {|a,b| a.name <=> b.name}
     if @round.save
       redirect_to @round, notice: 'Round was successfully created.'
     else
@@ -58,6 +58,7 @@ class RoundsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def round_params
-      params.fetch(:round, {}).permit(:comment, :creator, :day, :results)
+      params.fetch(:round, {}).permit(:comment, :creator, :day, :results, 
+      results_attributes: [:jasser_id, :spiele, :differenz, :max, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :chimiris, :id])
     end
 end

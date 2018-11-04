@@ -22,8 +22,8 @@ class User < ApplicationRecord
 
   attr_accessor :password_confirmation
   validates_confirmation_of :password
-  validates_uniqueness_of :username, :if => Proc.new { |user| user.privilege > 0 }
-  validates_presence_of :username, :if => Proc.new { |user| user.privilege > 0 }
+  validates_uniqueness_of :username, if: Proc.new { |user| user.privilege > 0 }
+  validates_presence_of :username, if: Proc.new { |user| user.privilege > 0 }
 
   def validate
     if privilege > 0

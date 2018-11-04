@@ -53,6 +53,24 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
   end
   
   
+  test "editing a round should edit the results as well" do
+    round = Round.new
+    round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
+    round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
+    round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
+    round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
+    round.day = Date.today
+    round.save
+    first_result = round.results.first
+
+    assert(first_result.differenz==200, "Differenz should be 200 as constructed")
+    patch round_url(round), params: { round: { results_attributes: {"0" => {differenz:190, id:first_result.id}}}, id: round.id }
+    updated_result = Result.find(first_result.id)
+    assert(updated_result.differenz==190, "Differenz should be reduced to 190, but is #{round.results.first.differenz}")
+  end
+  
+  
+  
   private
 
   def login_as_admin
