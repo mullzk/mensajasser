@@ -18,8 +18,8 @@
 		<td style="padding-right:10px; white-space:nowrap;"><%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => "& ")) %></td>
     	<td style="padding-right:10px; white-space:nowrap;"><%=h round.creator %></td>
 		<td><%=h round.comment %></td>
-        <td><%= link_to 'Edit', edit_round_path(round) %></td>
-        <td><%= link_to 'Destroy', round, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if @user_is_authorized then %><%= link_to 'Edit', edit_round_path(round) %><% end %></td>
+        <td><% if @user_is_authorized then %><%= link_to 'Destroy', round, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>

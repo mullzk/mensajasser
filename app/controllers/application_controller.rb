@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
   
   def authorize
-    unless User.find_by_id(session[:user_id]) || User.count.zero?
+    if (session[:user_id].nil? || User.find_by(id: session[:user_id].nil?) && User.count > 0)
       flash[:notice] = "Bitte einloggen"
       redirect_to :controller => "users", :action => "login"
     end

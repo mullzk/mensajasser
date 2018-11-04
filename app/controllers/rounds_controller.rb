@@ -1,8 +1,10 @@
 class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, :except => [:index, :show]
 
   # GET /rounds
   def index
+    if User.find_by(id: session[:user_id]) then @user_is_authorized = true else @user_is_authorized = false end
     @rounds = Round.order("day desc").page(params[:page])
   end
 
@@ -13,7 +15,7 @@ class RoundsController < ApplicationController
   # GET /rounds/new
   def new
     @round = Round.new
-    @round.creator = User.find(session[:user_id]).username
+    @round.creator = User.find_by(id: session[:user_id]).username
     4.times { @round.results.build }
     @jassers = Jasser.where(active: true).sort {|a,b| a.name <=> b.name}
   end
