@@ -4,6 +4,12 @@
     <title>Mensajasser: <%= @page_title || "#{controller.controller_name} - #{controller.action_name}" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152.png" />
+	<meta name="application-name" content="Mensajasser">
+	<meta name="msapplication-TileColor" content="#F4C143">
+	<meta name="msapplication-TileImage" content="/mstile-144.png">
+	<meta name="msapplication-config" content="/ieconfig.xml">
+
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
