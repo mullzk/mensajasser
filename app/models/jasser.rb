@@ -16,6 +16,11 @@ class Jasser < ApplicationRecord
   has_many :rounds, through: :results
   
 
+  def result_hash_for_jasser_in_date_range(jasser, from_date, to_date) 
+    summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
+    if summed_up_results.nil? then return {} end
+    summed_up_results.attributes    
+  end
 
   #######################################
   ### START OF OLD SMELLY CODE
@@ -24,9 +29,7 @@ class Jasser < ApplicationRecord
   def result_stats(options={})
     from_date, to_date = parse_date_from_options(options)
     
-    summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
-    if summed_up_results.nil? then return {} end
-    stat = summed_up_results.attributes
+    stat = result_hash_for_jasser_in_date_range(self, from_date, to_date)
 
     stat["jasser"] = self
     stat["id"]=id
@@ -43,9 +46,7 @@ class Jasser < ApplicationRecord
   def versenker_stats(options={})
     from_date, to_date = parse_date_from_options(options)
     
-    summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
-    if summed_up_results.nil? then return {} end
-    stat = summed_up_results.attributes
+    stat = result_hash_for_jasser_in_date_range(self, from_date, to_date)
 
 
     stat["jasser"] = self
