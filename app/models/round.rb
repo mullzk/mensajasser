@@ -19,11 +19,16 @@ class Round < ApplicationRecord
   validates_associated :results
   accepts_nested_attributes_for :results
 
+  scope :in_date_range, ->(from_date, to_date) { where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date) }
+  scope :with_jasser, ->(jasser) {joins(:results).where("results.jasser_id=?", jasser.id)}
   
   after_initialize do |round|
     @results = []
   end
 
+  def self.rounds_in_time_interval(from_date, to_date)
+    Round.where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
+  end
 
 
    
@@ -46,7 +51,7 @@ class Round < ApplicationRecord
 ## Fetch all Jassers who played in this Period. Fetch Rankings (as array) for the last and the previous day and order them by their Schnitt.
 ## Pay attention do Jassers, which played for the first time and are not present in previous_days statistic
     
-    jassers = Jasser.with_results_in_time_interval(beginning_of_period, date)
+    jassers = Jasser.jassers_having_results_in_time_interval(beginning_of_period, date)
     
     new_ranking_table = jassers.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => date)}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
     old_ranking_table = jassers.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => previous_day)}.delete_if{|stat| stat.blank?}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}

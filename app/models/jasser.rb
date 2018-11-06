@@ -24,29 +24,14 @@ class Jasser < ApplicationRecord
   def result_stats(options={})
     from_date, to_date = parse_date_from_options(options)
     
-    results_in_period = Result.joins(:round)
-                              .where("jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, from_date, to_date)                              
-    if results_in_period.size == 0 then return {} end
-    
-    stat = results_in_period.select("sum(spiele) spiele, 
-                                    sum(differenz) differenz, 
-                                    max(max) maximum,
-                                    sum(roesi) roesi, 
-                                    sum(droesi) droesi, 
-                                    sum(versenkt) versenkt, 
-                                    sum(gematcht) gematcht, 
-                                    sum(huebimatch) huebimatch, 
-                                    sum(chimiris) chimiris")
-                            .group("jasser_id")
-                            .order("jasser_id")
-                            .first
-                            .attributes
+    summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
+    if summed_up_results.nil? then return {} end
+    stat = summed_up_results.attributes
 
     stat["jasser"] = self
     stat["id"]=id
     if stat["spiele"] && stat["spiele"] > 0
       stat["schnitt"] = stat["differenz"] / stat["spiele"].to_f
-      stat["maximum"] = stat["maximum"].to_i
     else 
       stat["schnitt"] = nil
     end
@@ -58,23 +43,10 @@ class Jasser < ApplicationRecord
   def versenker_stats(options={})
     from_date, to_date = parse_date_from_options(options)
     
-    results_in_period = Result.joins(:round)
-                              .where("jasser_id = ? AND rounds.day >= ? AND rounds.day<= ?", self.id, from_date, to_date)
-    if results_in_period.size == 0 then return {} end
+    summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
+    if summed_up_results.nil? then return {} end
+    stat = summed_up_results.attributes
 
-    stat = results_in_period.select("sum(spiele) spiele, 
-                                    sum(differenz) differenz, 
-                                    max(max) maximum,
-                                    sum(roesi) roesi, 
-                                    sum(droesi) droesi, 
-                                    sum(versenkt) versenkt, 
-                                    sum(gematcht) gematcht, 
-                                    sum(huebimatch) huebimatch, 
-                                    sum(chimiris) chimiris")
-                            .group("jasser_id")
-                            .order("jasser_id")
-                            .first
-                            .attributes
 
     stat["jasser"] = self
     if stat["spiele"] && stat["spiele"] > 0
@@ -95,7 +67,7 @@ class Jasser < ApplicationRecord
   end
   
   
-  def self.with_results_in_time_interval(from_date, to_date)
+  def self.jassers_having_results_in_time_interval(from_date, to_date)
     jasser_ids = Result.joins(:round)
                         .where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
                         .select("jasser_id")

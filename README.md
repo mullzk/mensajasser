@@ -34,7 +34,7 @@ v1.1  (2018, this version): Build as a new project on current, stable versions o
 
 ## Todo
 Planned Features for 2.0
-- Favicon
+- Favicon @done
 - Angstgegner-, Berseker- and Schädling-Statistiken
 - per-jasser-Statistik
 - Mobilefriendly layout
