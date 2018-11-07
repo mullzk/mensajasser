@@ -47,10 +47,11 @@ class Round < ApplicationRecord
 ## Fetch all Jassers who played in this Period. Fetch Rankings (as array) for the last and the previous day and order them by their Schnitt.
 ## Pay attention do Jassers, which played for the first time and are not present in previous_days statistic
     
-    jassers = Jasser.having_results_in_time_interval(beginning_of_period, date)
+    jassers_new = Jasser.having_results_in_time_interval(beginning_of_period, date)
+    jassers_old = Jasser.having_results_in_time_interval(beginning_of_period, previous_day)
     
-    new_ranking_table = jassers.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => date)}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
-    old_ranking_table = jassers.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => previous_day)}.delete_if{|stat| stat.blank?}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
+    new_ranking_table = jassers_new.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => date)}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
+    old_ranking_table = jassers_old.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => previous_day)}.delete_if{|stat| stat.blank?}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
     
     
 ## The ugly part: Calculate the ranks in both tables. Convert the tables into hashes with the Jasser as Key
@@ -71,7 +72,7 @@ class Round < ApplicationRecord
     end
 
 ## Consolidate both Ranking-Hashes into the Rangverschiebungs-Tabelle    
-    rangverschiebungs_tabelle = jassers.map do |jasser|
+    rangverschiebungs_tabelle = jassers_new.map do |jasser|
       jasser_verschiebung = {}
       jasser_verschiebung[:jasser_name] = jasser[:name]
       jasser_verschiebung[:rang_nachher] = new_ranking_as_hash_with_rank[jasser]["rank"]
