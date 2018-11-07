@@ -15,11 +15,12 @@ class Jasser < ApplicationRecord
   has_many :results
   has_many :rounds, through: :results
   
+  scope :having_results_in_time_interval, ->(from_date, to_date) { joins(:results).joins(:rounds).where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date).group("id") }
 
   def result_hash_for_date_range(from_date, to_date) 
     summed_up_results = Result.with_jasser(self).in_date_range(from_date, to_date).summed_up.first
     if summed_up_results.nil? then return {} end
-    summed_up_results.attributes    
+    summed_up_results.attributes   
   end
 
   #######################################
