@@ -36,6 +36,7 @@ class Result < ApplicationRecord
                                     sum(gematcht) gematcht, 
                                     sum(huebimatch) huebimatch, 
                                     sum(chimiris) chimiris").group("jasser_id").order("jasser_id") }
+
   
   def schnitt
     if @spiele then @differenz/@spiele else 0 end
