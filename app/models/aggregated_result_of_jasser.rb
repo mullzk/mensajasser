@@ -1,22 +1,45 @@
 class AggregatedResultOfJasser
-  attr_reader :jasser, :spiele, :differenz, :versenkt, :roesi, :droesi, :gematcht, :huebimatch, :chimiris
+  attr_reader :jasser, :spiele, :differenz, :max, :versenkt, :roesi, :droesi, :gematcht, :huebimatch, :chimiris
+  attr_reader :schnitt, :versenkt_pro_spiel, :roesi_pro_spiel, :droesi_pro_spiel, :roesi_quote
+  attr_accessor :rank
   
-  initialize(summed_up_results)
-  
-  #  id         :bigint(8)        not null, primary key
-  #  chimiris   :integer          default(0), not null
-  #  differenz  :integer          not null
-  #  droesi     :integer          default(0), not null
-  #  gematcht   :integer          default(0), not null
-  #  huebimatch :integer          default(0), not null
-  #  max        :integer          default(0), not null
-  #  roesi      :integer          default(0), not null
-  #  spiele     :integer          not null
-  #  versenkt   :integer          default(0), not null
-  #  created_at :datetime         not null
-  #  updated_at :datetime         not null
-  #  jasser_id  :integer          not null
-  #  round_id   :integer          not null
-  
+  def initialize(summed_up_results)
+    
+    @jasser = Jasser.find(summed_up_results.jasser_id)
+    @rank = 0 # initial ranking, StatisticTablePerJasser should set rank properly
+    
+    @spiele     = summed_up_results.spiele
+    @differenz  = summed_up_results.differenz
+    @max        = summed_up_results.maximum
+    @roesi      = summed_up_results.roesi
+    @droesi     = summed_up_results.droesi
+    @versenkt   = summed_up_results.versenkt
+
+    @chimiris   = summed_up_results.chimiris
+    @gematcht   = summed_up_results.gematcht
+    @huebimatch = summed_up_results.huebimatch
+
+
+    
+    
+    if @spiele && @spiele > 0
+      @schnitt              = @differenz/@spiele.to_f
+      @versenkt_pro_spiel   = @versenkt/@spiele.to_f
+      @roesi_pro_spiel      = @roesi/@spiele.to_f
+      @droesi_pro_spiel     = @droesi/@spiele.to_f
+    else
+      @schnitt              = nil
+      @versenkt_pro_spiel   = nil
+      @roesi_pro_spiel      = nil
+      @droesi_pro_spiel     = nil
+    end
+    
+    if @roesi > 0
+      @roesi_quote = @droesi / @roesi.to_f
+    else
+      @roesi_quote = nil
+    end
+  end
+
   
 end

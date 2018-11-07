@@ -53,14 +53,14 @@ class ResultTest < ActiveSupport::TestCase
   end
     
   test "Create Statistic-Table for Year 2017" do
-    statistic_table = StatisticTablePerUser.new(@d2017_start, @d2017_end, "schnitt")
+    statistic_table = StatisticTablePerJasser.new(@d2017_start, @d2017_end, "schnitt")
     assert(statistic_table.jasser_results && statistic_table.total && statistic_table.average)
     
     assert(statistic_table.jasser_results.size==5)
     result1 = statistic_table.jasser_results[0]
-    assert(result1.rank==1)
-    assert(result1.jasser)
-    assert(result1.jasser.id==@j1)
+    assert(result1.rank==1, "Rank should be 1")
+    assert(result1.jasser, "Jasser should be present")
+    assert(result1.jasser.id==@j1.id)
     assert(result1.jasser.name=="jasser1")
     assert(result1.spiele==30)
     assert(result1.differenz==300)
@@ -68,8 +68,8 @@ class ResultTest < ActiveSupport::TestCase
     assert(result1.max==30)
     assert(result1.roesi==4)
     assert(result1.droesi==4)
-    assert(result1.versenker==2)
-    assert(result1.versenker_pro_spiel==2/30.to_f)
+    assert(result1.versenkt==2)
+    assert(result1.versenkt_pro_spiel==2/30.to_f)
     assert(result1.roesi_pro_spiel==4/30.to_f)
     assert(result1.droesi_pro_spiel==4/30.to_f)
     assert(result1.roesi_quote==1.0)
@@ -79,9 +79,9 @@ class ResultTest < ActiveSupport::TestCase
     
 
     result2 = statistic_table.jasser_results[1]
-    assert(result1.rank==2)
+    assert(result2.rank==2)
     assert(result2.jasser)
-    assert(result2.jasser.id==@j4)
+    assert(result2.jasser.id==@j4.id)
     assert(result2.jasser.name=="jasser4")
     assert(result2.spiele==20)
     assert(result2.differenz==220)
@@ -89,8 +89,8 @@ class ResultTest < ActiveSupport::TestCase
     assert(result2.max==50)
     assert(result2.roesi==0)
     assert(result2.droesi==0)
-    assert(result2.versenker==0)
-    assert(result2.versenker_pro_spiel==0.0)
+    assert(result2.versenkt==0)
+    assert(result2.versenkt_pro_spiel==0.0)
     assert(result2.roesi_pro_spiel==0.0)
     assert(result2.droesi_pro_spiel==0.0)
     assert_nil(result2.roesi_quote)
