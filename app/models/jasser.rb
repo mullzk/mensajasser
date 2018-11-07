@@ -69,15 +69,6 @@ class Jasser < ApplicationRecord
   end
   
   
-  def self.jassers_having_results_in_time_interval(from_date, to_date)
-    jasser_ids = Result.joins(:round)
-                        .where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
-                        .select("jasser_id")
-                        .group("jasser_id")
-                        .collect {|result| result[:jasser_id]}
-    Jasser.where("id IN (?)", jasser_ids)
-  end
-  
   
   #######################################
   ### END OF OLD SMELLY CODE
