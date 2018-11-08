@@ -28,13 +28,12 @@
 	</tr>
 	<% for stat in @rangverschiebung -%>
 	<% reset_cycle("colors") -%>
-		<tr>
+		<tr <% if stat[:rang_nachher]==1 || stat[:rang_nachher]==4 %>class="trennung_top"<% end %> >
 			<td ><%= stat[:rang_nachher]%></td>
-			<% puts stat.inspect %>
 			<td class="string <%= cyc_color%>"><%= h  stat[:jasser_name]%></td>
-			<td class="string <%= cyc_color%>"><%= n 0, stat[:rang_sprung]%> <%= h stat[:sprung_am_gruenen_tisch]%></td>
-			<td <%=cyc_color_class %>><%= n 2, stat[:schnitt_vorher]%></td>
-			<td <%=cyc_color_class %>><%= n 2, stat[:schnitt_nachher]%></td>
+			<td class="string <%= cyc_color%>"><%= format_number stat[:rang_sprung]%> <%= h stat[:sprung_am_gruenen_tisch]%></td>
+			<td <%=cyc_color_class %>><%= format_number stat[:schnitt_vorher]%></td>
+			<td <%=cyc_color_class %>><%= format_number stat[:schnitt_nachher]%></td>
 			<td <%=cyc_color_class %>><%= stat[:spiele_vorher]%></td>
 			<td <%=cyc_color_class %>><%= stat[:spiele_nachher]%></td>
 			<td <%=cyc_color_class %>><%= stat[:differenz_vorher]%></td>
@@ -44,7 +43,7 @@
 		</tr>
 	<% end -%>
 	<% reset_cycle("colors") -%>
-	<tr>
+		<tr class="trennung_top">
 		<td></td>
 		<td class="string <%= cyc_color%>">Total</td>
 		<td <%=cyc_color_class %>></td>
@@ -62,12 +61,12 @@
 		<td></td>
 		<td class="string <%= cyc_color%>">Schnitt</td>
 		<td <%=cyc_color_class %>></td>
-		<td <%=cyc_color_class %>><%= n 2, diffpr/spielepr.to_f %></td>
-		<td <%=cyc_color_class %>><%= n 2, diffpo/spielepo.to_f %></td>
-		<td <%=cyc_color_class %>><%= n 1, spielepr/@rangverschiebung.size.to_f %></td>
-		<td <%=cyc_color_class %>><%= n 1, spielepo/@rangverschiebung.size.to_f %></td>
-		<td <%=cyc_color_class %>><%= n 1, diffpr/@rangverschiebung.size.to_f %></td>
-		<td <%=cyc_color_class %>><%= n 1, diffpo/@rangverschiebung.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number diffpr/spielepr.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number diffpo/spielepo.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number spielepr/@rangverschiebung.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number spielepo/@rangverschiebung.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number diffpr/@rangverschiebung.size.to_f %></td>
+		<td <%=cyc_color_class %>><%= format_number diffpo/@rangverschiebung.size.to_f %></td>
 		<td <%=cyc_color_class %>></td>
 		<td <%=cyc_color_class %>></td>
 	</tr>

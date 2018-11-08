@@ -36,16 +36,15 @@ class Round < ApplicationRecord
 
 	
 	def self.calculate_rangeverschiebungs_table(date)
-#	  self.connection.select_all(self.rangverschiebungsquery_for_date(date))	
 
-## Set Up the Dates of the new round, the day before and the first day of the year (where the main statistik begins)
+    ## Set Up the Dates of the new round, the day before and the first day of the year (where the main statistik begins)
     unless date.respond_to?("strftime") then date = Date.parse(date) end
     previous_day = Round.where("day < ?", date).maximum("day")
     beginning_of_period = previous_day.beginning_of_year
 
 
-## Fetch all Jassers who played in this Period. Fetch Rankings (as array) for the last and the previous day and order them by their Schnitt.
-## Pay attention do Jassers, which played for the first time and are not present in previous_days statistic
+    ## Fetch all Jassers who played in this Period. Fetch Rankings (as array) for the last and the previous day and order them by their Schnitt.
+    ## Pay attention do Jassers, which played for the first time and are not present in previous_days statistic
     
     jassers_new = Jasser.having_results_in_time_interval(beginning_of_period, date)
     jassers_old = Jasser.having_results_in_time_interval(beginning_of_period, previous_day)
@@ -54,7 +53,7 @@ class Round < ApplicationRecord
     old_ranking_table = jassers_old.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => previous_day)}.delete_if{|stat| stat.blank?}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
     
     
-## The ugly part: Calculate the ranks in both tables. Convert the tables into hashes with the Jasser as Key
+    ## The ugly part: Calculate the ranks in both tables. Convert the tables into hashes with the Jasser as Key
     new_ranking_as_hash_with_rank = {}
     rank = 1
     new_ranking_table.each do |ranking_entry| 
@@ -71,7 +70,7 @@ class Round < ApplicationRecord
       old_ranking_as_hash_with_rank[ranking_entry["jasser"]]=ranking_entry
     end
 
-## Consolidate both Ranking-Hashes into the Rangverschiebungs-Tabelle    
+    ## Consolidate both Ranking-Hashes into the Rangverschiebungs-Tabelle    
     rangverschiebungs_tabelle = jassers_new.map do |jasser|
       jasser_verschiebung = {}
       jasser_verschiebung[:jasser_name] = jasser[:name]

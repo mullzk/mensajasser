@@ -52,69 +52,17 @@ class RankingController < ApplicationController
       @rounds = Round.where("day = ?", @date)
     end
 
-    #Calculating Tagesstatistik
-=begin
-    sortkey, sortorder = parse_sort_params
-    jasser_of_the_day = @rounds.collect{|x|x.jassers}.flatten.uniq
-    @ranking = jasser_of_the_day.map{|jasser| jasser.result_stats(:day => @date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
-    @rank = 0.0
-    @additional_columns = %w(roesi droesi versenkt gematcht huebimatch chimiris)
-    @totals = calculate_total(@ranking, @additional_columns)
-=end
     @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
     @statistic_table = StatisticTablePerJasser.new(@date, @date, "schnitt")
-    
         
     #Calcultating Rangverschiebung (big magic inside round.rb)
     @rangverschiebung = Round.calculate_rangeverschiebungs_table(@date)
   end
 
 
+
+
   private
-  
-
-  def calculate_total(ranking, additional_columns)
-    totals = {}
-    totals["spiele"]    = ranking.inject(0) {|acc, jasser| acc += jasser["spiele"]}
-    totals["differenz"] = ranking.inject(0) {|acc, jasser| acc += jasser["differenz"]} 
-    totals["maximum"]   = ranking.inject(0) {|acc, jasser| if acc > jasser["maximum"].to_i then acc else jasser["maximum"].to_i end }
-    #the following columns look all the same, so we can can avoid repeating...
-    for col in additional_columns
-      totals[col] = ranking.inject(0){|acc, jasser| unless jasser[col].nil? then acc += jasser[col] else acc end
-      }
-    end
-    totals
-  end
-  
-  def parse_sort_params
-    if params[:order]
-      case params[:order]
-      when "spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris"
-        [params[:order], -1]
-      when "schnitt", "roesi", "huebimatch"
-        [params[:order], 1]
-      else
-        ["schnitt", 1]
-      end
-    else
-      ["schnitt", 1]
-    end
-  end
-
-  def parse_sort_params_versenker
-    if params[:order]
-      case params[:order]
-      when "versenkt", "versenkt_ps", "droesi", "droesi_ps", "roesi_quote", "spiele"
-        [params[:order], -1]
-      when "roesi", "roesi_ps"
-        [params[:order], 1]
-      else
-        ["versenkt_ps", -1]
-      end
-    else
-      ["versenkt_ps", -1]
-    end
-  end
   
   def permit_sort_key(suggested_key)
     if ["spiele", "differenz", "max", "droesi", "versenkt", "gematcht", "chimiris", "schnitt", "roesi", "huebimatch", "versenkt_pro_spiel", "roesi_pro_spiel", "droesi_pro_spiel", "roesi_quote"].include?(suggested_key) then
@@ -123,5 +71,28 @@ class RankingController < ApplicationController
       "schnitt"
     end
   end
+
+  
+  
+  def parse_day_param(param)
+    if param
+      begin
+        date = Date.parse(param)
+      rescue 
+        #Do nothing, we will use current date a few more lines down
+      end
+      begin 
+        date ||= Date.new(param.to_i)
+      rescue
+        #Do nothing, we will use current date a few more lines down
+      end
+    end
+    date ||= Date.today
+    unless date.gregorian?
+      date = Date.today
+    end
+    date
+  end
+  
 
 end

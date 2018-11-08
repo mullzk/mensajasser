@@ -18,24 +18,7 @@ module ApplicationHelper
   end
     
   
-  def n(decimals, number)
-    if number && number.to_f != 0
-      "%.#{decimals}f" % number
-    end    
-  end
-  
-  def d0(number)
-    if number && number.to_f > 0
-      "%i" % number
-    end
-  end
-  
-  def d2(number)
-    if number && number.to_f > 0
-      "%.2f" % number
-    end    
-  end
-  
+   
   def cyc_color_class
     raw "class=\"#{cyc_color}\""
   end
