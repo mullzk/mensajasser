@@ -2,12 +2,9 @@ class RankingController < ApplicationController
 
   def year
     @date = parse_day_param(params[:date])
-    sortkey, sortorder = parse_sort_params
-    @ranking = Jasser.all.map{|jasser| jasser.result_stats(:year => @date)}.select{|stat| stat[sortkey]}.sort{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
-
-    @rank = 0.0
-    @additional_columns = %w(roesi droesi versenkt gematcht huebimatch chimiris)
-    @totals = calculate_total(@ranking, @additional_columns)
+    sortkey = permit_sort_key(params[:order])
+    @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_year, @date.end_of_year, sortkey)
+    @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
   end
 
   def month
@@ -125,6 +122,14 @@ class RankingController < ApplicationController
       end
     else
       ["versenkt_ps", -1]
+    end
+  end
+  
+  def permit_sort_key(suggested_key)
+    if ["spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris", "schnitt", "roesi", "huebimatch", "versenkt_ps", "roesi_ps", "droesi_ps", "roesi_quote"].include?(suggested_key) then
+      suggested_key
+    else # if no permitted sortkey is provided, sort by schnitt
+      "schnitt"
     end
   end
 

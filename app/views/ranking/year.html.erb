@@ -13,30 +13,20 @@
 <table class="ranking">
 	<tr >
 		<th>Rang</th>
-		<th class="string <%= cyc_color%>">Jasser</th>
-		<th <%= cyc_color_class %>><%= link_to "Spiele", :id => @date.year, :order => "spiele" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Differenz", :id => @date.year, :order => "differenz" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Schnitt", :id => @date.year, :order => "schnitt" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Max", :id => @date.year, :order => "maximum" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Rösi", :id => @date.year, :order => "roesi" %></th>
-		<th <%= cyc_color_class %>><%= link_to "2xRösi", :id => @date.year, :order => "droesi" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Versenkt", :id => @date.year, :order => "versenkt" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Match", :id => @date.year, :order => "gematcht" %></th>
-		<th <%= cyc_color_class %>><%= link_to "H.Match", :id => @date.year, :order => "huebimatch" %></th>
-		<th <%= cyc_color_class %>><%= link_to "Dähler-Ris", :id => @date.year, :order => "chimiris" %></th>
+		<th class="string <%= cyc_color %>">Jasser</th>
+		<% @columns.each do |key, column_name| -%>
+		<th class="<%= cyc_color %>"><%= link_to column_name, :order => key %></th>
+		<% end -%>
 	</tr>
-	<% if @ranking.size > 0 -%>
-		<% for stat in @ranking -%>
+	
+	<% if @statistic_table.jasser_results.size > 0 -%>
+		<% @statistic_table.jasser_results.each do |jasser_result| -%>
 			<% reset_cycle("colors") -%>
-			<tr <% if @rank==0 || @rank==3 %>class="trennung_top"<% end %> >
-				<td><%= n 0, @rank +=1 %></td>
-				<td class="string <%= cyc_color%>"><%= stat["jasser"].name %></td>
-				<td <%= cyc_color_class %>><%= n 0, stat["spiele"] %></td>
-				<td <%= cyc_color_class %>><%= n 0, stat["differenz"] %></td>
-				<td <%= cyc_color_class %>><%= n 2, stat["schnitt"] %></td>
-				<td <%= cyc_color_class %>><%= n 0, stat["maximum"] %></td>
-				<% for col in @additional_columns -%>
-					<td <%= cyc_color_class %>><%= n 0, stat[col] %></td>
+			<tr <% if jasser_result.rank==1 || jasser_result.rank==4 %>class="trennung_top"<% end %> >
+				<td><%= jasser_result.rank %></td>
+				<td class="string <%= cyc_color%>"><%= jasser_result.jasser.name %></td>
+				<% @columns.each do |key, column_name| -%>
+					<td class="<%= cyc_color %>"><%= format_number(jasser_result.send(key))%></td>
 				<% end -%>
 			<tr>
 		<% end -%>
@@ -44,24 +34,16 @@
 			<% reset_cycle("colors") -%>
 			<td></td>
 			<td class="string <%= cyc_color%>">Total</td>
-			<td <%= cyc_color_class %>><%= @totals["spiele"] %></td>
-			<td <%= cyc_color_class %>><%= @totals["differenz"] %></td>
-			<td <%= cyc_color_class %>> </td>
-			<td <%= cyc_color_class %>><%= @totals["maximum"] %></td>
-			<% for col in @additional_columns -%>
-				<td <%= cyc_color_class %>><%= n 0, @totals[col] %></td>
+			<% @columns.each do |key, column_name| %>
+				<td class="<%= cyc_color %>"><%= format_number(@statistic_table.totals[key])%></td>
 			<% end -%>
 		</tr>
 		<tr>
-			<td></td>
+			<td></td> 
 			<% reset_cycle("colors") -%>
 			<td class="string <%= cyc_color%>">Schnitt</td>
-			<td <%= cyc_color_class %>><%= n 2, @totals["spiele"]/@rank %></td>
-			<td <%= cyc_color_class %>><%= n 2, @totals["differenz"]/@rank %></td>
-			<td <%= cyc_color_class %>><%= n 2, @totals["differenz"]/@totals["spiele"].to_f %></td>
-			<td <%= cyc_color_class %>> </td>
-			<% for col in @additional_columns -%>
-				<td <%= cyc_color_class %>><%= n 2, @totals[col]/@rank %></td>
+			<% @columns.each do |key, column_name| %>
+				<td class="<%= cyc_color %>"><%= format_number(@statistic_table.averages[key])%></td>
 			<% end -%>
 		</tr>
 	<% else %>

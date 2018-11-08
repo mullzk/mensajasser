@@ -1,5 +1,5 @@
 class StatisticTablePerJasser
-  attr_reader :jasser_results, :total, :average
+  attr_reader :jasser_results, :totals, :averages
   
   def initialize(from_date, to_date, sortkey)
     @from_date = from_date
@@ -16,8 +16,8 @@ class StatisticTablePerJasser
     
     sort_and_rank_jasser_results_for_key(sortkey)
 
-    @total = calculate_totals(@jasser_results)
-    @average = calculate_averages(@jasser_results)
+    @totals = calculate_totals(@jasser_results)
+    @averages = calculate_averages(@jasser_results, @totals)
     
   end
   
@@ -48,14 +48,39 @@ class StatisticTablePerJasser
   end
   
   def calculate_totals(jasser_results)
-    []
+    totals = {}
+    for col in [:spiele, :differenz, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :chimiris] do
+      totals[col] = jasser_results.inject(0) {|acc, single_result| acc+=single_result.send(col)}
+    end
+    totals[:max] = jasser_results.inject(0) {|acc, single_result| acc = [acc, single_result.max].max}
+    totals[:schnitt] = nil
+    for col in [:versenkt_pro_spiel, :roesi_pro_spiel, :droesi_pro_spiel, :roesi_quote] do
+      totals[col]=nil
+    end
+    totals
   end
-  def calculate_averages(jasser_results)
-    []
-  end
-
-
   
+  def calculate_averages(jasser_results, totals)
+    jassers = jasser_results.size.to_f
+    if jassers > 0 && totals[:spiele] && totals[:spiele] > 0 then
+      averages = {}
+      for col in [:spiele, :differenz, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :chimiris] do
+        averages[col] = totals[col]/jassers
+      end
+      averages[:max] = nil
+      spiele = totals[:spiele].to_f
+      averages[:schnitt] = totals[:differenz]/spiele
+      averages[:versenkt_pro_spiel]   = totals[:versenkt] / spiele
+      averages[:roesi_pro_spiel]      = totals[:roesi]    / spiele
+      averages[:droesi_pro_spiel]     = totals[:droesi]   / spiele
+      if totals[:roesi]>0 then
+        averages[:roesi_quote]        = totals[:droesi]   / totals[:roesi].to_f
+      end
+    end
+    averages
+  end
+
+
   def sort_order_for_key(sortkey)
     case sortkey
       when "spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris", "versenkt_ps", "droesi_ps", "roesi_quote"

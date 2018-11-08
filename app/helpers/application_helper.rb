@@ -7,6 +7,16 @@ module ApplicationHelper
     date.strftime("%B %Y")
   end
 
+  def format_number(number)
+    if number && number > 0
+      if number.class == Integer
+        "%i" % number
+      else
+        "%.2f" % number
+      end
+    end
+  end
+    
   
   def n(decimals, number)
     if number && number.to_f != 0

@@ -54,7 +54,7 @@ class ResultTest < ActiveSupport::TestCase
     
   test "Create Statistic-Table for Year 2017" do
     statistic_table = StatisticTablePerJasser.new(@d2017_start, @d2017_end, "schnitt")
-    assert(statistic_table.jasser_results && statistic_table.total && statistic_table.average)
+    assert(statistic_table.jasser_results && statistic_table.totals && statistic_table.averages)
     
     assert(statistic_table.jasser_results.size==5)
     result1 = statistic_table.jasser_results[0]
@@ -97,6 +97,21 @@ class ResultTest < ActiveSupport::TestCase
     assert(result2.chimiris==1)
     assert(result2.gematcht==1)
     assert(result2.huebimatch==1)
+    
+    totals = statistic_table.totals
+    assert(totals[:spiele]==120)
+    assert(totals[:differenz]==1620)
+    assert(totals[:max]==50)
+    assert(totals[:versenkt]==3)
+    assert_nil(totals[:schnitt])
+    
+    averages = statistic_table.averages
+    assert(averages[:spiele]==24)
+    assert(averages[:differenz]==324)
+    assert(averages[:schnitt]==13.5)
+    assert(averages[:versenkt]==3/5.to_f)
+    assert(averages[:versenkt_pro_spiel]==3/120.to_f, "Versenkt pro Spiel should be 0.025 but was #{averages[:versenkt_pro_spiel]}")
+    assert_nil(averages[:max])
     
   end
   
