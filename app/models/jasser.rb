@@ -69,7 +69,7 @@ class Jasser < ApplicationRecord
   end
   
   
-  def self.jassers_having_results_in_time_interval(from_date, to_date)
+  def self.having_results_in_time_interval(from_date, to_date)
     jasser_ids = Result.joins(:round)
                         .where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
                         .select("jasser_id")

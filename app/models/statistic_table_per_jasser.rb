@@ -14,11 +14,12 @@ class StatisticTablePerJasser
       unless statistic_for_jasser.jasser.disqualifiziert then @jasser_results << statistic_for_jasser end
     end
     
-    sort_and_rank_jasser_results_for_key(sortkey)
-
-    @totals = calculate_totals(@jasser_results)
-    @averages = calculate_averages(@jasser_results, @totals)
-    
+    if @jasser_results && @jasser_results.size > 0 then
+      sort_and_rank_jasser_results_for_key(@sortkey)
+      @totals = calculate_totals(@jasser_results)
+      @averages = calculate_averages(@jasser_results, @totals)
+    end
+      
   end
   
   
