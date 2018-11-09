@@ -12,38 +12,4 @@
 	
 	<% end %>
 </h1>
-<table class="ranking">
-	<tr >
-		<th>Rang</th>
-		<th class="string <%= cyc_color%>">Jasser</th>
-		<th <%=cyc_color_class %>><%= link_to "Spiele", :id => @date, :order => "spiele" %></th>
-		<th <%=cyc_color_class %>><%= link_to "Versenker", :id => @date, :order => "versenkt" %></th>
-		<th <%=cyc_color_class %>><%= link_to "Versenker p. Spiel", :id => @date, :order => "versenkt_ps" %></th>
-		<th <%=cyc_color_class %>><%= link_to "Rösi", :id => @date, :order => "roesi" %></th>
-		<th <%=cyc_color_class %>><%= link_to "Rösi p. Spiel", :id => @date, :order => "roesi_ps" %></th>
-		<th <%=cyc_color_class %>><%= link_to "2Rösi", :id => @date, :order => "droesi" %></th>
-		<th <%=cyc_color_class %>><%= link_to "2xRösi p. Spiel", :id => @date, :order => "droesi_ps" %></th>
-		<th <%=cyc_color_class %>><%= link_to "Rösi-Quote", :id => @date, :order => "roesi_quote" %></th>
-	</tr>
-	<% if @ranking.size > 0 -%>
-		<% for stat in @ranking -%>
-			<% reset_cycle("colors") -%>
-			<tr <% if @rank==0 || @rank==3 %>class="trennung_top"<% end %> >
-				<td><%= n 0, @rank +=1 %></td>
-				<td class="string <%= cyc_color%>"><%= stat["jasser"].name %></td>
-				<td <%=cyc_color_class %>><%= n 0, stat["spiele"] %></td>
-				<td <%=cyc_color_class %>><%= n 0, stat["versenkt"] %></td>
-				<td <%=cyc_color_class %>><%= n 3, stat["versenkt_ps"] %></td>
-				<td <%=cyc_color_class %>><%= n 0, stat["roesi"] %></td>
-				<td <%=cyc_color_class %>><%= n 2, stat["roesi_ps"] %></td>
-				<td <%=cyc_color_class %>><%= n 0, stat["droesi"] %></td>
-				<td <%=cyc_color_class %>><%= n 2, stat["droesi_ps"] %></td>
-				<td <%=cyc_color_class %>><%= n 2, stat["roesi_quote"] %></td>
-			<tr>
-		<% end -%>
-	<% else %>
-		<tr>
-			<td colspan=12 style="padding:15px;text-align:center;">In diesem Jahr wurde kein Spiel eingetragen</td>
-		</tr>
-	<% end -%>
-</table>
+<%= render 'user_ranking_table' %>

@@ -14,26 +14,6 @@ class ApplicationController < ActionController::Base
   end
     
   
-  def parse_day_param(param)
-    if param
-      begin
-        date = Date.parse(param)
-      rescue 
-        #Do nothing, we will use current date a few more lines down
-      end
-      begin 
-        date ||= Date.new(param.to_i)
-      rescue
-        #Do nothing, we will use current date a few more lines down
-      end
-    end
-    date ||= Date.today
-    unless date.gregorian?
-      date = Date.today
-    end
-    date
-  end
-  
   def authorize
     if (session[:user_id].nil? || User.find_by(id: session[:user_id].nil?) && User.count > 0)
       flash[:notice] = "Bitte einloggen"
