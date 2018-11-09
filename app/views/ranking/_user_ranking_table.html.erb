@@ -18,22 +18,26 @@
 				<% end -%>
 			<tr>
 		<% end -%>
-		<tr class="trennung_top">
-			<% reset_cycle("colors") -%>
-			<td></td>
-			<td class="string <%= cyc_color%>">Total</td>
-			<% @columns.each do |key, column_name| %>
-				<td class="<%= cyc_color %>"><%= format_number(@statistic_table.totals[key])%></td>
-			<% end -%>
-		</tr>
-		<tr>
-			<td></td> 
-			<% reset_cycle("colors") -%>
-			<td class="string <%= cyc_color%>">Schnitt</td>
-			<% @columns.each do |key, column_name| %>
-				<td class="<%= cyc_color %>"><%= format_number(@statistic_table.averages[key])%></td>
-			<% end -%>
-		</tr>
+		<% if @statistic_table.respond_to? :totals -%>
+			<tr class="trennung_top">
+				<% reset_cycle("colors") -%>
+				<td></td>
+				<td class="string <%= cyc_color%>">Total</td>
+				<% @columns.each do |key, column_name| %>
+					<td class="<%= cyc_color %>"><%= format_number(@statistic_table.totals.send(key))%></td>
+				<% end -%>
+			</tr>
+		<% end -%>
+		<% if @statistic_table.respond_to? :averages -%>
+			<tr>
+				<td></td> 
+				<% reset_cycle("colors") -%>
+				<td class="string <%= cyc_color%>">Schnitt</td>
+				<% @columns.each do |key, column_name| %>
+					<td class="<%= cyc_color %>"><%= format_number(@statistic_table.averages.send(key))%></td>
+				<% end -%>
+			</tr>
+		<% end -%>
 	<% else %>
 		<tr>
 			<td colspan=12 style="padding:15px;text-align:center;">In diesem Zeitraum wurde kein Spiel eingetragen</td>

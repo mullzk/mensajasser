@@ -49,7 +49,7 @@ class StatisticTablePerJasser
   end
   
   def calculate_totals(jasser_results)
-    totals = {}
+    totals = OpenStruct.new
     for col in [:spiele, :differenz, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :chimiris] do
       totals[col] = jasser_results.inject(0) {|acc, single_result| acc+=single_result.send(col)}
     end
@@ -64,7 +64,7 @@ class StatisticTablePerJasser
   def calculate_averages(jasser_results, totals)
     jassers = jasser_results.size.to_f
     if jassers > 0 && totals[:spiele] && totals[:spiele] > 0 then
-      averages = {}
+      averages = OpenStruct.new
       for col in [:spiele, :differenz, :roesi, :droesi, :versenkt, :gematcht, :huebimatch, :chimiris] do
         averages[col] = totals[col]/jassers
       end

@@ -1,6 +1,6 @@
 class BersekerStatisticTable
   attr_reader :jasser_results
-  
+   
   def initialize(from_date, to_date, sortkey)
     @from_date = from_date
     @to_date = to_date
@@ -28,17 +28,11 @@ class BersekerStatisticTable
     end
     
     @jasser_results = @jasser_stats.map do |key,value|
-      result = {}
-
-      result[:jasser] = value[:jasser]
-      result[:spiele] = value[:spiele]
-      result[:eigene_differenz] = value[:eigene_differenz]
-      result[:tisch_differenz]  = value[:tisch_differenz]
-      
-      result[:eigener_schnitt]  = result[:eigene_differenz]/result[:spiele].to_f
-      result[:tisch_schnitt]    = result[:tisch_differenz]/4.0/result[:spiele].to_f
-      result[:gegner_schnitt]   = (result[:tisch_differenz]-result[:eigene_differenz])/3.0/result[:spiele].to_f 
-      result[:schaedling_index] = result[:gegner_schnitt]/result[:eigener_schnitt]  
+      result = AggregatedBersekerResultsOfJasser.new
+      result.jasser = value[:jasser]
+      result.spiele = value[:spiele]
+      result.eigene_differenz = value[:eigene_differenz]
+      result.tisch_differenz  = value[:tisch_differenz]
       result
     end
       
@@ -55,16 +49,16 @@ class BersekerStatisticTable
   def sort_and_rank_jasser_results_for_key(sortkey)
     sortorder = sort_order_for_key(sortkey)
     
-    if @jasser_results && @jasser_results.size > 0 && @jasser_results[0][sortkey] then
-      results_with_sortkey = @jasser_results.select{|stat| stat[sortkey]}
-      results_without_sortkey = @jasser_results.reject {|stat| stat[sortkey]}
+    if @jasser_results && @jasser_results.size > 0 && @jasser_results[0].respond_to?(sortkey) then
+      results_with_sortkey = @jasser_results.select{|stat| stat.send(sortkey)}
+      results_without_sortkey = @jasser_results.reject {|stat| stat.send(sortkey)}
     
-      results_with_sortkey.sort!{|a,b| sortorder*(a[sortkey]<=>b[sortkey])}
+      results_with_sortkey.sort!{|a,b| sortorder*(a.send(sortkey)<=>b.send(sortkey))}
     
       @jasser_results = results_with_sortkey.concat results_without_sortkey
       rank = 1
       @jasser_results.each do |result| 
-        result[:rank] = rank
+        result.rank = rank
         rank += 1
       end
       @jasser_results
