@@ -4,7 +4,7 @@
 			<% if delta == 0 -%>
 				<%=@date.year %>
 			<% else -%>
-				<%= link_to @date.year + delta, :action => "year", :date => @date.year + delta %>
+				<%= link_to @date.year + delta, :action => "berseker", :date => @date.year + delta %>
 			<% end -%>
 		</span>
 	

@@ -52,6 +52,14 @@ class RankingControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get Berseker-Table" do
+    get url_for controller:"ranking", action:"berseker"
+    assert_response :success
+    get url_for controller:"ranking", action:"berseker", date:@d2017_jan_21
+    assert_response :success
+    get url_for controller:"ranking", action:"berseker", date:Date.new(1980,1,5)  # no rounds setup for 2016 or earlier
+    assert_response :success
+  end
 
 
 private 
