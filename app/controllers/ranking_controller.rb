@@ -38,9 +38,17 @@ class RankingController < ApplicationController
 
 
   def ewig
+    @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
     @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
     @statistic_table = StatisticTablePerJasser.new(Date.new(1980,1,1), Date.today, sortkey)
+  end
+
+  def berseker
+    sortkey = permit_sort_key_berseker(params[:order])
+    @date = parse_day_param(params[:date])
+    @columns = {spiele: "Spiele", eigener_schnitt: "Eigener Schnitt", gegner_schnitt: "Gegner Schnitt", schaedling_index: "Schaedling"}
+    @statistic_table = BersekerStatisticTable.new(@date.beginning_of_year, @date.end_of_year, sortkey)
   end
 
 
@@ -53,7 +61,7 @@ class RankingController < ApplicationController
     end
     
     @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
-    @statistic_table = StatisticTablePerJasser.new(@date, @date, "schnitt")
+    @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_year, @date.end_of_year, "schnitt")
         
     #Calcultating Rangverschiebung (big magic inside round.rb)
     @rangverschiebung = Round.calculate_rangeverschiebungs_table(@date)
@@ -88,6 +96,13 @@ class RankingController < ApplicationController
       suggested_key
     else # if no permitted sortkey is provided, sort by schnitt
       "schnitt"
+    end
+  end
+  def permit_sort_key_berseker(suggested_key)
+    if ["spiele", "eigener_schnitt", "gegner_schnitt", "schaedling_index"].include?(suggested_key) then
+      suggested_key.to_sym
+    else # if no permitted sortkey is provided, sort by schnitt
+      :schaedling_index
     end
   end
 

@@ -1,0 +1,35 @@
+<h1>Jasser des Jahres 
+	<% for delta in [-2, -1, 0, 1, 2]%>
+		<span class="headlinks" style="font-size:<%= 100/2**delta.abs %>%; padding:<%= 20-5*delta.abs%>px;">
+			<% if delta == 0 -%>
+				<%=@date.year %>
+			<% else -%>
+				<%= link_to @date.year + delta, :action => "year", :date => @date.year + delta %>
+			<% end -%>
+		</span>
+	
+	<% end %>
+</h1>
+<table class="ranking">
+	<tr >
+		<th>Rang</th>
+		<th class="string <%= cyc_color %>">Jasser</th>
+		<% @columns.each do |key, column_name| -%>
+		<th class="<%= cyc_color %>"><%= link_to column_name, :order => key %></th>
+		<% end -%>
+	</tr>
+	
+	<% if @statistic_table.jasser_results.size > 0 -%>
+		<% @statistic_table.jasser_results.each do |jasser_result| -%>
+			<% reset_cycle("colors") -%>
+			<tr <% if jasser_result[:rank]==1 || jasser_result[:rank]==4 %>class="trennung_top"<% end %> >
+				<td><%= jasser_result[:rank] %></td>
+				<td class="string <%= cyc_color%>"><%= jasser_result[:jasser].name %></td>
+				<% @columns.each do |key, column_name| -%>
+					<td class="<%= cyc_color %>"><%= format_number(jasser_result[key])%></td>
+				<% end -%>
+			<tr>
+		<% end -%>
+	<% end -%>
+		
+</table>

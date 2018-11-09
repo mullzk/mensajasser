@@ -116,6 +116,46 @@ class ResultTest < ActiveSupport::TestCase
   end
   
   
+  
+  test "Create Berseker-Stat" do 
+    statistic_table = BersekerStatisticTable.new(@d2017_start, @d2017_end, :schaedling_index)
+    assert(statistic_table && statistic_table.jasser_results)
+    assert(statistic_table.jasser_results.size==5)
+    jasser1_stat = statistic_table.jasser_results[0]
+    assert(jasser1_stat[:jasser])
+    assert(jasser1_stat[:jasser].id==@j1.id)
+    assert(jasser1_stat[:rank]==1)
+    assert(jasser1_stat[:spiele]==30)
+    assert(jasser1_stat[:eigener_schnitt]==10.0)
+    assert(jasser1_stat[:gegner_schnitt]==1320.0/3.0/30.0)
+    assert(jasser1_stat[:tisch_schnitt]==13.5)
+    assert(jasser1_stat[:schaedling_index]==1320.0/3.0/30.0/10.0)    
+
+    jasser2_stat = statistic_table.jasser_results[1]
+    assert(jasser2_stat[:jasser])
+    assert(jasser2_stat[:jasser].id==@j4.id)
+    assert(jasser2_stat[:rank]==2)
+    assert(jasser2_stat[:spiele]==20)
+    assert(jasser2_stat[:eigener_schnitt]==11.0)
+    assert(jasser2_stat[:gegner_schnitt]==14.0)
+    assert(jasser2_stat[:tisch_schnitt]==13.25)
+    assert(jasser2_stat[:schaedling_index]==14.0/11.0)    
+
+    jasser5_stat = statistic_table.jasser_results[4]
+    assert(jasser5_stat[:jasser])
+    assert(jasser5_stat[:jasser].id==@j2.id)
+    assert(jasser5_stat[:rank]==5)
+    assert(jasser5_stat[:spiele]==30)
+    assert(jasser5_stat[:eigener_schnitt]==20.0)
+    assert(jasser5_stat[:gegner_schnitt]==1020.0/3.0/30.0)
+    assert(jasser5_stat[:tisch_schnitt]==13.5)
+    assert(jasser5_stat[:schaedling_index]==1020.0/3.0/30.0/20.0)    
+    
+  end
+  
+  
+  
+  
   private
   
   def setup_jassers_rounds_and_results
@@ -143,11 +183,11 @@ class ResultTest < ActiveSupport::TestCase
     @d2018_mar_21   = Date.new(2018,3,21)
     
     
-    @j1 = FactoryBot.create(:jasser, name:"jasser1")
-    @j2 = FactoryBot.create(:jasser, name:"jasser2")
-    @j3 = FactoryBot.create(:jasser, name:"jasser3")
-    @j4 = FactoryBot.create(:jasser, name:"jasser4")
-    @j5 = FactoryBot.create(:jasser, name:"jasser5")
+    @j1 = FactoryBot.create(:jasser, name:"jasser1", disqualifiziert:false)
+    @j2 = FactoryBot.create(:jasser, name:"jasser2", disqualifiziert:false)
+    @j3 = FactoryBot.create(:jasser, name:"jasser3", disqualifiziert:false)
+    @j4 = FactoryBot.create(:jasser, name:"jasser4", disqualifiziert:false)
+    @j5 = FactoryBot.create(:jasser, name:"jasser5", disqualifiziert:false)
     @j6 = FactoryBot.create(:jasser, name:"jasser6")
     @j7 = FactoryBot.create(:jasser, name:"jasser7")
     @j8 = FactoryBot.create(:jasser, name:"jasser8")

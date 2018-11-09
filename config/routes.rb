@@ -20,6 +20,10 @@ get 'ranking/last_3_months/:date', controller: "ranking", action: "last_3_months
 get 'ranking/ewig' => "ranking#ewig"
 get 'ranking/day' => "ranking#day"
 get 'ranking/day/:date', controller: "ranking", action: "day"
+get 'ranking/berseker' => "ranking#berseker"
+get 'ranking/berseker/:date', controller: "ranking", action: "berseker"
+get 'ranking/schaedling' => "ranking#schaedling"
+get 'ranking/schaedling/:date', controller: "ranking", action: "schaedling"
 
 
 match 'login' => "users#login", via: [:get, :post], as: :login
