@@ -40,6 +40,7 @@ Planned Features for 2.0
 - Angstgegner-Statistik
 - Mobilefriendly layout
 - A better Round-Creating-Form, mobilefriendly
+- Encoding Email-Adresses
 And improved code where more is handled in an improved model. @done
 
 Planned Features for 3.0
