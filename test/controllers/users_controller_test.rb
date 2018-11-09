@@ -3,14 +3,8 @@ require 'test_helper'
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = FactoryBot.create(:user)
-    @admin = FactoryBot.create(:user)
-    @admin.username = "admin"
-    @admin.password = "password"
-    @admin.save
-    @empty_round_necessary_for_building_layout = FactoryBot.create(:round)
-    @empty_round_necessary_for_building_layout.day = Date.today
-    @empty_round_necessary_for_building_layout.save
-    
+    @admin = FactoryBot.create(:user, username: "admin", password: "password")
+    @latest_round_necessary_for_building_layout = FactoryBot.create(:round_with_date)     
     
   end
 

@@ -40,6 +40,7 @@ class Round < ApplicationRecord
     ## Set Up the Dates of the new round, the day before and the first day of the year (where the main statistik begins)
     unless date.respond_to?("strftime") then date = Date.parse(date) end
     previous_day = Round.where("day < ?", date).maximum("day")
+    if previous_day.nil? then return {} end # If there are no rounds older than the Date, a rangverschiebungstable doesn't make any sense
     beginning_of_period = previous_day.beginning_of_year
 
 

@@ -51,7 +51,7 @@ class RankingController < ApplicationController
       @date = Round.order(created_at: :desc).first.day
       @rounds = Round.where("day = ?", @date)
     end
-
+    
     @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
     @statistic_table = StatisticTablePerJasser.new(@date, @date, "schnitt")
         
