@@ -10,20 +10,20 @@ class BersekerStatisticTable
     
     @jasser_stats = {}
     @jasser.each do |jasser|
-      @jasser_stats[jasser] = {}
-      @jasser_stats[jasser][:jasser] = jasser
-      @jasser_stats[jasser][:spiele] = 0
-      @jasser_stats[jasser][:eigene_differenz] = 0
-      @jasser_stats[jasser][:tisch_differenz] = 0
+      @jasser_stats[jasser.id] = {}
+      @jasser_stats[jasser.id][:jasser] = jasser
+      @jasser_stats[jasser.id][:spiele] = 0
+      @jasser_stats[jasser.id][:eigene_differenz] = 0
+      @jasser_stats[jasser.id][:tisch_differenz] = 0
     end
 
     Round.in_date_range(from_date, to_date).each do |round| 
       tisch_differenz = round.results.inject(0) {|acc,result| acc+=result.differenz} 
       round.results.each do |result| 
         
-        @jasser_stats[result.jasser][:spiele] += result.spiele
-        @jasser_stats[result.jasser][:eigene_differenz] += result.differenz
-        @jasser_stats[result.jasser][:tisch_differenz] += tisch_differenz
+        @jasser_stats[result.jasser_id][:spiele] += result.spiele
+        @jasser_stats[result.jasser_id][:eigene_differenz] += result.differenz
+        @jasser_stats[result.jasser_id][:tisch_differenz] += tisch_differenz
       end
     end
     
