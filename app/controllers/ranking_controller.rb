@@ -60,9 +60,28 @@ class RankingController < ApplicationController
   end
 
 
-
-
   private
+  
+  def parse_day_param(param)
+    if param
+      begin
+        date = Date.parse(param)
+      rescue 
+        #Do nothing, we will use current date a few more lines down
+      end
+      begin 
+        date ||= Date.new(param.to_i)
+      rescue
+        #Do nothing, we will use current date a few more lines down
+      end
+    end
+    date ||= Date.today
+    unless date.gregorian?
+      date = Date.today
+    end
+    date
+  end
+  
   
   def permit_sort_key(suggested_key)
     if ["spiele", "differenz", "max", "droesi", "versenkt", "gematcht", "chimiris", "schnitt", "roesi", "huebimatch", "versenkt_pro_spiel", "roesi_pro_spiel", "droesi_pro_spiel", "roesi_quote"].include?(suggested_key) then

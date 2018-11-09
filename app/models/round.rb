@@ -43,59 +43,36 @@ class Round < ApplicationRecord
     beginning_of_period = previous_day.beginning_of_year
 
 
-    ## Fetch all Jassers who played in this Period. Fetch Rankings (as array) for the last and the previous day and order them by their Schnitt.
-    ## Pay attention do Jassers, which played for the first time and are not present in previous_days statistic
-    
-    jassers_new = Jasser.having_results_in_time_interval(beginning_of_period, date)
-    jassers_old = Jasser.having_results_in_time_interval(beginning_of_period, previous_day)
-    
-    new_ranking_table = jassers_new.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => date)}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
-    old_ranking_table = jassers_old.map{|jasser| jasser.result_stats(:from => beginning_of_period, :to => previous_day)}.delete_if{|stat| stat.blank?}.sort{|a,b| a["schnitt"] <=> b["schnitt"]}
-    
-    
-    ## The ugly part: Calculate the ranks in both tables. Convert the tables into hashes with the Jasser as Key
-    new_ranking_as_hash_with_rank = {}
-    rank = 1
-    new_ranking_table.each do |ranking_entry| 
-      ranking_entry["rank"]= rank
-      rank +=1
-      new_ranking_as_hash_with_rank[ranking_entry["jasser"]]=ranking_entry
-    end
-
-    old_ranking_as_hash_with_rank = {}
-    rank = 1
-    old_ranking_table.each do |ranking_entry| 
-      ranking_entry["rank"]= rank
-      rank+=1
-      old_ranking_as_hash_with_rank[ranking_entry["jasser"]]=ranking_entry
-    end
-
+    new_ranking_table = StatisticTablePerJasser.new(beginning_of_period, date, "schnitt").jasser_results
+    old_ranking_table = StatisticTablePerJasser.new(beginning_of_period, previous_day, "schnitt").jasser_results
     ## Consolidate both Ranking-Hashes into the Rangverschiebungs-Tabelle    
-    rangverschiebungs_tabelle = jassers_new.map do |jasser|
+    rangverschiebungs_tabelle = new_ranking_table.map do |new_jasser_result|
       jasser_verschiebung = {}
-      jasser_verschiebung[:jasser_name] = jasser[:name]
-      jasser_verschiebung[:rang_nachher] = new_ranking_as_hash_with_rank[jasser]["rank"]
-      jasser_verschiebung[:spiele_nachher] = new_ranking_as_hash_with_rank[jasser]["spiele"]
-      jasser_verschiebung[:differenz_nachher] = new_ranking_as_hash_with_rank[jasser]["differenz"]
-      jasser_verschiebung[:schnitt_nachher] = new_ranking_as_hash_with_rank[jasser]["schnitt"]
-
-      if old_ranking_as_hash_with_rank[jasser] then
-        jasser_verschiebung[:rang_vorher] = old_ranking_as_hash_with_rank[jasser]["rank"]
-        jasser_verschiebung[:spiele_vorher] = old_ranking_as_hash_with_rank[jasser]["spiele"]
-        jasser_verschiebung[:differenz_vorher] = old_ranking_as_hash_with_rank[jasser]["differenz"]
-        jasser_verschiebung[:schnitt_vorher] = old_ranking_as_hash_with_rank[jasser]["schnitt"]
-        jasser_verschiebung[:rang_sprung] = jasser_verschiebung[:rang_vorher]-jasser_verschiebung[:rang_nachher]
-        if jasser_verschiebung[:spiele_vorher] != jasser_verschiebung[:spiele_nachher] then
-          jasser_verschiebung[:sprung_am_gruenen_tisch] = ""
-        else
-          # Jasser did not play on last day, so he potentially changed his rank on the grünen Tisch
-          if jasser_verschiebung[:rang_sprung] > 0
-            jasser_verschiebung[:sprung_am_gruenen_tisch] = "(Feigling)"
-          elsif jasser_verschiebung[:rang_sprung] < 0
-            jasser_verschiebung[:sprung_am_gruenen_tisch] = "(Ätsch)"
-          else
+      jasser_verschiebung[:jasser_name] = new_jasser_result.jasser.name
+      jasser_verschiebung[:rang_nachher] = new_jasser_result.rank
+      jasser_verschiebung[:spiele_nachher] = new_jasser_result.spiele
+      jasser_verschiebung[:differenz_nachher] = new_jasser_result.differenz
+      jasser_verschiebung[:schnitt_nachher] = new_jasser_result.schnitt
+      
+      old_ranking_table.each do |old_jasser_result|
+        if old_jasser_result.jasser == new_jasser_result.jasser then
+          jasser_verschiebung[:rang_vorher] = old_jasser_result.rank
+          jasser_verschiebung[:spiele_vorher] = old_jasser_result.spiele
+          jasser_verschiebung[:differenz_vorher] = old_jasser_result.differenz
+          jasser_verschiebung[:schnitt_vorher] = old_jasser_result.schnitt
+          jasser_verschiebung[:rang_sprung] = jasser_verschiebung[:rang_vorher]-jasser_verschiebung[:rang_nachher]
+          if jasser_verschiebung[:spiele_vorher] != jasser_verschiebung[:spiele_nachher] then
             jasser_verschiebung[:sprung_am_gruenen_tisch] = ""
-          end
+          else
+            # Jasser did not play on last day, so he potentially changed his rank on the grünen Tisch
+            if jasser_verschiebung[:rang_sprung] > 0
+              jasser_verschiebung[:sprung_am_gruenen_tisch] = "(Feigling)"
+            elsif jasser_verschiebung[:rang_sprung] < 0
+              jasser_verschiebung[:sprung_am_gruenen_tisch] = "(Ätsch)"
+            else
+              jasser_verschiebung[:sprung_am_gruenen_tisch] = ""
+            end
+          end          
         end
       end
       jasser_verschiebung
