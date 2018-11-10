@@ -153,6 +153,20 @@ class ResultTest < ActiveSupport::TestCase
     
   end
   
+  test "Create Angstgegner-Stat" do
+    statistic_table = AngstgegnerTable.new(@j1, @d2018_mar_start, @d2018_mar_end, :schaedling_index)
+    assert(statistic_table && statistic_table.jasser_results)
+    assert(statistic_table.jasser_results.size==5)
+    jasser1_stat = statistic_table.jasser_results[0]
+    assert(jasser1_stat.jasser)
+    assert(jasser1_stat.jasser.id==@j7.id)
+    assert(jasser1_stat.rank==1)
+    assert(jasser1_stat.spiele==10)
+    assert(jasser1_stat.eigener_schnitt==13.0)
+    assert(jasser1_stat.gegner_schnitt==11.0)
+    assert(jasser1_stat.schaedling_index==13.0/11.0)    
+    
+  end
   
   
   
@@ -238,17 +252,17 @@ class ResultTest < ActiveSupport::TestCase
     FactoryBot.create(:result, round_id:@t7.id, jasser_id:@j1.id, spiele:10, differenz:100, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t7.id, jasser_id:@j2.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t7.id, jasser_id:@j3.id, spiele:10, differenz:120, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
-    FactoryBot.create(:result, round_id:@t7.id, jasser_id:@j4.id, spiele:10, differenz:130, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
+    FactoryBot.create(:result, round_id:@t7.id, jasser_id:@j4.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
 
-    FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j1.id, spiele:10, differenz:100, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
+    FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j1.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j2.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j3.id, spiele:10, differenz:120, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
-    FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j5.id, spiele:10, differenz:130, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
+    FactoryBot.create(:result, round_id:@t8.id, jasser_id:@j5.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
 
-    FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j1.id, spiele:10, differenz:100, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
+    FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j1.id, spiele:10, differenz:130, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j2.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
     FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j3.id, spiele:10, differenz:120, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
-    FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j7.id, spiele:10, differenz:130, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
+    FactoryBot.create(:result, round_id:@t9.id, jasser_id:@j7.id, spiele:10, differenz:110, max:20, roesi:0, droesi:0 , versenkt:0, gematcht:0, huebimatch:0, chimiris:0)
 
   end
   

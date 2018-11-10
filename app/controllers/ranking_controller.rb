@@ -61,10 +61,20 @@ class RankingController < ApplicationController
     end
     
     @columns = {spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi", droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris"}
-    @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_year, @date.end_of_year, "schnitt")
-        
-    #Calcultating Rangverschiebung (big magic inside round.rb)
+    @statistic_table = StatisticTablePerJasser.new(@date, @date, "schnitt")
     @rangverschiebung = Round.calculate_rangeverschiebungs_table(@date)
+  end
+
+  def angstgegner 
+    sortkey = permit_sort_key_berseker(params[:order])
+    @date = parse_day_param(params[:date])
+    begin
+      @jasser = Jasser.find(params[:id])
+    rescue
+      redirect_to "ranking#year", notice: "User for id #{params[:id]} could not be found" and return
+    end
+    @columns = {spiele: "Spiele", eigener_schnitt: "Eigener Schnitt", gegner_schnitt: "Gegner Schnitt", schaedling_index: "Schaedling"}
+    @statistic_table = AngstgegnerTable.new(@jasser, @date -1.year, @date, sortkey)
   end
 
 

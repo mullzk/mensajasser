@@ -60,6 +60,14 @@ class RankingControllerTest < ActionDispatch::IntegrationTest
     get url_for controller:"ranking", action:"berseker", date:Date.new(1980,1,5)  # no rounds setup for 2016 or earlier
     assert_response :success
   end
+  
+  test "should get Angstgegner-Table" do
+    get url_for controller:"ranking", action:"angstgegner", id:@j1.id
+    assert_response :success
+    get url_for controller:"ranking", action:"angstgegner", id:"keineid"
+    assert_redirected_to "ranking#year"
+  end
+    
 
 
 private 
