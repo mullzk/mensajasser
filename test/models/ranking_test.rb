@@ -165,6 +165,25 @@ class ResultTest < ActiveSupport::TestCase
     assert(jasser1_stat.eigener_schnitt==13.0)
     assert(jasser1_stat.gegner_schnitt==11.0)
     assert(jasser1_stat.schaedling_index==13.0/11.0)    
+
+    jasser2_stat = statistic_table.jasser_results[1]
+    assert(jasser2_stat.jasser)
+    assert(jasser2_stat.jasser.id==@j2.id)
+    assert(jasser2_stat.rank==2)
+    assert(jasser2_stat.spiele==30)
+    assert(jasser2_stat.eigener_schnitt==340.0/30)
+    assert(jasser2_stat.gegner_schnitt==11.0)
+    assert(jasser2_stat.schaedling_index==340.0/30.0/11.0)    
+    
+    jasser3_stat = statistic_table.jasser_results[4]
+    assert(jasser3_stat.jasser)
+    assert(jasser3_stat.jasser.id==@j4.id)
+    assert(jasser3_stat.rank==5)
+    assert(jasser3_stat.spiele==10)
+    assert(jasser3_stat.eigener_schnitt==10.0)
+    assert(jasser3_stat.gegner_schnitt==11.0)
+    assert(jasser3_stat.schaedling_index==10.0/11.0)    
+    
     
   end
   
