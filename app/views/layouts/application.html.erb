@@ -43,6 +43,8 @@
 				<br />
 				<li><%= link_to "Versenker + Rösis", :controller => "ranking", :action => "versenker_und_roesis"%></li>
 				<li><%= link_to "Berseker + Schädling", :controller => "ranking", :action => "berseker"%></li>
+				<li><%= collection_select(:angstgegner, :id, Jasser.where("active=true").order("name"), :id, :name, {prompt: 'Angstgegner'})%></li>
+				<br />
 				<li><%= link_to "Ewige Rangliste", :controller => "ranking", :action => "ewig" %></li>
 				<br />
 				<li><%= link_to "Tableaus", :controller => "rounds", :action => "index" %></li>
