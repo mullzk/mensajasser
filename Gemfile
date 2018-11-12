@@ -42,7 +42,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Gems for this project, added by mullzk
 gem 'will_paginate', '~> 3.1.0', git:'https://github.com/mislav/will_paginate.git'
-gem 'jquery-rails'
 group :development do
   gem 'annotate'
 end

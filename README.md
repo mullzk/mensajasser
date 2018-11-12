@@ -36,10 +36,10 @@ v1.1  (2018, this version): Build as a new project on current, stable versions o
 Planned Features for 2.0
 - Favicon @done
 - Berseker- and Schädling-Statistiken @done
-- per-jasser-Statistik
-- Angstgegner-Statistik
+- Angstgegner-Statistik @done
 - Mobilefriendly layout
 - A better Round-Creating-Form, mobilefriendly
+- per-jasser-Statistik
 - Encoding Email-Adresses
 And improved code where more is handled in an improved model. @done
 

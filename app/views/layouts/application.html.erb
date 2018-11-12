@@ -32,6 +32,8 @@
 				<% unless session[:user_id].nil? -%>
 					<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :class => "decent"%>
 				<% end -%>
+				<script>
+				</script>
 			</p>
 		</div>
 		<div id="side">
@@ -43,7 +45,7 @@
 				<br />
 				<li><%= link_to "Versenker + Rösis", :controller => "ranking", :action => "versenker_und_roesis"%></li>
 				<li><%= link_to "Berseker + Schädling", :controller => "ranking", :action => "berseker"%></li>
-				<li><%= collection_select(:angstgegner, :id, Jasser.where("active=true").order("name"), :id, :name, {prompt: 'Angstgegner'})%></li>
+				<li><%= collection_select(:angstgegner, :id, Jasser.where("active=true").order("name"), :id, :name, {prompt: 'Angstgegner'}, {'data-js-open-path-with-value-as-id' =>"/ranking/angstgegner/"})%></li>
 				<br />
 				<li><%= link_to "Ewige Rangliste", :controller => "ranking", :action => "ewig" %></li>
 				<br />
