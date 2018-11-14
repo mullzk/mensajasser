@@ -37,7 +37,7 @@ Planned Features for 2.0
 - Favicon @done
 - Berseker- and Schädling-Statistiken @done
 - Angstgegner-Statistik @done
-- Mobilefriendly layout
+- Mobilefriendly layout @done
 - A better Round-Creating-Form, mobilefriendly
 - per-jasser-Statistik
 - Encoding Email-Adresses
