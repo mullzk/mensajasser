@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   
   def initialize
     @last_entered_round = Round.order(created_at: :desc).first
+    @all_active_jassers_email = Jasser.where(:active => true).map{|jasser| jasser.email}
     super
   end
     

@@ -27,9 +27,7 @@
 				<%= yield %>
 				<p style="margin-top:20px">
 					Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :date => @last_entered_round.day}, {:class => "decent"} %>
-					<% unless session[:user_id].nil? -%>
-						<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :class => "decent"%>
-					<% end -%>
+						<br /><%= encrypted_mailto_link_for_adresses(@all_active_jassers_email).html_safe %>
 				</p>
 			</div>
 			<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
