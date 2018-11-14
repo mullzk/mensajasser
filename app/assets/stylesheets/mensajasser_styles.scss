@@ -21,7 +21,7 @@ h1 {  font-size:1em; }
 .headlinks-hierarchy-0 { font-weight:bold; }
 .headlinks-hierarchy-1 { padding:10px; font-size:60%; }
 .headlinks-hierarchy-2 { display:none; }
-@media (min-width: 576px)  {
+@include media-breakpoint-up(md) {
   h1 {  font-size:2em;  }
   .headlinks-hierarchy-0 {	padding:20px; font-weight:normal;}
   .headlinks-hierarchy-1 {	padding:15px; font-size:60%; }
