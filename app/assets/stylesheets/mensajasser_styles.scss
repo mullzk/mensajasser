@@ -1,0 +1,73 @@
+
+/* Links in Heading, on Table-Headings and non-prominent-Links like the Last-Round-Link on the bottom  */
+.headlinks a, a.decent, table.ranking a {
+	color:black;
+	text-decoration:none;
+}
+span.headlinks a:before, a.decent:before, table.ranking th a:before {
+	content: ">"; 
+}
+
+
+
+
+/*	Headings above Ranking-Tables
+	On Small Devices, h1 should not be all that big, as the focus should be on the table. 
+	Therefor we reduce the font-size, the padding between the YearXY-Links and we show 
+	only the previous and the next period (hiding the hierarchy 2).
+	On bigger devices, we provide more links to periods and differentiate them by font-size
+*/
+h1 {  font-size:1em; }
+.headlinks-hierarchy-0 { font-weight:bold; }
+.headlinks-hierarchy-1 { padding:10px; font-size:60%; }
+.headlinks-hierarchy-2 { display:none; }
+@media (min-width: 576px)  {
+  h1 {  font-size:2em;  }
+  .headlinks-hierarchy-0 {	padding:20px; font-weight:normal;}
+  .headlinks-hierarchy-1 {	padding:15px; font-size:60%; }
+  .headlinks-hierarchy-2 {  padding:10px; font-size:40%; display:inline;}
+}
+
+
+
+
+/* Rails flash[:notice]*/
+#notice {
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+  font: bold smaller sans-serif;
+}
+
+
+
+table.ranking {
+	td, th { text-align:right; }
+	td.string, th.string { text-align:left; }	
+	
+	tr {
+		border-top:solid gray 1px; 
+		border-bottom:solid gray 1px; 
+	}
+	tr.trennung_top { border-top:solid black 2px; }
+}
+
+/* Color-Definitions used for cycling of Row-Background in Ranking-Tables */
+.color_silver {
+	background-color:silver;
+}
+.color_blue {
+	background-color: rgb(165, 148, 247);
+}
+.color_green {
+	background-color: rgb(125, 209, 137);
+}
+.color_yellow {
+	background-color: rgb(219, 233, 140);
+}
+.color_red {
+	background-color: rgb(214, 69, 43);
+}
+
+

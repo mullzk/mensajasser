@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mensajasser: <%= @page_title || "#{controller.controller_name} - #{controller.action_name}" %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152.png" />
+	<meta name="application-name" content="Mensajasser">
+	<meta name="msapplication-TileColor" content="#F4C143">
+	<meta name="msapplication-TileImage" content="/mstile-144.png">
+	<meta name="msapplication-config" content="/ieconfig.xml">
+	<meta name="viewport" content="width=device-width, initial-scale=0.75" />
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+<body id="jasser-app">
+	<div class="container-fluid">
+		<div class="row" style="padding-top:4em;">
+			<div class="col-md-12">
+				<% if flash[:notice] -%>
+					<div id="notice">
+						<%= flash[:notice] %>
+					</div>
+				<% end -%>
+				<%= yield %>
+				<p style="margin-top:20px">
+					Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :date => @last_entered_round.day}, {:class => "decent"} %>
+					<% unless session[:user_id].nil? -%>
+						<br /><%= mail_to Jasser.where(:active => true).map{|jasser| jasser.email}.join(", ") , "Mail an alle Jasser", :class => "decent"%>
+					<% end -%>
+				</p>
+			</div>
+			<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+				<a class="navbar-brand" href="#">Die Mensajasser</a>
+  				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto" >
+						 <li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:12em;">Ranglisten</a>
+							 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+								 <%= link_to "Haupt-Rangliste", {:controller => "ranking", :action => "year"}, :class => "nav-link" %>
+								 <%= link_to "Monats-Rangliste", {:controller => "ranking", :action => "month"}, :class => "nav-link" %>
+								 <%= link_to "12-Monats-Ranking", {:controller => "ranking", :action => "last_12_months"}, :class => "nav-link" %>
+								 <%= link_to "Quartals-Ranking", {:controller => "ranking", :action => "last_3_months"}, :class => "nav-link" %>
+								 <div class="dropdown-divider"></div>
+								 <%= link_to "Versenker + Rösis", {:controller => "ranking", :action => "versenker_und_roesis"}, :class => "nav-link"%>
+								 <%= link_to "Berseker + Schädling", {:controller => "ranking", :action => "berseker"}, :class => "nav-link"%>
+								 <%= collection_select(:angstgegner, :id, Jasser.where("active=true").order("name"), :id, :name, {prompt: 'Angstgegner'}, {'data-js-open-path-with-value-as-id' =>"/ranking/angstgegner/", :class => "nav-link"})%>
+								 <div class="dropdown-divider"></div>
+								 <%= link_to "Ewige Rangliste", {:controller => "ranking", :action => "ewig"}, :class => "nav-link" %>
+							 </div>
+						 </li>
+						 
+						 <li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+							 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+
+								 <%= link_to "Tableaus", {:controller => "rounds", :action => "index"}, :class => "nav-link" %>
+								 <% if session[:user_id].nil? %>
+								 	<%= link_to "Login", {:controller => "users", :action => "login"}, :class => "nav-link" %>
+								<% else %>
+									<%= link_to "Neues Tableau", {:controller => "rounds", :action => "new"} , :class => "nav-link"%>					
+									<%= link_to "Jasser verwalten", {:controller => "jassers", :action => "index"}, :class => "nav-link" %>
+									<%= link_to "User verwalten", {:controller => "users", :action => "index"}, :class => "nav-link" %>
+									<%= link_to "Passwort ändern", {:controller => "users", :action => "change_own_password"}, :class => "nav-link" %>
+									<%= link_to "Logout", {:controller => "users", :action => "logout"}, :class => "nav-link" %>
+								<% end%>
+							 </div>
+						 </li>
+				</ul>
+			
+			
+			</nav>
+		</div>
+	</div>
+</body>
+</html>

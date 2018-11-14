@@ -2,7 +2,7 @@
 	<% for delta in [-2, -1, 0, 1, 2]
 		next_year = @date + delta.years
 	%>
-		<span class="headlinks" style="font-size:<%= 100/2**delta.abs %>%; padding:<%= 20-5*delta.abs%>px;">
+		<span class="headlinks headlinks-hierarchy-<%=delta.abs%>">
 			<% if delta == 0 -%>
 				<%= next_year.strftime("%Y") %>
 			<% else -%>
