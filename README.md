@@ -39,8 +39,8 @@ Planned Features for 2.0
 - Angstgegner-Statistik @done
 - Mobilefriendly layout @done
 - A better Round-Creating-Form, mobilefriendly
-- per-jasser-Statistik
-- Encoding Email-Adresses
+- per-jasser-Statistik @postponed 
+- Encoding Email-Adresses @done
 And improved code where more is handled in an improved model. @done
 
 Planned Features for 3.0
