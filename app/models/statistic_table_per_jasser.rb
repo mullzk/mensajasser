@@ -84,7 +84,7 @@ class StatisticTablePerJasser
 
   def sort_order_for_key(sortkey)
     case sortkey
-      when "spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris", "versenkt_ps", "droesi_ps", "roesi_quote"
+      when "spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris", "versenkt_pro_spiel", "droesi_pro_spiel", "roesi_quote"
         -1 #ascending
       when "schnitt", "roesi", "roesi_ps", "huebimatch"
         1 #descending
