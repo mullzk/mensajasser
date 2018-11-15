@@ -38,18 +38,31 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto" >
 						 <li class="nav-item dropdown">
-							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:12em;">Ranglisten</a>
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:12em;">Haupt-Ranglisten</a>
 							 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
 								 <%= link_to "Haupt-Rangliste", {:controller => "ranking", :action => "year"}, :class => "nav-link" %>
 								 <%= link_to "Monats-Rangliste", {:controller => "ranking", :action => "month"}, :class => "nav-link" %>
 								 <%= link_to "12-Monats-Ranking", {:controller => "ranking", :action => "last_12_months"}, :class => "nav-link" %>
 								 <%= link_to "Quartals-Ranking", {:controller => "ranking", :action => "last_3_months"}, :class => "nav-link" %>
 								 <div class="dropdown-divider"></div>
+								 <%= link_to "Ewige Rangliste", {:controller => "ranking", :action => "ewig"}, :class => "nav-link" %>
+							 </div>
+						 </li>
+						 <li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:12em;">Spezial-Listen</a>
+							 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">	 
 								 <%= link_to "Versenker + Rösis", {:controller => "ranking", :action => "versenker_und_roesis"}, :class => "nav-link"%>
 								 <%= link_to "Berseker + Schädling", {:controller => "ranking", :action => "berseker"}, :class => "nav-link"%>
-								 <%= collection_select(:angstgegner, :id, Jasser.where("active=true").order("name"), :id, :name, {prompt: 'Angstgegner'}, {'data-js-open-path-with-value-as-id' =>"/ranking/angstgegner/", :class => "nav-link"})%>
-								 <div class="dropdown-divider"></div>
-								 <%= link_to "Ewige Rangliste", {:controller => "ranking", :action => "ewig"}, :class => "nav-link" %>
+								 
+								 
+								 <div class="dropdown-submenu" data-js-toggle-submenu>
+								 	<a class="nav-link" toggle-link tabindex="-1" href="#">Angstgegner <span class="caret"></span></a>
+								    <div class="dropdown-menu bg-dark" toggle-view>
+										<% Jasser.where("active=true").order("name").each do |jasser| -%>
+											<%= link_to jasser.name, {:controller => "ranking", :action => "angstgegner", :id => jasser.id}, :class => "nav-link" %>
+										<% end -%>
+									</div>
+								</div>
 							 </div>
 						 </li>
 						 

@@ -8,8 +8,23 @@ span.headlinks a:before, a.decent:before, table.ranking th a:before {
 	content: ">"; 
 }
 
-
-
+.dropdown-submenu {
+    position: relative;
+	
+	.dropdown-menu {
+	    top: 0;
+	    left: 100%;
+	    margin-top: -1px;
+		max-height:7em;
+		overflow:scroll;
+		a.nav-link {
+			margin-left:3em;
+			padding-top:0.25em;
+			padding-bottom:0.25em;
+			margin:0;
+		}
+	}
+}
 
 /*	Headings above Ranking-Tables
 	On Small Devices, h1 should not be all that big, as the focus should be on the table. 
