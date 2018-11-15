@@ -7,5 +7,8 @@
 
 
 
-document.addEventListener "turbolinks:load", (event) ->
-	document.querySelector("[data-js-open-path-with-value-as-id]").addEventListener "change", (e) -> open_path_with_value_as_id e
+# The EventListener is used for <selects> which choose a jasser for tables such as angstgegner. As we now use dropdowns, 
+# we do not use this function anymore
+#
+# document.addEventListener "turbolinks:load", (event) ->
+#	document.querySelector("[data-js-open-path-with-value-as-id]").addEventListener "change", (e) -> open_path_with_value_as_id e

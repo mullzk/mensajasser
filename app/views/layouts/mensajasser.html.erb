@@ -55,8 +55,8 @@
 								 <%= link_to "Berseker + Schädling", {:controller => "ranking", :action => "berseker"}, :class => "nav-link"%>
 								 
 								 
-								 <div class="dropdown-submenu" data-js-toggle-submenu>
-								 	<a class="nav-link text-light" toggle-link tabindex="-1" href="#">Angstgegner <span class="caret"></span></a>
+								 <div class="dropdown-submenu dropright" data-js-toggle-submenu>
+								 	<a class="nav-link text-light dropdown-toggle" toggle-link tabindex="-1" href="#" >Angstgegner</a>
 								    <div class="dropdown-menu bg-dark" toggle-view>
 										<% Jasser.where("active=true").order("name").each do |jasser| -%>
 											<%= link_to jasser.name, {:controller => "ranking", :action => "angstgegner", :id => jasser.id}, :class => "nav-link" %>

@@ -1,9 +1,10 @@
 @toggle_navigation_submenu = (event) ->
-	submenu = document.querySelector("[data-js-toggle-submenu] [toggle-view]")
-	if submenu.style.display!="block"
-		submenu.style.display = "block"
-	else
-		submenu.style.display = "none"
+	submenu = event.target.nextElementSibling
+	if submenu.hasAttribute("toggle-view") 
+		if submenu.style.display!="block"
+			submenu.style.display = "block"
+		else
+			submenu.style.display = "none"
 	event.preventDefault()
 	event.stopPropagation()
 
