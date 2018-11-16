@@ -27,28 +27,47 @@
 		<th>Jasser</th>
 		<th>Spiele</th>
 		<th>Diff</th>
-		<th>Max</th>
-		<th>Roesi</th>
-		<th>2xRoesi</th>
-		<th>Versenkt</th>
-		<th>Match</th>
-		<th>H.Match</th>
-		<th>Dählerris</th>
 	</tr>
-	<%= form.fields :results do |result_form| %>
+	<%= form.fields :results, :builder => MyFormBuilder do |result_form| %>
    	 	<tr>
 			<td><%= result_form.collection_select(:jasser_id , @jassers, :id, :name, {}, {"data-js-jasser-selector-to-fields" => result_form.index}) %></td>
         	<td><%= result_form.text_field :spiele, :type => "number", "data-js-copy-anzahl-spiele-to-all-results" => "" %></td>
         	<td><%= result_form.text_field :differenz, :type => "number" %></td>
+			
+		</tr>
+    <% end %>
+	<tr>
+		<th>Jasser</th>
+		<th>Max</th>
+		<th>Roesi</th>
+		<th>2xRoesi</th>
+		<th>Versenkt</th>
+	</tr>
+	<%= form.fields :results do |result_form| %>
+   	 	<tr>
+			<td data-js-jasser-name=<%= result_form.index %>></td>
         	<td><%= result_form.text_field :max, :size => 1, :width => "2em", :type => "number" %></td>
         	<td><%= result_form.text_field :roesi, :type => "number" %></td>
         	<td><%= result_form.text_field :droesi, :type => "number" %></td>
         	<td><%= result_form.text_field :versenkt, :type => "number" %></td>
-        	<td><%= result_form.text_field :gematcht, :type => "number" %></td>
-        	<td><%= result_form.text_field :huebimatch, :type => "number", :onFocus => "" %></td>
-        	<td><%= result_form.text_field :chimiris, :type => "number", :onFocus => "this.select()" %></td>			
 		</tr>
     <% end %>
+
+	<tr>
+		<th>Jasser</th>
+		<th>Match</th>
+		<th>H.Match</th>
+		<th>Dählerris</th>
+	</tr>
+	<%= form.fields :results, :builder => MyFormBuilder do |result_form| %>
+   	 	<tr>
+			<td data-js-jasser-name=<%= result_form.index %>></td>
+        	<td><%= result_form.text_field :gematcht, :type => "number" %></td>
+        	<td><%= result_form.text_field :huebimatch, :type => "number", :onFocus => "" %></td>
+        	<td><%= result_form.text_field :chimiris, :type => "number", :onFocus => "this.select()" %></td>
+		</tr>
+    <% end %>
+
 </table>
 
 
