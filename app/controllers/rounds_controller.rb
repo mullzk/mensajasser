@@ -31,7 +31,7 @@ class RoundsController < ApplicationController
     @round = Round.new(round_params)
     @jassers = Jasser.where(active: true).sort {|a,b| a.name <=> b.name}
     if @round.save
-      redirect_to @round, notice: 'Round was successfully created.'
+      redirect_to controller:"ranking", action:"day", date:@round.day
     else
       render :new
     end

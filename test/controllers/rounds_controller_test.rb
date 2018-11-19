@@ -23,11 +23,12 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create round" do
     login_as_admin
+
     assert_difference('Round.count') do
       post rounds_url, params: { round: {  } }
     end
 
-    assert_redirected_to round_url(Round.last)
+    assert_redirected_to controller:"ranking", action:"day"
   end
 
   test "should show round" do
