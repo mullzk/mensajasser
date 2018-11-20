@@ -33,7 +33,9 @@ class Round < ApplicationRecord
     unless (jasser_names.uniq.size == jasser_names.size) then errors.add(:base, "Ein Jasser darf nur einmal im Tableau vertreten sein...") end
   end
 
-
+  def self.day_of_first_round_in_system
+    Round.order(:day).first.day
+  end
 	
 	def self.calculate_rangeverschiebungs_table(date)
 
