@@ -67,13 +67,12 @@ class Jasser < ApplicationRecord
   def timeseries_for_period(from_date, to_date, clearing_period=nil)
     schnitt_for_dates = {}
     spiele_and_differenz = rounds_spiele_and_differenz(from_date, to_date)
-    accumulator = {spiele:0, differenz:0, runden:0}
+    accumulator = {spiele:0, differenz:0}
 
     (from_date..to_date).each do |date|
       if clearing_period && spiele_and_differenz[date+clearing_period]
         accumulator[:spiele] -= spiele_and_differenz[date+clearing_period][:spiele]
         accumulator[:differenz] -= spiele_and_differenz[date+clearing_period][:differenz]
-        accumulator[:runden] -= 1
         if accumulator[:spiele] > 0
           schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
         end
@@ -81,14 +80,14 @@ class Jasser < ApplicationRecord
       if spiele_and_differenz[date]
         accumulator[:spiele] += spiele_and_differenz[date][:spiele]
         accumulator[:differenz] += spiele_and_differenz[date][:differenz]
-        accumulator[:runden] += 1
         if accumulator[:spiele] > 0
           schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
         end
       end
     end
-
-    schnitt_for_dates[to_date] = accumulator[:differenz]/accumulator[:spiele].to_f
+    if accumulator[:spiele] > 0 then
+      schnitt_for_dates[to_date] = accumulator[:differenz]/accumulator[:spiele].to_f
+    end
     schnitt_for_dates
     
   end

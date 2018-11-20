@@ -199,14 +199,14 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(t_year_j1[@d2018_mar_20],600/50.0)
     assert_equal(t_year_j1[@d2018_mar_21],840/70.0)
 
-    assert_equal(t_run_j1[@d2018_jan_19],10.0)
+    assert_nil(t_year_j1[@d2018_jan_19])
     assert_equal(t_run_j1[@d2018_jan_20],10.0)
     assert_equal(t_run_j1[@d2018_jan_21],12.5)
     assert_equal(t_run_j1[@d2018_jan_22],12.5)
     assert_equal(t_run_j1[@d2018_mar_20],12.0)
     assert_equal(t_run_j1[@d2018_mar_21],12.0)
     
-    assert_equal(t_ewig_j1[@d2018_jan_19],10.0)
+    assert_nil(t_year_j1[@d2018_jan_19])
     assert_equal(t_ewig_j1[@d2018_jan_20],10.0)
     assert_equal(t_ewig_j1[@d2018_jan_21],700/60.0)
     assert_equal(t_ewig_j1[@d2018_jan_22],800/70.0)
@@ -220,13 +220,9 @@ class ResultTest < ActiveSupport::TestCase
     t_run_j8  = @j8.timeseries_running
     t_ewig_j8 = @j8.timeseries_ewig
     
-    empty_this_year = {}
-    (@d2018_mar_21.beginning_of_year..@d2018_mar_21).each {|date| empty_this_year[date]=nil}
-    assert_equal(empty_this_year, t_year_j8)
-    empty_all_rounds = {}
-    (@d2017_jan_20..Date.today).each {|date| empty_all_rounds[date]=nil}
-    assert_equal(empty_all_rounds, t_run_j8)
-    assert_equal(empty_all_rounds, t_ewig_j8)
+    assert_equal(t_year_j8, {})
+    assert_equal(t_run_j8, {})
+    assert_equal(t_ewig_j8, {})
   end
   
   
