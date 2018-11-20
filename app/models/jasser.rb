@@ -38,9 +38,9 @@ class Jasser < ApplicationRecord
       if spiele_and_differenz[result.day]
         spiele = result.spiele + spiele_and_differenz[result.day][:spiele]
         differenz = result.differenz + spiele_and_differenz[result.day][:differenz]
-        spiele_and_differenz[result.day] = {day:result.day, spiele:spiele, differenz:differenz}
+        spiele_and_differenz[result.day] = {day:result.day, spiele:spiele, differenz:differenz, schnitt:(differenz/spiele)}
       else
-        spiele_and_differenz[result.day] = {day:result.day, spiele:result.spiele, differenz:result.differenz}
+        spiele_and_differenz[result.day] = {day:result.day, spiele:result.spiele, differenz:result.differenz, schnitt:(result.differenz/result.spiele)}
       end
     }
     spiele_and_differenz        
@@ -52,28 +52,7 @@ class Jasser < ApplicationRecord
   
   
   def timeseries_running
-    from_date = Round.day_of_first_round_in_system
-    to_date = Date.today
-    schnitt_for_dates = {}
-  
-    spiele_and_differenz = rounds_spiele_and_differenz(from_date, to_date)
-    accumulator = {spiele:0, differenz:0}
-    (from_date..to_date).each do |date|
-      if spiele_and_differenz[date]
-        accumulator[:spiele] += spiele_and_differenz[date][:spiele]
-        accumulator[:differenz] += spiele_and_differenz[date][:differenz]
-      end
-      if spiele_and_differenz[date-1.year]
-        accumulator[:spiele] -= spiele_and_differenz[date-1.year][:spiele]
-        accumulator[:differenz] -= spiele_and_differenz[date-1.year][:differenz]
-      end
-      if accumulator[:spiele] > 0
-        schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
-      else
-        schnitt_for_dates[date] = nil
-      end
-    end
-    schnitt_for_dates
+    timeseries_for_period(Round.day_of_first_round_in_system, Date.today, -365.days)    
   end
 
   
@@ -85,21 +64,31 @@ class Jasser < ApplicationRecord
     timeseries_for_period(Round.day_of_first_round_in_system, Date.today)    
   end
 
-  def timeseries_for_period(from_date, to_date)
+  def timeseries_for_period(from_date, to_date, clearing_period=nil)
     schnitt_for_dates = {}
     spiele_and_differenz = rounds_spiele_and_differenz(from_date, to_date)
-    accumulator = {spiele:0, differenz:0}
+    accumulator = {spiele:0, differenz:0, runden:0}
+
     (from_date..to_date).each do |date|
+      if clearing_period && spiele_and_differenz[date+clearing_period]
+        accumulator[:spiele] -= spiele_and_differenz[date+clearing_period][:spiele]
+        accumulator[:differenz] -= spiele_and_differenz[date+clearing_period][:differenz]
+        accumulator[:runden] -= 1
+        if accumulator[:spiele] > 0
+          schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
+        end
+      end
       if spiele_and_differenz[date]
         accumulator[:spiele] += spiele_and_differenz[date][:spiele]
         accumulator[:differenz] += spiele_and_differenz[date][:differenz]
-      end
-      if accumulator[:spiele] > 0
-        schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
-      else
-        schnitt_for_dates[date] = nil
+        accumulator[:runden] += 1
+        if accumulator[:spiele] > 0
+          schnitt_for_dates[date] = accumulator[:differenz]/accumulator[:spiele].to_f
+        end
       end
     end
+
+    schnitt_for_dates[to_date] = accumulator[:differenz]/accumulator[:spiele].to_f
     schnitt_for_dates
     
   end

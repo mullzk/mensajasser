@@ -1,0 +1,63 @@
+<h1>Graph#year</h1>
+<div id="graph" ></div>
+	
+	
+<p>Die Grafik zeigt die Entwicklung des Schnitts in der Hauptrangliste an, sie beginnt also immer zu Jahresbeginn neu</p>
+
+<% puts @timeseries %>
+<script>
+	GRAPH = document.getElementById('graph');
+
+	var x = [];
+	var y = [];
+	
+	<% @jasser_series.each do |jasser, timeseries| -%>
+		var x<%= jasser.id %> = [];
+		var y<%= jasser.id %> = [];
+		<% timeseries.each do |datum, schnitt| -%>
+			x<%= jasser.id %>.push(new Date(<%= "#{datum.year}, #{datum.month-1}, #{datum.day}" %>))
+			y<%= jasser.id %>.push(<%= if schnitt.nil? then "null" else schnitt end %>)
+		<% end -%>
+		var trace<%= jasser.id %> = {
+			name: "<%= jasser.name %>",
+			x: x<%= jasser.id %>,
+			y: y<%= jasser.id %>,
+        	mode: 'lines',
+			connectgaps: true, 
+			line: {shape: 'linear'}
+		}
+	<% end -%>
+	
+	var data = [<%= @jasser_series.keys.map{|jasser| "trace#{jasser.id}"}.join(", ") %>]
+	
+	
+	var selectorOptions = {
+	    buttons: [{
+	        step: 'month',
+	        stepmode: 'backward',
+	        count: 1,
+	        label: '1m'
+	    }, {
+	        step: 'month',
+	        stepmode: 'backward',
+	        count: 6,
+	        label: '6m'
+	    }, {
+	        step: 'year',
+	        stepmode: 'todate',
+	        count: 1,
+	        label: 'YTD'
+	    }, {
+	        step: 'year',
+	        stepmode: 'backward',
+	        count: 1,
+	        label: '1y'
+	    }, {
+	        step: 'all',
+	    }],
+	};
+	
+	layout = { margin: { t: 0 }
+ 	} 
+	Plotly.plot( GRAPH, data, layout, {responsive: true});
+</script>

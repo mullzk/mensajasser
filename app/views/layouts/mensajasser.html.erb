@@ -13,6 +13,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	
+	<%- if (@page_specific_js_libraries || []).include?('plotly') %>
+	    <script type="text/javascript" src="/assets/plotly-latest.min.js"></script>
+	<% end -%>
   </head>
 
 <body id="jasser-app">

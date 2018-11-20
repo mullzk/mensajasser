@@ -1,0 +1,32 @@
+<h1>Graph#year</h1>
+<div id="graph" ></div>
+
+<p>Die Grafik zeigt die Entwicklung des Schnitts in der ewigen Rangliste an</p>
+
+
+<script>
+	GRAPH = document.getElementById('graph');
+
+	var x = [];
+	var y = [];
+	
+	<% @timeseries.each do |key, value| -%>
+	x.push(new Date(<%= "#{key.year}, #{key.month-1}, #{key.day}" %>))
+		y.push(<%= if value.nil? then "null" else value end %>)
+	<% end -%>
+	
+	data = [{
+        mode: 'lines',
+		connectgaps: true, 
+        x: x,
+        y: y,
+		line: {shape: 'linear'}
+		
+    }];
+	
+
+	
+	layout = { margin: { t: 0 }
+ 	} 
+	Plotly.plot( GRAPH, data, layout, {responsive: true});
+</script>
