@@ -1,4 +1,4 @@
-<h1>Graph#year</h1>
+<h1>Graphische Jahresrangliste</h1>
 <div id="graph" ></div>
 	
 	
@@ -29,33 +29,6 @@
 	<% end -%>
 	
 	var data = [<%= @jasser_series.keys.map{|jasser| "trace#{jasser.id}"}.join(", ") %>]
-	
-	
-	var selectorOptions = {
-	    buttons: [{
-	        step: 'month',
-	        stepmode: 'backward',
-	        count: 1,
-	        label: '1m'
-	    }, {
-	        step: 'month',
-	        stepmode: 'backward',
-	        count: 6,
-	        label: '6m'
-	    }, {
-	        step: 'year',
-	        stepmode: 'todate',
-	        count: 1,
-	        label: 'YTD'
-	    }, {
-	        step: 'year',
-	        stepmode: 'backward',
-	        count: 1,
-	        label: '1y'
-	    }, {
-	        step: 'all',
-	    }],
-	};
 	
 	layout = { margin: { t: 0 }
  	} 
