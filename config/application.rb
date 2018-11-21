@@ -17,6 +17,5 @@ module Mensajasser
     # the framework and any gems in your application.
     
     config.filter_parameters += [:password]
-    config.serve_static_assets = true
   end
 end
