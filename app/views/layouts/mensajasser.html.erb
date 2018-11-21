@@ -69,6 +69,30 @@
 								</div>
 							 </div>
 						 </li>
+
+
+						 <li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Grafiken</a>
+							 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">	 
+								 <%= link_to "Jahresschnitt", {:controller => "graph", :action => "year"}, :class => "nav-link"%>
+								 <div class="dropdown-submenu dropright" data-js-toggle-submenu>
+								 	<a class="nav-link text-light dropdown-toggle" toggle-link tabindex="-1" href="#" >Ewige Rangliste</a>
+								    <div class="dropdown-menu bg-dark" toggle-view>
+										<% Jasser.where("active=true").order("name").each do |jasser| -%>
+											<%= link_to jasser.name, {:controller => "graph", :action => "ewig", :id => jasser.id}, :class => "nav-link" %>
+										<% end -%>
+									</div>
+								</div>
+								 <div class="dropdown-submenu dropright" data-js-toggle-submenu>
+								 	<a class="nav-link text-light dropdown-toggle" toggle-link tabindex="-1" href="#" >Laufender Schnitt</a>
+								    <div class="dropdown-menu bg-dark" toggle-view>
+										<% Jasser.where("active=true").order("name").each do |jasser| -%>
+											<%= link_to jasser.name, {:controller => "graph", :action => "running", :id => jasser.id}, :class => "nav-link" %>
+										<% end -%>
+									</div>
+								</div>
+							 </div>
+						 </li>
 						 
 						 <li class="nav-item dropdown">
 							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>

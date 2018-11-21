@@ -10,4 +10,5 @@
 
 
 document.addEventListener "turbolinks:load", (event) ->
-	document.querySelector("[data-js-toggle-submenu] a[toggle-link]").addEventListener "click", (e) -> toggle_navigation_submenu(e)
+	document.querySelectorAll("[data-js-toggle-submenu] a[toggle-link]").forEach (element) ->
+		element.addEventListener "click", (e) -> toggle_navigation_submenu(e)

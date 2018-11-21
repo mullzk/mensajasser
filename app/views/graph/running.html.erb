@@ -1,7 +1,7 @@
-<h1>Laufender Schnitt</h1>
+<h1>Laufender Schnitt von <%= @jasser.name%></h1>
 <div id="graph" ></div>
 
-<p>Die Grafik zeigt die Entwicklung des Schnitts in den letzten 12 Monaten an</p>
+<p>Die Grafik zeigt die Entwicklung des Schnitts über die vorangehenden 12 Monaten an</p>
 
 
 <script>
@@ -14,14 +14,12 @@
 		x.push(new Date(<%= "#{key.year}, #{key.month-1}, #{key.day}" %>))
 		y.push(<%= if value.nil? then "null" else value end %>)
 	<% end -%>
-	console.log(x)
-	console.log(y)
 	data = [{
         mode: 'lines',
 		connectgaps: true, 
         x: x,
         y: y,
-		line: {shape: 'linear'}
+		line: {shape: 'hv'}
 		
     }];
 	

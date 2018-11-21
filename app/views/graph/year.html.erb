@@ -1,4 +1,16 @@
 <h1>Graphische Jahresrangliste</h1>
+<p>
+	<% for delta in [-2, -1, 0, 1, 2]%>
+		<span class="headlinks headlinks-hierarchy-<%=delta.abs%>">
+			<% if delta == 0 -%>
+				<%=@date.year %>
+			<% else -%>
+				<%= link_to @date.year + delta, :action => "year", :date => @date.year + delta %>
+			<% end -%>
+		</span>
+	
+	<% end %>
+</p>
 <div id="graph" ></div>
 	
 	
@@ -30,7 +42,10 @@
 	
 	var data = [<%= @jasser_series.keys.map{|jasser| "trace#{jasser.id}"}.join(", ") %>]
 	
-	layout = { margin: { t: 0 }
+	layout = { margin: { t: 0 },
+		legend: {
+			y: 0.9
+		}
  	} 
 	Plotly.plot( GRAPH, data, layout, {responsive: true});
 </script>
