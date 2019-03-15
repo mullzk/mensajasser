@@ -46,3 +46,18 @@ v2.0  (2018, this version):
 - Testing of graph-controller
 - System-Tests
 - per-jasser-Statistik
+
+## Maintenance
+git pull
+git checkout dev-branch
+bundle update 		# Updates *all* gems in Gemfile
+rails test			# runs test-suite
+git add . && git commit -m "Updates" && git push # pushs into dev-branch
+Make sure, that heroku dev-app automatically deploys dev-branch, wait until deployed
+Test dev-app
+git checkout master
+git merge dev-branch
+rails test
+git add . && git commit -m "Updates" && git push  # pushs into master
+Make sure, that heroku prod-app automatically deploys master, wait until deployed
+git checkout dev-branch # No working in master
