@@ -13,17 +13,17 @@ To run this project, you need:
 - Ruby, at least version 2.5.1 (I use rvm for keeping track of ruby versions)
 - Rails 5.2.1  (gem install rails)
 - Bundler (gem install bundler)
-- Postgres
+- Postgres  
 everything else should get installed when running "bundle install"
 
 ## Database 
-Once Postgres is installed, you should create the databases according to config/database.yml. 
-createdb mensajasser_development
-createdb mensajasser_test
+Once Postgres is installed, you should create the databases according to config/database.yml.  
+`createdb mensajasser_development`
+`createdb mensajasser_test``
 
 ## Testing
-Testing is rudimentary, but running 
-rails test
+Testing is rudimentary, but running  
+`rails test` 
 should produce no errors. 
 
 ## History
