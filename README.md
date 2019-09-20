@@ -53,8 +53,8 @@ git checkout dev-branch
 bundle update 		# Updates *all* gems in Gemfile  
 rails test			# runs test-suite  
 git add . && git commit -m "Updates" && git push # pushs into dev-branch  
- # Make sure, that heroku dev-app automatically deploys dev-branch, wait until deployed  
- # Test dev-app  
+Make sure, that heroku dev-app automatically deploys dev-branch, wait until deployed  
+Test dev-app  
 git checkout master  
 git merge dev-branch  
 rails test  
