@@ -61,3 +61,6 @@ Test dev-app
 `git add . && git commit -m "Updates" && git push`  # pushs into master  
 Make sure, that heroku prod-app automatically deploys master, wait until deployed  
 `git checkout dev-branch` # No working in master  
+
+## Deployment
+This of course is heavily dependent on the installation. My own way: I have two heroku-apps, prod and dev. Prod is linked to the master branch, dev is linked to whatever dev-branch I currently work in. With every push to the dev-branch, the Dev-App gets immediately updated. If everything works out as desired, I merge into master, deploy the master, on which herokus prod-app fetches its new code. 
