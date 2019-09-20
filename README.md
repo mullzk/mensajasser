@@ -27,10 +27,10 @@ rails test
 should produce no errors. 
 
 ## History
-v0.01: Spahni started tracking our games in the Mensa Hauptgebäude in an Excel-Sheet 2002
-v0.1:  mensajasser.mullzk.ch as a PHP-Code-Monster, starting in 2003
-v1.0:  Ported to jasser.mullzk.ch in 2010, as a Rails 2.3-project on Ruby 1.8.7. After Release, the code was not touched anymore, as Updates would have been more and more punitive because of Upgrade to Rails and Ruby
-v1.1  Built in 2018 as a new project on current, stable versions of Rails and Ruby, developed with github and heroku. No new features compared to v1.0, in some cases improved code, more tests.
+v0.01: Spahni started tracking our games in the Mensa Hauptgebäude in an Excel-Sheet 2002  
+v0.1:  mensajasser.mullzk.ch as a PHP-Code-Monster, starting in 2003  
+v1.0:  Ported to jasser.mullzk.ch in 2010, as a Rails 2.3-project on Ruby 1.8.7. After Release, the code was not touched anymore, as Updates would have been more and more punitive because of Upgrade to Rails and Ruby  
+v1.1  Built in 2018 as a new project on current, stable versions of Rails and Ruby, developed with github and heroku. No new features compared to v1.0, in some cases improved code, more tests.  
 v2.0  (2018, this version): 
 - Improved Code, especially an improved model. 
 - Berseker, Schädlings- und Angstgegner-Statistiken
@@ -48,16 +48,16 @@ v2.0  (2018, this version):
 - per-jasser-Statistik
 
 ## Maintenance
-git pull
-git checkout dev-branch
-bundle update 		# Updates *all* gems in Gemfile
-rails test			# runs test-suite
-git add . && git commit -m "Updates" && git push # pushs into dev-branch
-Make sure, that heroku dev-app automatically deploys dev-branch, wait until deployed
-Test dev-app
-git checkout master
-git merge dev-branch
-rails test
-git add . && git commit -m "Updates" && git push  # pushs into master
-Make sure, that heroku prod-app automatically deploys master, wait until deployed
-git checkout dev-branch # No working in master
+git pull  
+git checkout dev-branch  
+bundle update 		# Updates *all* gems in Gemfile  
+rails test			# runs test-suite  
+git add . && git commit -m "Updates" && git push # pushs into dev-branch  
+ # Make sure, that heroku dev-app automatically deploys dev-branch, wait until deployed  
+ # Test dev-app  
+git checkout master  
+git merge dev-branch  
+rails test  
+git add . && git commit -m "Updates" && git push  # pushs into master  
+Make sure, that heroku prod-app automatically deploys master, wait until deployed  
+git checkout dev-branch # No working in master  
