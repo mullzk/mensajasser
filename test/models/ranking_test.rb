@@ -242,6 +242,13 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(timeseries[@d2018_jan_22], 2180/160.0)
   end
   
+  test "Get Best and Worst Rounds" do 
+    assert_equal(Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order("schnitt desc").first, @t5)
+    assert_equal(Round.in_date_range(@d2017_start, @d2017_end).summed_on_ris.order("schnitt desc").first, @t3)
+    assert_equal(Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order("schnitt asc").first, @t7)
+    
+  end
+  
   private
   
   def setup_jassers_rounds_and_results

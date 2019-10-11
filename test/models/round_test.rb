@@ -18,6 +18,7 @@ class RoundTest < ActiveSupport::TestCase
   
   test "Tableau with multiple instances of the same jasser should throw an error" do
     round = Round.new
+    round.day = Date.today
     jasser1 = FactoryBot.create(:uniquely_named_jasser)
     jasser2 = FactoryBot.create(:uniquely_named_jasser)
     round.results.build(jasser:jasser1, spiele:20, differenz:200)
@@ -29,6 +30,7 @@ class RoundTest < ActiveSupport::TestCase
   
   test "Tableau with 4 different jassers should not throw an error" do
     round = Round.new
+    round.day = Date.today
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
@@ -40,6 +42,7 @@ class RoundTest < ActiveSupport::TestCase
   test "Tableau without differences should throw an error" do
     ## Rethink: Should result.spiele and result.differenz really be NOT NULL but not default to 0? 
     round = Round.new
+    round.day = Date.today
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser))
     round.results.build(jasser:FactoryBot.create(:uniquely_named_jasser), spiele:20, differenz:200)

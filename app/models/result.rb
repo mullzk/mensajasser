@@ -38,6 +38,8 @@ class Result < ApplicationRecord
                                     sum(chimiris) chimiris").group("jasser_id").order("jasser_id") } 
   scope :daily_sum_for_all_users, -> { select("sum(spiele) spiele, sum(differenz) differenz, rounds.day as day").group("day").order("day")}
   
+  
+  
   def schnitt
     if @spiele then @differenz/@spiele else 0 end
   end
@@ -50,8 +52,7 @@ class Result < ApplicationRecord
     schnitt_for_dates = {}
 
     # Data-Hash: Sums of Spiele and Differenz on every Day
-    spiele_and_differenz = {}
-    Result.in_date_range(from_date, to_date).daily_sum_for_all_users.each {|result| spiele_and_differenz[result.day] = result }
+    spiele_and_differenz = Result.in_date_range(from_date, to_date).daily_sum_for_all_users.inject({}) {|hash, result| hash[result.day] = result ; hash }
     
     accumulator = {spiele:0, differenz:0}
 

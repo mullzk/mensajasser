@@ -14,6 +14,7 @@ class Round < ApplicationRecord
 	has_many :results, dependent: :destroy, inverse_of: :round 
 	has_many :jassers, through: :results
 
+  validates_presence_of :day
 
   validate :all_jassers_unique?
   validates_associated :results
@@ -21,6 +22,10 @@ class Round < ApplicationRecord
 
   scope :in_date_range, ->(from_date, to_date) { where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date) }
   scope :with_jasser, ->(jasser) {joins(:results).where("results.jasser_id=?", jasser.id)}
+  
+  scope :summed_on_ris, -> {joins(:results).select("rounds.id, sum(results.spiele) spiele, sum(results.differenz) differenz, (sum(differenz)/sum(CAST(spiele as decimal))) schnitt").group("rounds.id")}
+
+
   
   after_initialize do |round|
     @results = []

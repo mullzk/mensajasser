@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RoundsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @round = FactoryBot.create(:round)
+    @round = FactoryBot.create(:round, day:Date.today)
     @latest_round = FactoryBot.create(:round_with_date) # Default Layout needs a dated round for @last_entered_round.day
     
   end
@@ -25,10 +25,10 @@ class RoundsControllerTest < ActionDispatch::IntegrationTest
     login_as_admin
 
     assert_difference('Round.count') do
-      post rounds_url, params: { round: {  } }
+      post rounds_url, params: { round: { day:Date.today } }
     end
 
-    assert_redirected_to controller:"ranking", action:"day"
+    assert_redirected_to controller:"ranking", action:"day", date:Date.today
   end
 
   test "should show round" do
