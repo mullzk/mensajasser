@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'graph/year/:date', controller: "graph", action: "year"
   get 'graph/running/:id', controller: "graph", action: "running"
   get 'graph/ewig/:id', controller: "graph", action: "ewig"
+  get 'graph/overall', controller: "graph", action: "overall"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 root 'ranking#year'

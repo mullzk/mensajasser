@@ -31,6 +31,10 @@ class GraphController < ApplicationController
 
   end
   
+  def overall
+    @page_specific_js_libraries = ["plotly"]
+    @timeseries = Result.timeseries_running_ewig
+  end
   
   
   

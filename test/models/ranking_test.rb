@@ -225,6 +225,22 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(t_ewig_j8, {})
   end
   
+  test "Calculate Overall-Schnitt" do 
+    all_results = Result.in_date_range(@d2017_start, @d2018_end).daily_sum_for_all_users
+    
+    assert_equal(all_results.length, 8)
+    assert_equal(all_results.first[:spiele], 4*10)
+    
+    timeseries = Result.timeseries_running_ewig(@d2017_jan_20, @d2018_mar_21)
+    assert_equal(timeseries.length, 8)
+
+    assert_equal(timeseries[@d2017_jan_20], 530/40.0)
+    assert_equal(timeseries[@d2017_jan_21], 1060/80.0)
+    assert_equal(timeseries[@d2017_jan_22], 1620/120.0)
+    assert_equal(timeseries[@d2018_jan_20], 1550/120.0)
+    assert_equal(timeseries[@d2018_jan_21], 2280/160.0)
+    assert_equal(timeseries[@d2018_jan_22], 2180/160.0)
+  end
   
   private
   

@@ -82,6 +82,7 @@
 											<%= link_to jasser.name, {:controller => "graph", :action => "ewig", :id => jasser.id}, :class => "nav-link" %>
 										<% end -%>
 									</div>
+								
 								</div>
 								 <div class="dropdown-submenu dropright" data-js-toggle-submenu>
 								 	<a class="nav-link text-light dropdown-toggle" toggle-link tabindex="-1" href="#" >Laufender Schnitt</a>
@@ -90,6 +91,7 @@
 											<%= link_to jasser.name, {:controller => "graph", :action => "running", :id => jasser.id}, :class => "nav-link" %>
 										<% end -%>
 									</div>
+							 	   <%= link_to "Allgemeiner Schnitt", {:controller => "graph", :action => "overall"}, :class => "nav-link"%>
 								</div>
 							 </div>
 						 </li>
