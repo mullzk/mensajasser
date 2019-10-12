@@ -31,7 +31,7 @@ v0.01: Spahni started tracking our games in the Mensa Hauptgebäude in an Excel-
 v0.1:  mensajasser.mullzk.ch as a PHP-Code-Monster, starting in 2003  
 v1.0:  Ported to jasser.mullzk.ch in 2010, as a Rails 2.3-project on Ruby 1.8.7. After Release, the code was not touched anymore, as Updates would have been more and more punitive because of Upgrade to Rails and Ruby  
 v1.1  Built in 2018 as a new project on current, stable versions of Rails and Ruby, developed with github and heroku. No new features compared to v1.0, in some cases improved code, more tests.  
-v2.0  (2018, this version): 
+v2.0  (2018): 
 - Improved Code, especially an improved model. 
 - Berseker, Schädlings- und Angstgegner-Statistiken
 - Grafiken
@@ -39,6 +39,9 @@ v2.0  (2018, this version):
 - Improved Form for adding new rounds
 - Favicon
 - Encoding Email-Adresses
+v2.1 (2019, this version);
+- Graph for overall-Average
+- Tables for worst Games
 
 ## Todo
 - A better form for adding new rounds (multi-page-form?)
