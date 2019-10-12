@@ -78,27 +78,16 @@ class RankingController < ApplicationController
   end
 
 
-  private
-  
-  def parse_day_param(param)
-    if param
-      begin
-        date = Date.parse(param)
-      rescue 
-        #Do nothing, we will use current date a few more lines down
-      end
-      begin 
-        date ||= Date.new(param.to_i)
-      rescue
-        #Do nothing, we will use current date a few more lines down
-      end
-    end
-    date ||= Date.today
-    unless date.gregorian?
-      date = Date.today
-    end
-    date
+  def schlimmstespiele 
+    @worst_average = Round.get_worst_average   
+    @worst_leader  = Round.get_worst_leaders
+    @best_average = Round.get_best_average   
+    
   end
+  
+
+
+  private
   
   
   def permit_sort_key(suggested_key)

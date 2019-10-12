@@ -1,0 +1,36 @@
+<h1>Unendliche Differenzen</h1>
+<p>Runden mit mehr 16 Spielen oder mehr, rangiert nach höchstem Gesamtschnitt</p>
+
+<ul>
+	<% @worst_average.each do |round| %>	
+		<li>
+			<%= link_to short_date(round.day), :controller => "ranking", :action => "day", :date => round.day %>, mit
+			<%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => " & ")) %>.&nbsp;&nbsp; 
+			Schnitt: <%= format_number(round.results.sum(:differenz)/round.results.sum(:spiele).to_f) %>
+		</li>
+	<% end %>
+</ul>
+<h1>Es profitiert nur, wer zuhause bleibt</h1>
+<p>Alle Spiele, sortiert nach höchstem Schnitt des besten Spielers</p>
+<ul>
+	<% @worst_leader.each do |round| %>	
+		<li>
+			<%= link_to short_date(round.day), :controller => "ranking", :action => "day", :date => round.day %>, mit
+			<%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => " & ")) %>.&nbsp;&nbsp; 
+			Niemand unter <%= format_number(round.results.minimum(:differenz)/round.results.minimum(:spiele).to_f) %>
+		</li>
+	<% end %>
+</ul>
+	
+<h1>Streichelzoos</h1>
+<p>Runden mit 16 Spielen oder mehr, rangiert nach tiefstem Gesamtschnitt</p>
+<ul>
+	<% @best_average.each do |round| %>	
+		<li>
+			<%= link_to short_date(round.day), :controller => "ranking", :action => "day", :date => round.day %>, mit
+			<%=h(round.jassers.map{|a| a.name}.to_sentence(:words_connector => ", ", :last_word_connector => " & ")) %>.&nbsp;&nbsp; 
+			Schnitt: <%= format_number(round.results.sum(:differenz)/round.results.sum(:spiele).to_f) %>
+		</li>
+	<% end %>
+</ul>
+

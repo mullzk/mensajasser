@@ -30,6 +30,7 @@ get 'ranking/berseker/:date', controller: "ranking", action: "berseker"
 get 'ranking/schaedling' => "ranking#schaedling"
 get 'ranking/schaedling/:date', controller: "ranking", action: "schaedling"
 get 'ranking/angstgegner/:id', controller: "ranking", action: "angstgegner"
+get 'ranking/schlimmstespiele' => "ranking#schlimmstespiele"
 
 
 match 'login' => "users#login", via: [:get, :post], as: :login

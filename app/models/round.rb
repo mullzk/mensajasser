@@ -24,6 +24,7 @@ class Round < ApplicationRecord
   scope :with_jasser, ->(jasser) {joins(:results).where("results.jasser_id=?", jasser.id)}
   
   scope :summed_on_ris, -> {joins(:results).select("rounds.id, sum(results.spiele) spiele, sum(results.differenz) differenz, (sum(differenz)/sum(CAST(spiele as decimal))) schnitt").group("rounds.id")}
+  scope :best_player_on_ris, -> {joins(:results).select("rounds.id, max(results.spiele) spiele, min(results.differenz) differenz, (min(differenz/CAST(spiele as decimal))) schnitt").group("rounds.id")}
 
 
   
@@ -88,6 +89,26 @@ class Round < ApplicationRecord
     
     rangverschiebungs_tabelle.sort{|a,b| a[:rang_nachher] <=> b[:rang_nachher]}
   end
+  
+  
+  def self.get_worst_average   
+    Round.summed_on_ris.where("spiele > 15").order("schnitt desc").limit(20).map {|result| 
+      Round.find(result.id)
+    }
+  end
+  
+  def self.get_worst_leaders
+    Round.best_player_on_ris.order("schnitt desc").limit(20).map {|result| 
+      Round.find(result.id)
+    }
+  end
+
+  def self.get_best_average   
+    Round.summed_on_ris.where("spiele > 15").order("schnitt asc").limit(20).map {|result| 
+      Round.find(result.id)
+    }
+  end
+  
   
 
 end
