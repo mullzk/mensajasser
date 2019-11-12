@@ -42,7 +42,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 
 # Gems for this project, added by mullzk
-gem 'will_paginate', '~> 3.1.0', git:'https://github.com/mislav/will_paginate.git'
+gem 'will_paginate', git:'https://github.com/mislav/will_paginate.git'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails' # Used for bootstrap
 gem 'mini_racer' # otherwise bootstrap-subgem Autoprefixer crashes
