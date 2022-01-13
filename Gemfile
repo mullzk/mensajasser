@@ -9,7 +9,7 @@ gem 'rails', '~> 7.0.0'
 # Use Postgres as the database for Active Record, as used by heroku
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '>= 4.3.9'
 # Use SCSS for stylesheets
 #gem 'sass-rails', '~> 5.0'
 gem 'sassc-rails'
