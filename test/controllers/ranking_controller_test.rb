@@ -65,7 +65,7 @@ class RankingControllerTest < ActionDispatch::IntegrationTest
     get url_for controller:"ranking", action:"angstgegner", id:@j1.id
     assert_response :success
     get url_for controller:"ranking", action:"angstgegner", id:"keineid"
-    assert_redirected_to "ranking#year"
+    assert_redirected_to "/ranking#year"
   end
     
 

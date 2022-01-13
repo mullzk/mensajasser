@@ -71,7 +71,7 @@ class RankingController < ApplicationController
     begin
       @jasser = Jasser.find(params[:id])
     rescue
-      redirect_to "ranking#year", notice: "User for id #{params[:id]} could not be found" and return
+      redirect_to "/ranking#year", notice: "User for id #{params[:id]} could not be found" and return
     end
     @columns = {spiele: "Spiele", eigener_schnitt: "Eigener Schnitt", gegner_schnitt: "Gegner Schnitt", schaedling_index: "Schaedling"}
     @statistic_table = AngstgegnerTable.new(@jasser, @date -1.year, @date, sortkey)
