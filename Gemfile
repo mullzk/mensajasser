@@ -16,7 +16,7 @@ gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby, , '= 0.6.0'
+# gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5.0.0'
@@ -45,7 +45,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'will_paginate', git:'https://github.com/mislav/will_paginate.git'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails' # Used for bootstrap
-gem 'mini_racer' # otherwise bootstrap-subgem Autoprefixer crashes
+#gem 'mini_racer' # otherwise bootstrap-subgem Autoprefixer crashes
 
 group :development do
   gem 'annotate'
