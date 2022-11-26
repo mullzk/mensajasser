@@ -23,9 +23,8 @@ FactoryBot.define do
   factory :inaktiver_jasser, class: Jasser do
     active { false }
   end
-  
+
   factory :uniquely_named_jasser, class: Jasser do
     sequence(:name) { |n| "jasser#{n}" }
   end
-
 end

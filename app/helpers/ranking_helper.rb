@@ -1,3 +1,2 @@
 module RankingHelper
 end
-

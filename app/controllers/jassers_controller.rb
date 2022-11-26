@@ -1,16 +1,13 @@
 class JassersController < ApplicationController
-  before_action :set_jasser, only: [:show, :edit, :update, :destroy]
+  before_action :set_jasser, only: %i[show edit update destroy]
 
-  
-  
   # GET /jassers
   def index
     @jassers = Jasser.all
   end
 
   # GET /jassers/1
-  def show
-  end
+  def show; end
 
   # GET /jassers/new
   def new
@@ -18,8 +15,7 @@ class JassersController < ApplicationController
   end
 
   # GET /jassers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /jassers
   def create
@@ -48,13 +44,14 @@ class JassersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_jasser
-      @jasser = Jasser.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def jasser_params
-      params.fetch(:jasser, {}).permit(:active, :disqualifiziert, :name, :email)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_jasser
+    @jasser = Jasser.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def jasser_params
+    params.fetch(:jasser, {}).permit(:active, :disqualifiziert, :name, :email)
+  end
 end
