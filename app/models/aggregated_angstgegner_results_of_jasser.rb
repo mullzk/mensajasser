@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AggregatedAngstgegnerResultsOfJasser
   attr_accessor :jasser, :rank
   attr_reader :spiele, :eigene_differenz, :gegner_differenz, :max, :versenkt, :roesi, :droesi, :gematcht, :huebimatch,

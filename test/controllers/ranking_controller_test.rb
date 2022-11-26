@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class RankingControllerTest < ActionDispatch::IntegrationTest
@@ -44,7 +46,7 @@ class RankingControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     get url_for controller: 'ranking', action: 'day', date: @d2017_jan_21
     assert_response :success
-    get url_for controller: 'ranking', action: 'day', date: @d2017_jan_20  # there is only a round for Jan 20th, but no previous round
+    get url_for controller: 'ranking', action: 'day', date: @d2017_jan_20 # there is only a round for Jan 20th, but no previous round
     assert_response :success
     get url_for controller: 'ranking', action: 'day', date: Date.new(2016, 1, 5) # no rounds setup for 2016 or earlier
     assert_response :success

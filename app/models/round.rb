@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: rounds
@@ -75,9 +77,9 @@ class Round < ApplicationRecord
           jasser_verschiebung[:sprung_am_gruenen_tisch] = ''
         else
           # Jasser did not play on last day, so he potentially changed his rank on the grünen Tisch
-          jasser_verschiebung[:sprung_am_gruenen_tisch] = if jasser_verschiebung[:rang_sprung] > 0
+          jasser_verschiebung[:sprung_am_gruenen_tisch] = if (jasser_verschiebung[:rang_sprung]).positive?
                                                             '(Feigling)'
-                                                          elsif jasser_verschiebung[:rang_sprung] < 0
+                                                          elsif (jasser_verschiebung[:rang_sprung]).negative?
                                                             '(Ätsch)'
                                                           else
                                                             ''

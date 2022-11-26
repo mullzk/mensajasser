@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GraphController < ApplicationController
   def year
     @date = parse_day_param(params[:date])

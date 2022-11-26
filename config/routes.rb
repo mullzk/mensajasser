@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'graph/year'
   get 'graph/year/:date', controller: 'graph', action: 'year'

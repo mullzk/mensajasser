@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StatisticTablePerJasser
   attr_reader :jasser_results, :totals, :averages
 
@@ -14,7 +16,7 @@ class StatisticTablePerJasser
       @jasser_results << statistic_for_jasser unless statistic_for_jasser.jasser.disqualifiziert
     end
 
-    return unless @jasser_results && @jasser_results.size > 0
+    return unless @jasser_results&.size&.positive?
 
     sort_and_rank_jasser_results_for_key(@sortkey)
     @totals = calculate_totals(@jasser_results)
@@ -26,7 +28,7 @@ class StatisticTablePerJasser
   def sort_and_rank_jasser_results_for_key(sortkey)
     sortorder = sort_order_for_key(sortkey)
 
-    unless @jasser_results && @jasser_results.size > 0 && @jasser_results[0].respond_to?(sortkey)
+    unless @jasser_results&.size&.positive? && @jasser_results[0].respond_to?(sortkey)
       raise 'Trying to sort results with an invalid Sortkey'
     end
 
@@ -46,12 +48,12 @@ class StatisticTablePerJasser
 
   def calculate_totals(jasser_results)
     totals = OpenStruct.new
-    for col in %i[spiele differenz roesi droesi versenkt gematcht huebimatch chimiris] do
+    %i[spiele differenz roesi droesi versenkt gematcht huebimatch chimiris].each do |col|
       totals[col] = jasser_results.inject(0) { |acc, single_result| acc += single_result.send(col) }
     end
     totals[:max] = jasser_results.inject(0) { |acc, single_result| acc = [acc, single_result.max].max }
     totals[:schnitt] = nil
-    for col in %i[versenkt_pro_spiel roesi_pro_spiel droesi_pro_spiel roesi_quote] do
+    %i[versenkt_pro_spiel roesi_pro_spiel droesi_pro_spiel roesi_quote].each do |col|
       totals[col] = nil
     end
     totals
@@ -59,9 +61,9 @@ class StatisticTablePerJasser
 
   def calculate_averages(jasser_results, totals)
     jassers = jasser_results.size.to_f
-    if jassers > 0 && totals[:spiele] && totals[:spiele] > 0
+    if jassers.positive? && totals[:spiele] && (totals[:spiele]).positive?
       averages = OpenStruct.new
-      for col in %i[spiele differenz roesi droesi versenkt gematcht huebimatch chimiris] do
+      %i[spiele differenz roesi droesi versenkt gematcht huebimatch chimiris].each do |col|
         averages[col] = totals[col] / jassers
       end
       averages[:max] = nil
@@ -70,7 +72,7 @@ class StatisticTablePerJasser
       averages[:versenkt_pro_spiel]   = totals[:versenkt] / spiele
       averages[:roesi_pro_spiel]      = totals[:roesi]    / spiele
       averages[:droesi_pro_spiel]     = totals[:droesi]   / spiele
-      averages[:roesi_quote] = totals[:droesi] / totals[:roesi].to_f if totals[:roesi] > 0
+      averages[:roesi_quote] = totals[:droesi] / totals[:roesi].to_f if (totals[:roesi]).positive?
     end
     averages
   end

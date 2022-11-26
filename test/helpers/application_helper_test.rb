@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationHelperTest < ActionView::TestCase
   test 'should return encrypted' do
     jasser1 = FactoryBot.create(:jasser, name: 'jasser1', email: 'info@test.ch', disqualifiziert: false)
@@ -8,7 +10,7 @@ class ApplicationHelperTest < ActionView::TestCase
 
     expected_string = 'info_AAA_test_PPP_ch_KKK__SSS_mail_mit123_schnickschnack_AAA_TESs_PPP_co_PPP_uk'
 
-    @all_active_jassers_email = Jasser.where(active: true).map { |jasser| jasser.email }
+    @all_active_jassers_email = Jasser.where(active: true).map(&:email)
     encoded_string = encrypt_mails_adresses(@all_active_jassers_email.join(', '))
     assert_equal(encoded_string, expected_string, 'Encoded Mail Addresses was not as expected')
 

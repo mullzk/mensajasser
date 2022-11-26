@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: jassers
@@ -73,15 +75,18 @@ class Jasser < ApplicationRecord
       if clearing_period && spiele_and_differenz[date + clearing_period]
         accumulator[:spiele] -= spiele_and_differenz[date + clearing_period][:spiele]
         accumulator[:differenz] -= spiele_and_differenz[date + clearing_period][:differenz]
-        schnitt_for_dates[date] = accumulator[:differenz] / accumulator[:spiele].to_f if accumulator[:spiele] > 0
+        if (accumulator[:spiele]).positive?
+          schnitt_for_dates[date] =
+            accumulator[:differenz] / accumulator[:spiele].to_f
+        end
       end
       next unless spiele_and_differenz[date]
 
       accumulator[:spiele] += spiele_and_differenz[date][:spiele]
       accumulator[:differenz] += spiele_and_differenz[date][:differenz]
-      schnitt_for_dates[date] = accumulator[:differenz] / accumulator[:spiele].to_f if accumulator[:spiele] > 0
+      schnitt_for_dates[date] = accumulator[:differenz] / accumulator[:spiele].to_f if (accumulator[:spiele]).positive?
     end
-    schnitt_for_dates[to_date] = accumulator[:differenz] / accumulator[:spiele].to_f if accumulator[:spiele] > 0
+    schnitt_for_dates[to_date] = accumulator[:differenz] / accumulator[:spiele].to_f if (accumulator[:spiele]).positive?
     schnitt_for_dates
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AggregatedBersekerResultsOfJasser
   attr_accessor :jasser, :spiele, :eigene_differenz, :tisch_differenz, :rank
 

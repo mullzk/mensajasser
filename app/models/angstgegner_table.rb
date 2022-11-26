@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AngstgegnerTable
   attr_reader :jasser_results
 
@@ -27,7 +29,7 @@ class AngstgegnerTable
 
     @jasser_results = jasser_stats.values
 
-    return unless @jasser_results && @jasser_results.size > 0
+    return unless @jasser_results&.size&.positive?
 
     sort_and_rank_jasser_results_for_key(@sortkey)
   end
@@ -37,7 +39,7 @@ class AngstgegnerTable
   def sort_and_rank_jasser_results_for_key(sortkey)
     sortorder = sort_order_for_key(sortkey)
 
-    unless @jasser_results && @jasser_results.size > 0 && @jasser_results[0].respond_to?(sortkey)
+    unless @jasser_results&.size&.positive? && @jasser_results[0].respond_to?(sortkey)
       raise 'Trying to sort results with an invalid Sortkey'
     end
 

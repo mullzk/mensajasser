@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
@@ -92,7 +94,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get '/logout'
     post '/login', params: { name: @admin.username, password: @admin.password }
     get users_url
-    assert_redirected_to :login  # As we tried to login with the old password, we should get redirected to the login-page
+    assert_redirected_to :login # As we tried to login with the old password, we should get redirected to the login-page
     post '/login', params: { name: @admin.username, password: newpass }
     get users_url
     assert_response :success

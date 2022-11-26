@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JassersController < ApplicationController
   before_action :set_jasser, only: %i[show edit update destroy]
 

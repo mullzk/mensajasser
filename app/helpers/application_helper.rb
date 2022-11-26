@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def short_date(date)
     date.strftime('%d.%m.%y')
@@ -8,7 +10,7 @@ module ApplicationHelper
   end
 
   def format_number(number)
-    return unless number && number > 0
+    return unless number&.positive?
 
     if number.instance_of?(Integer)
       '%i' % number

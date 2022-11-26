@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ResultTest < ActiveSupport::TestCase
@@ -20,9 +22,9 @@ class ResultTest < ActiveSupport::TestCase
     assert t.size == 2, "There should two rounds with jasser5 in 2018, but there were #{t.size}"
 
     t = Round.with_jasser(@j8)
-    assert t.size == 0, "There should be no rounds with jasser8, but there were #{t.size}"
+    assert t.size.zero?, "There should be no rounds with jasser8, but there were #{t.size}"
     t = Round.with_jasser(@j8).in_date_range(@d2018_start, @d2018_end)
-    assert t.size == 0, "There should be no rounds with jasser8 in 2018, but there were #{t.size}"
+    assert t.size.zero?, "There should be no rounds with jasser8 in 2018, but there were #{t.size}"
   end
 
   test 'Scopes of Results' do
@@ -71,9 +73,9 @@ class ResultTest < ActiveSupport::TestCase
     assert(result1.roesi_pro_spiel == 4 / 30.to_f)
     assert(result1.droesi_pro_spiel == 4 / 30.to_f)
     assert(result1.roesi_quote == 1.0)
-    assert(result1.chimiris == 0)
-    assert(result1.gematcht == 0)
-    assert(result1.huebimatch == 0)
+    assert(result1.chimiris.zero?)
+    assert(result1.gematcht.zero?)
+    assert(result1.huebimatch.zero?)
 
     result2 = statistic_table.jasser_results[1]
     assert(result2.rank == 2)
@@ -84,9 +86,9 @@ class ResultTest < ActiveSupport::TestCase
     assert(result2.differenz == 220)
     assert(result2.schnitt == 11)
     assert(result2.max == 50)
-    assert(result2.roesi == 0)
-    assert(result2.droesi == 0)
-    assert(result2.versenkt == 0)
+    assert(result2.roesi.zero?)
+    assert(result2.droesi.zero?)
+    assert(result2.versenkt.zero?)
     assert(result2.versenkt_pro_spiel == 0.0)
     assert(result2.roesi_pro_spiel == 0.0)
     assert(result2.droesi_pro_spiel == 0.0)
