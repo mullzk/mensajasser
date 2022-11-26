@@ -26,7 +26,9 @@ RUN yarn install --check-files
 #RUN SECRET_KEY_BASE=$SECRET_KEY_BASE RAILS_ENV=production rails db:setup
 #RUN SECRET_KEY_BASE=$SECRET_KEY_BASE RAILS_ENV=production rails server
 
-RUN rake assets:precompile
-RUN rails db:setup
-RUN rails server
+EXPOSE 3001
+
+RUN bundle exec rake assets:precompile
+RUN bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate
+CMD ["bundle", "exec", "rails", "s", "-p", "3001"]
 
