@@ -1,0 +1,21 @@
+---
+services:
+
+##NEWLINE##
+  web:
+    git_url: http://github.com/mullzk/mensajasser.git
+    git_branch: remotes/origin/master
+    command: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
+    build_command: /bin/sh -c "RAILS_ENV=_env:RAILS_ENV bundle exec rake db:schema:load"
+    deploy_command: /bin/sh -c "RAILS_ENV=_env:RAILS_ENV bundle exec rake db:migrate"
+    build_root: .
+
+    ports:
+      - container: 3000
+        http: 80
+        https: 443
+        
+        
+    
+
+    
