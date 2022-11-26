@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: rounds
@@ -11,11 +13,10 @@
 #
 
 FactoryBot.define do
-  factory :round do 
+  factory :round do
   end
-  
-  factory :round_with_date, class: Round do 
-    day {Date.today}
+
+  factory :round_with_date, class: Round do
+    day { Date.today }
   end
-  
 end
