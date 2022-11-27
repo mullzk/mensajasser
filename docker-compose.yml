@@ -1,0 +1,29 @@
+version: '3'
+services:
+  db:
+    image: postgres:13.8
+    restart: always
+    ports: 
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U mensajasser -d mensajasser_development
+      interval: 5s
+      timeout: 1s
+      retries: 3
+    environment:
+      POSTGRES_USER: mensajasser
+      POSTGRES_DB: mensajasser_development
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    command: bash -c "bundle exec rake assets:precompile && (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) && rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
