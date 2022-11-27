@@ -4,6 +4,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: db
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -11,6 +12,8 @@ default: &default
 development:
   <<: *default
   database: mensajasser_development
+  username: mensajasser
+  password: password
 
 test:
   <<: *default
