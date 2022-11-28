@@ -1,0 +1,50 @@
+version: '3'
+services:
+  postgres-mensajasser:
+    image: postgres:13.8
+    restart: always
+    ports: 
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 5s
+      timeout: 1s
+      retries: 3
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - "net"
+
+  mensajasser:
+    build: .
+    volumes:
+      - .:/app
+    command: bash -c "bundle exec rake assets:precompile && \
+      (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) && \
+      rm -f tmp/pids/server.pid && \
+      bundle exec rails s -e ${RAILS_ENVIRONMENT} -p ${VHOST_PORT} -b '0.0.0.0'"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      VIRTUAL_HOST: ${VHOST_URL}
+      VIRTUAL_PORT: ${VHOST_PORT}
+      LETSENCRYPT_HOST: ${VHOST_URL}
+      LETSENCRYPT_EMAIL: ${ADMIN_EMAIL}
+      RAILS_SERVE_STATIC_FILES: 'true'
+    depends_on:
+      postgres-mensajasser:
+        condition: service_healthy
+    networks:
+      - "net"
+
+volumes:
+  postgres_data: 
+
+networks:
+  net:
+    external: true

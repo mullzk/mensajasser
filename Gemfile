@@ -46,9 +46,6 @@ gem 'jquery-rails' # Used for bootstrap
 gem 'will_paginate', git: 'https://github.com/mislav/will_paginate.git'
 # gem 'mini_racer' # otherwise bootstrap-subgem Autoprefixer crashes
 
-group :development do
-  gem 'annotate'
-end
 group :development, :test do
   gem 'factory_bot_rails', '~> 4.0'
 end
@@ -82,3 +79,5 @@ gem 'bundle-audit', '~> 0.1.0'
 gem 'rubocop', '~> 1.39'
 
 gem 'brakeman', '~> 5.4'
+
+gem "annotate", "~> 3.2"
