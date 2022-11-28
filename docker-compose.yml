@@ -6,13 +6,13 @@ services:
     ports: 
       - "5432:5432"
     healthcheck:
-      test: pg_isready -U ${APP_NAME} -d ${APP_NAME}_${TARGET_ENVIRONMENT}
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
       interval: 5s
       timeout: 1s
       retries: 3
     environment:
-      POSTGRES_DB: ${APP_NAME}_${TARGET_ENVIRONMENT}
-      POSTGRES_USER: ${APP_NAME}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data/
@@ -21,17 +21,20 @@ services:
     build: .
     volumes:
       - .:/app
-    command: bash -c "bundle exec rake assets:precompile && (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) && rm -f tmp/pids/server.pid && bundle exec rails s -e ${TARGET_ENVIRONMENT} -p 3001 -b '0.0.0.0'"
+    command: bash -c "bundle exec rake assets:precompile && \
+      (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) && \
+      rm -f tmp/pids/server.pid && \
+      bundle exec rails s -e ${RAILS_ENVIRONMENT} -p ${VHOST_PORT} -b '0.0.0.0'"
     environment:
-      POSTGRES_DB: ${APP_NAME}_${TARGET_ENVIRONMENT}
-      POSTGRES_USER: ${APP_NAME}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       VIRTUAL_HOST: ${VHOST_URL}
-      VIRTUAL_PORT: 3000
+      VIRTUAL_PORT: ${VHOST_PORT}
       LETSENCRYPT_HOST: ${VHOST_URL}
       LETSENCRYPT_EMAIL: ${ADMIN_EMAIL}
     ports:
-      - "3001:3001"
+      - "${VHOST_PORT}:${VHOST_PORT}"
     depends_on:
       postgres-mensajasser:
         condition: service_healthy
