@@ -16,6 +16,8 @@ ADD Gemfile* $APP_HOME/
 RUN bundle config set without 'development test'
 RUN bundle install
 
+EXPOSE 3000
+
 ADD . $APP_HOME
 # if you're not using webpack, you can comment out the following line
 RUN yarn install --check-files
