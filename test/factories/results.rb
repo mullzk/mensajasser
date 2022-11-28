@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: results
@@ -20,8 +22,7 @@
 
 FactoryBot.define do
   factory :result do
-    differenz {200}
-    spiele {20}
+    differenz { 200 }
+    spiele { 20 }
   end
-  
 end

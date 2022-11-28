@@ -30,7 +30,9 @@
 				<% end -%>
 				<%= yield %>
 				<p style="margin-top:20px">
-					Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :date => @last_entered_round.day}, {:class => "decent"} %>
+					<% if @last_entered_round -%>
+						Neuste Runde: <%= link_to @last_entered_round.day.strftime("%d.%m.%y"), {:controller => "ranking", :action => "day", :date => @last_entered_round.day}, {:class => "decent"} %>
+					<% end -%>
 						<br /><%= encrypted_mailto_link_for_adresses(@all_active_jassers_email).html_safe %>
 				</p>
 			</div>

@@ -1,54 +1,49 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :authorize, :except => :login
+  before_action :authorize, except: :login
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-
+  before_action :set_user, only: %i[show edit update destroy]
 
   def login
-    if request.post?
-      user = User.authenticate(params[:name], params[:password])
-      if user
-        session[:user_id] = user.id
-        redirect_to :controller => "rounds", :action => "new"
-      else
-        flash[:notice] = "Ungültige user/passwort Kombination"
-      end
+    return unless request.post?
+
+    user = User.authenticate(params[:name], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect_to controller: 'rounds', action: 'new'
+    else
+      flash[:notice] = 'Ungültige user/passwort Kombination'
     end
   end
 
   def logout
     session[:user_id] = nil
     session[:user_is_admin] = nil
-    flash[:notice] = "Logged out"
-    redirect_to :controller => :ranking, :action => :year
+    flash[:notice] = 'Logged out'
+    redirect_to controller: :ranking, action: :year
   end
 
   def change_own_password
-    @user = User.find_by_id(session[:user_id])    
-    if request.patch?
-      user = User.authenticate(@user.username, params[:old_password])
-      if user
-        if params[:user][:password] == params[:user][:password_confirmation]
-          if @user.update_attribute(:password, params[:user][:password])
-            flash[:notice] = 'Password geändert'
-            redirect_to root_path 
-          else
-            flash[:notice] = "Passwort konnte nicht geändert werden, der Grund ist unklar"
-          end
+    @user = User.find_by_id(session[:user_id])
+    return unless request.patch?
+
+    user = User.authenticate(@user.username, params[:old_password])
+    if user
+      if params[:user][:password] == params[:user][:password_confirmation]
+        if @user.update_attribute(:password, params[:user][:password])
+          flash[:notice] = 'Password geändert'
+          redirect_to root_path
         else
-          flash[:notice] = "Passwort und Bestätigung stimmen nicht überein"
+          flash[:notice] = 'Passwort konnte nicht geändert werden, der Grund ist unklar'
         end
       else
-        flash[:notice] = "Altes Passwort ist ungültig"
+        flash[:notice] = 'Passwort und Bestätigung stimmen nicht überein'
       end
+    else
+      flash[:notice] = 'Altes Passwort ist ungültig'
     end
   end
-
-
-
-
-
 
   # GET /users
   def index
@@ -56,8 +51,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -65,8 +59,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   def create
@@ -95,13 +88,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.fetch(:user, {}).permit(:username, :password)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.fetch(:user, {}).permit(:username, :password)
+  end
 end
