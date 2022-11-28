@@ -36,8 +36,6 @@ services:
       LETSENCRYPT_HOST: ${VHOST_URL}
       LETSENCRYPT_EMAIL: ${ADMIN_EMAIL}
       RAILS_SERVE_STATIC_FILES: 'true'
-    ports:
-      - "${VHOST_PORT}:${VHOST_PORT}"
     depends_on:
       postgres-mensajasser:
         condition: service_healthy
