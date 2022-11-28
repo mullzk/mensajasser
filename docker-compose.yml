@@ -43,6 +43,9 @@ services:
     networks:
       - "net"
 
+volumes:
+  postgres_data: 
+
 networks:
   net:
     external: true
