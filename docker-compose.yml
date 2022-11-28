@@ -4,7 +4,7 @@ services:
     image: postgres:13.8
     restart: always
     ports: 
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     healthcheck:
       test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
       interval: 5s
