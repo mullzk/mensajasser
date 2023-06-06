@@ -23,9 +23,10 @@ services:
     build: .
     volumes:
       - .:/app
-    command: bash -c "bundle exec rake assets:precompile && \
-      (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) && \
-      rm -f tmp/pids/server.pid && \
+    command: >
+      bash -c "bundle exec rake assets:precompile &&
+      (bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:create db:migrate) &&
+      rm -f tmp/pids/server.pid &&
       bundle exec rails s -e ${RAILS_ENVIRONMENT} -p ${VHOST_PORT} -b '0.0.0.0'"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
