@@ -40,7 +40,7 @@ gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Gems for this project, added by mullzk
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap'
 gem 'jquery-rails' # Used for bootstrap
 gem 'will_paginate', git: 'https://github.com/mislav/will_paginate.git'
 # gem 'mini_racer' # otherwise bootstrap-subgem Autoprefixer crashes
