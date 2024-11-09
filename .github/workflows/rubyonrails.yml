@@ -13,22 +13,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:11-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      DATABASE_URL: "db/test.sqlite3"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       # Add or replace dependency steps here
+      - name: Setup SQLite
+        uses: actions/setup-sqlite@v1
+        with:
+          sqlite-version: 3.43.2
+          sqlite-year: 2023
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
         with:
