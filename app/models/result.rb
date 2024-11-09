@@ -61,7 +61,7 @@ class Result < ApplicationRecord
     # Data-Hash: Sums of Spiele and Differenz on every Day
     spiele_and_differenz = Result.in_date_range(from_date,
                                                 to_date).daily_sum_for_all_users.each_with_object({}) do |result, hash|
-      hash[result.day] = result
+      hash[Date.parse(result.day)] = result
     end
 
     accumulator = { spiele: 0, differenz: 0 }

@@ -36,6 +36,7 @@ class Jasser < ApplicationRecord
                                   .where('rounds.day >= ? AND rounds.day<= ?', from_date, to_date)
                                   .order('rounds.day')
     results_in_time_range.each do |result|
+      result.day = Date.parse(result.day) # sanitize dates after switching from postgres to sqlite
       if spiele_and_differenz[result.day]
         spiele = result.spiele + spiele_and_differenz[result.day][:spiele]
         differenz = result.differenz + spiele_and_differenz[result.day][:differenz]

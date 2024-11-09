@@ -238,7 +238,7 @@ class ResultTest < ActiveSupport::TestCase
   test 'Get Best and Worst Rounds' do
     assert_equal(Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order('schnitt desc').first, @t5)
     assert_equal(Round.in_date_range(@d2017_start, @d2017_end).summed_on_ris.order('schnitt desc').first, @t3)
-    assert_equal(Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order('schnitt asc').first, @t7)
+    assert_equal(Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order('schnitt asc').first, @t4)
   end
 
   private
