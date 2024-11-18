@@ -3,16 +3,16 @@
 */
 
 toggle_dropdown = function (event) {
-	var dropdown_menu = event.target.nextElementSibling;
-	console.log(event.target);
-	console.log(dropdown_menu);
-	if (dropdown_menu.classList.contains("dropdown-menu")) {
+	let current_dropdown_menu = event.target.nextElementSibling;
+	document.querySelectorAll(".dropdown .dropdown-menu").forEach ((dropdown_menu) => {
 		if (dropdown_menu.style.display!="block") {
-			dropdown_menu.style.display = "block"
+			if (dropdown_menu == current_dropdown_menu) {
+				dropdown_menu.style.display = "block"
+			}
 		} else {
 			dropdown_menu.style.display = "none"
 		}
-	}
+	});
 	event.preventDefault();
 	event.stopPropagation();
 }
