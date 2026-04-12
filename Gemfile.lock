@@ -123,6 +123,10 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     date (3.4.0)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
     execjs (2.10.0)
@@ -131,7 +135,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    ffi (1.17.0)
+    ffi (1.17.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.6)
@@ -164,6 +168,8 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.25.1)
     msgpack (1.7.5)
+    mysql2 (0.5.7)
+      bigdecimal
     net-imap (0.5.1)
       date
       net-protocol
@@ -318,9 +324,11 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   coffee-rails
+  dotenv-rails
   factory_bot_rails (~> 4.0)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
+  mysql2
   ostruct (~> 0.6.1)
   puma (>= 4.3.9)
   rails (~> 8.0.0)

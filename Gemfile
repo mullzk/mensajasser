@@ -7,8 +7,6 @@ ruby '3.3.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.0'
-# Mullzk:
-# Use Postgres as the database for Active Record, as used by heroku
 # Use Puma as the app server
 gem 'puma', '>= 4.3.9'
 # Use SCSS for stylesheets
@@ -18,6 +16,8 @@ gem 'sassc-rails'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+
+gem 'mysql2'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
@@ -52,6 +52,7 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'dotenv-rails' 
 end
 
 group :development do
