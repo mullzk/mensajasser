@@ -82,6 +82,4 @@ gem 'brakeman', '~> 5.4'
 
 gem "annotate"
 
-gem "sqlite3"
-
 gem "ostruct", "~> 0.6.1"
