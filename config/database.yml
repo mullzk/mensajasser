@@ -1,16 +1,20 @@
 default: &default
-  adapter: sqlite3
+  adapter: trilogy
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  encoding: utf8mb4
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: mensajasser_development
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
 
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: mensajasser_test
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  url: <%= ENV['DATABASE_URL'] %>
