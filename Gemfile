@@ -34,7 +34,11 @@ gem 'turbolinks', '~> 5'
 # gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+group :development do
+  gem 'capistrano', '~> 3.18'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+end
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
