@@ -5,10 +5,21 @@ set :repo_url, "git@github.com:mullzk/mensajasser.git"
 set :linked_dirs, %w[log tmp/pids public/system]
 set :keep_releases, 5
 
-# mise instead of rbenv/rvm — ensures correct Ruby on remote server
-SSHKit.config.command_map[:bundle] = "/usr/local/bin/mise exec -- bundle"
-SSHKit.config.command_map[:rake]   = "/usr/local/bin/mise exec -- rake"
-SSHKit.config.command_map[:rails]  = "/usr/local/bin/mise exec -- rails"
+set :default_env, { path: "/home/deploy-app/.local/share/mise/shims:$PATH" }
+
+before 'deploy:starting', :load_shared_env do
+  on roles(:all) do
+    env_content = capture("cat #{shared_path}/config/env 2>/dev/null || true")
+    env_vars = {}
+    env_content.each_line do |line|
+      line = line.strip
+      next if line.empty? || line.start_with?('#')
+      key, value = line.split('=', 2)
+      env_vars[key.strip] = value.to_s.strip.gsub(/\A["']|["']\z/, '') if key
+    end
+    SSHKit.config.default_env.merge!(env_vars)
+  end
+end
 
 namespace :deploy do
   task :restart do
