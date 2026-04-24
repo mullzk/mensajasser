@@ -5,6 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
+      DATABASE_URL: trilogy://root@127.0.0.1/mensajasser_test
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: mensajasser_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
