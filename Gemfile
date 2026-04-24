@@ -18,6 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
 
 gem 'trilogy'
+gem "sqlite3", "~> 2.0"  # temporär für SQLite-Migration, danach entfernen
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'

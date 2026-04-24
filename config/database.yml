@@ -18,3 +18,8 @@ integration:
 production:
   <<: *default
   url: <%= ENV.fetch("DATABASE_URL") %>
+
+sqlite_source:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
