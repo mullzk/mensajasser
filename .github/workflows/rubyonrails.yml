@@ -8,7 +8,7 @@ jobs:
       DATABASE_URL: trilogy://root@127.0.0.1/mensajasser_test
     services:
       mysql:
-        image: mariadb:10.6
+        image: mariadb:11.4
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
           MARIADB_DATABASE: mensajasser_test
