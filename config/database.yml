@@ -11,6 +11,10 @@ test:
   <<: *default
   url: <%= ENV.fetch("DATABASE_URL") %>
 
+integration:
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL") %>
+
 production:
   <<: *default
   url: <%= ENV.fetch("DATABASE_URL") %>
