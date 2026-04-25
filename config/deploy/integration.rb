@@ -4,4 +4,6 @@ set :application_instance, "jasserdev"
 set :branch,               "main"
 set :deploy_to,            "/var/www/jasserdev"
 
-deploy_server_for :integration, roles: %w[app db web]
+server ENV.fetch("DEPLOY_INTEGRATION_HOST"),
+       user: ENV.fetch("DEPLOY_INTEGRATION_USER"),
+       roles: %w[app db web]

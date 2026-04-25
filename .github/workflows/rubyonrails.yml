@@ -54,4 +54,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
       - name: Deploy to integration
+        env:
+          DEPLOY_INTEGRATION_HOST: ${{ secrets.DEPLOY_INTEGRATION_HOST }}
+          DEPLOY_INTEGRATION_USER: ${{ secrets.DEPLOY_INTEGRATION_USER }}
         run: bundle exec cap integration deploy
