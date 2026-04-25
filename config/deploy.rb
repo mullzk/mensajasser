@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+require "active_support"
+require "active_support/encrypted_configuration"
+
+DEPLOY_CREDENTIALS = ActiveSupport::EncryptedConfiguration.new(
+  config_path: File.expand_path("credentials.yml.enc", __dir__),
+  key_path:    File.expand_path("master.key",         __dir__),
+  env_key:     "RAILS_MASTER_KEY",
+  raise_if_missing_key: true
+)
+
+def deploy_server_for(stage, roles:)
+  config = DEPLOY_CREDENTIALS.dig(:deploy, stage) or
+    raise "Missing credentials for deploy.#{stage} in config/credentials.yml.enc"
+
+  server config.fetch(:host), user: config.fetch(:user), roles: roles
+end
+
 set :application, "mensajasser"
 set :repo_url, "git@github.com:mullzk/mensajasser.git"
 set :linked_dirs, %w[log tmp/pids public/system]
