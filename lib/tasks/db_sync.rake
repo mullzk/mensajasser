@@ -4,7 +4,11 @@ require "shellwords"
 module DbSync
   module_function
 
-  REMOTE_STAGES = %w[integration production].freeze
+  DEPLOY_PATHS = {
+    "integration" => "/var/www/jasserdev",
+    "production"  => "/var/www/jasser"
+  }.freeze
+  REMOTE_STAGES = DEPLOY_PATHS.keys.freeze
 
   def require_stage!
     stage = ENV["STAGE"] or abort "Usage: STAGE=integration rails db:pull / db:push"
@@ -19,12 +23,12 @@ module DbSync
   end
 
   def stage_credentials(stage)
-    config = Rails.application.credentials.dig(:deploy, stage.to_sym) or
-      abort "Missing credentials for deploy.#{stage} in config/credentials.yml.enc"
-    %i[host user env_file].each do |key|
-      config.fetch(key) { abort "deploy.#{stage}.#{key} fehlt in den Credentials" }
-    end
-    config
+    prefix = "DEPLOY_#{stage.upcase}_"
+    {
+      host:     ENV.fetch("#{prefix}HOST")   { abort "#{prefix}HOST not set (lokal in .env, in CI als GitHub-Secret)" },
+      user:     ENV.fetch("#{prefix}USER")   { abort "#{prefix}USER not set (lokal in .env, in CI als GitHub-Secret)" },
+      env_file: "#{DEPLOY_PATHS.fetch(stage)}/shared/config/env"
+    }
   end
 
   def ssh_target_for(stage)
