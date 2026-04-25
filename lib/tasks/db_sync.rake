@@ -1,4 +1,5 @@
 require "securerandom"
+require "shellwords"
 
 module DbSync
   module_function
@@ -42,7 +43,7 @@ module DbSync
   end
 
   def mysqldump_cmd(db)
-    "mysqldump --no-create-info --no-tablespaces --replace " \
+    "mysqldump --no-create-info --no-tablespaces --replace --single-transaction " \
       "--ignore-table=#{db[:database]}.schema_migrations " \
       "--ignore-table=#{db[:database]}.ar_internal_metadata " \
       "-h #{db[:host]} -u #{db[:user]} #{db[:database]}"
@@ -55,6 +56,7 @@ module DbSync
   def local_dump(db, path)
     system({"MYSQL_PWD" => db[:password]}, "#{mysqldump_cmd(db)} > #{path}") or
       abort "Fehler beim Dump."
+    File.chmod(0o600, path)
   end
 
   def local_import(db, path)
@@ -84,10 +86,11 @@ module DbSync
       set -eo pipefail
       source "#{env_file}"
       #{PARSE_DB_URL_BASH}
-      MYSQL_PWD="$DB_PASS" mariadb-dump --no-create-info --no-tablespaces --replace \\
+      MYSQL_PWD="$DB_PASS" mariadb-dump --no-create-info --no-tablespaces --replace --single-transaction \\
         --ignore-table="$DB_NAME.schema_migrations" \\
         --ignore-table="$DB_NAME.ar_internal_metadata" \\
         -h "$DB_HOST" -u "$DB_USER" "$DB_NAME" > "#{dump_path}"
+      chmod 600 "#{dump_path}"
     BASH
   end
 
@@ -100,15 +103,15 @@ module DbSync
     BASH
   end
 
-  def scp_from_remote(ssh, remote, local) = sh!("scp #{ssh}:#{remote} #{local}")
-  def scp_to_remote(local, ssh, remote)   = sh!("scp #{local} #{ssh}:#{remote}")
+  def scp_from_remote(ssh, remote, local) = sh!("scp #{Shellwords.shellescape("#{ssh}:#{remote}")} #{Shellwords.shellescape(local)}")
+  def scp_to_remote(local, ssh, remote)   = sh!("scp #{Shellwords.shellescape(local)} #{Shellwords.shellescape("#{ssh}:#{remote}")}")
 
   def remove_local_file(path)
     File.delete(path) if File.exist?(path)
   end
 
   def remove_remote_file(ssh, path)
-    system(%(ssh #{ssh} "rm -f #{path}"))
+    system("ssh #{Shellwords.shellescape(ssh)} rm -f #{Shellwords.shellescape(path)}")
   end
 
   def run_remote(ssh, script)
