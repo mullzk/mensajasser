@@ -89,6 +89,7 @@ GEM
     autoprefixer-rails (10.4.19.0)
       execjs (~> 2)
     base64 (0.3.0)
+    bcrypt_pbkdf (1.1.2)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
@@ -140,6 +141,7 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
+    ed25519 (1.4.0)
     erb (6.0.4)
     erubi (1.13.1)
     execjs (2.10.0)
@@ -361,6 +363,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt_pbkdf (~> 1.0)
   bootsnap (>= 1.1.0)
   bootstrap
   brakeman (~> 5.4)
@@ -372,6 +375,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   coffee-rails
   dotenv-rails
+  ed25519 (~> 1.2)
   factory_bot_rails (~> 4.0)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
