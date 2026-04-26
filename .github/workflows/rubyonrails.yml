@@ -56,20 +56,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
-      - name: Debug SSH (TEMPORARY)
-        env:
-          DEPLOY_INTEGRATION_HOST: ${{ secrets.DEPLOY_INTEGRATION_HOST }}
-          DEPLOY_INTEGRATION_USER: ${{ secrets.DEPLOY_INTEGRATION_USER }}
-        run: |
-          echo "=== Loaded keys in ssh-agent ==="
-          ssh-add -l || echo "no keys loaded"
-          echo "=== known_hosts ==="
-          wc -l ~/.ssh/known_hosts
-          cut -d' ' -f1 ~/.ssh/known_hosts | sort -u
-          echo "=== Test SSH (verbose) ==="
-          ssh -vvv -o BatchMode=yes -o ConnectTimeout=10 \
-              "$DEPLOY_INTEGRATION_USER@$DEPLOY_INTEGRATION_HOST" \
-              'echo OK from $(whoami)@$(hostname)' 2>&1 || echo "ssh exit $?"
       - name: Deploy to integration
         env:
           DEPLOY_INTEGRATION_HOST: ${{ secrets.DEPLOY_INTEGRATION_HOST }}
