@@ -39,6 +39,9 @@ group :development do
   gem 'capistrano', '~> 3.18'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  # Required by net-ssh for ED25519 SSH key authentication, even via ssh-agent
+  gem 'ed25519', '~> 1.2'
+  gem 'bcrypt_pbkdf', '~> 1.0'
 end
 
 # Reduces boot times through caching; required in config/boot.rb
