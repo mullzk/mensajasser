@@ -1,5 +1,10 @@
-name: My workflow
-on: [push, pull_request]
+name: Mensajasser
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - production
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -23,6 +28,7 @@ jobs:
     - run: bundle exec rake
 
   lint:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -32,32 +38,23 @@ jobs:
         with:
           ruby-version: '3.3.5'
           bundler-cache: true
-      # Add or replace any other lints here
       - name: Security audit dependencies
         run: bin/bundler-audit --update
       - name: Security audit application code
         run: bin/brakeman -q -w2
 
   deploy_integration:
-    needs: [test, lint]
+    needs: [test]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - name: Setup known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-      - name: Deploy to integration
-        env:
-          DEPLOY_INTEGRATION_HOST: ${{ secrets.DEPLOY_INTEGRATION_HOST }}
-          DEPLOY_INTEGRATION_USER: ${{ secrets.DEPLOY_INTEGRATION_USER }}
-        run: bundle exec cap integration deploy
+    uses: ./.github/workflows/deploy.yml
+    with:
+      stage: integration
+    secrets: inherit
+
+  deploy_production:
+    needs: [test]
+    if: github.ref == 'refs/heads/production' && github.event_name == 'push'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      stage: production
+    secrets: inherit
