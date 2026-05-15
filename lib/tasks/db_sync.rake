@@ -6,7 +6,7 @@ module DbSync
 
   DEPLOY_PATHS = {
     "integration" => "/var/www/jasserdev",
-    "production"  => "/var/www/jasser"
+    "production"  => "/var/www/jasserprod"
   }.freeze
   REMOTE_STAGES = DEPLOY_PATHS.keys.freeze
 
