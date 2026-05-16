@@ -35,8 +35,13 @@ environment ENV.fetch('RAILS_ENV', 'development')
 # process behavior so workers use less memory.
 #
 # preload_app!
-
+  
 # Allow puma to be restarted by `rails restart` command.
+if (puma_dir = ENV['PUMA_DIRECTORY']) && !puma_dir.empty?
+  directory puma_dir
+  prune_bundler
+end
+
 plugin :tmp_restart
 
 # ssl_bind '127.0.0.1', '3000',
