@@ -89,7 +89,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bundle-audit', '~> 0.1.0'
 
-gem 'rubocop', '~> 1.39'
+gem 'rubocop', '~> 1.86'
 
 gem 'brakeman', '~> 5.4'
 
