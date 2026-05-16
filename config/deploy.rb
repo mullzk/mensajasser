@@ -24,7 +24,9 @@ end
 namespace :deploy do
   task :restart do
     on roles(:app) do
-      execute :touch, "#{fetch(:current_path)}/tmp/restart.txt"
+      within release_path do
+        execute :bundle, :exec, :pumactl, "-S", shared_path.join("tmp/pids/puma.state"), "restart"
+      end
     end
   end
   after :publishing, :restart
