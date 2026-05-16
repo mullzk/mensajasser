@@ -323,7 +323,7 @@ GEM
     thor (1.5.0)
     tilt (2.4.0)
     timeout (0.6.1)
-    trilogy (2.12.3)
+    trilogy (2.12.5)
       bigdecimal
     tsort (0.2.0)
     turbolinks (5.2.1)
