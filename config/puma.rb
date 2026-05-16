@@ -36,10 +36,15 @@ environment ENV.fetch('RAILS_ENV', 'development')
 #
 # preload_app!
   
-# Allow puma to be restarted by `rails restart` command.
-if (puma_dir = ENV['PUMA_DIRECTORY']) && !puma_dir.empty?
+# Server only: tmp/pids is a linked_dir, so these paths resolve into shared/
+# and stay stable across releases. PUMA_DIRECTORY is the `current` symlink.
+puma_dir = ENV["PUMA_DIRECTORY"].to_s
+unless puma_dir.empty?
   directory puma_dir
   prune_bundler
+  pidfile    "#{puma_dir}/tmp/pids/puma.pid"
+  state_path "#{puma_dir}/tmp/pids/puma.state"
+  activate_control_app "unix://#{puma_dir}/tmp/pids/pumactl.sock"
 end
 
 plugin :tmp_restart
