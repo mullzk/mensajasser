@@ -79,9 +79,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # After depreciation of chromedriver use webdrivers to run browserbased system tests
-  gem 'webdrivers'
+  # Selenium 4.11+ manages browser drivers itself via Selenium Manager;
+  # the separate 'webdrivers' gem is no longer needed.
+  gem 'selenium-webdriver', '>= 4.11'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

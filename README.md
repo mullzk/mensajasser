@@ -132,3 +132,7 @@ Pushing to `production` requires typing `yes` at the confirmation prompt.
 **Behaviour note:** The sync uses `REPLACE INTO` semantics — existing rows at the destination are updated, missing rows are inserted. Rows that were *deleted at the source* are **not** deleted at the destination; they remain as orphans. This is intentional: a full "delete-on-destination" sync would require either truncating the target table (risky if the import fails mid-way) or computing the set difference of primary keys (complex, slow). For this app, a few surplus old rounds in the integration DB are harmless.
 
 **Schema and migrations:** `db:pull`/`db:push` transfer data only — they do not apply schema changes. `cap deploy` runs `rails db:migrate` on the remote automatically. Always deploy first, then sync data if needed. In particular, never `db:push` after adding a new migration locally but before deploying: the dump will contain data for columns that don't yet exist on the remote, causing the import to fail.
+
+
+## Logging
+Puma does not log to shared/log, but to the system. Get it with `sudo journalctl -u puma-{instance} -f`

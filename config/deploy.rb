@@ -24,7 +24,12 @@ end
 namespace :deploy do
   task :restart do
     on roles(:app) do
-      execute :touch, "#{fetch(:current_path)}/tmp/restart.txt"
+      state = shared_path.join("tmp/pids/puma.state")
+      # First deploy before the control app exists: nothing to signal yet.
+      next unless test :test, "-f", state
+      within release_path do
+        execute :bundle, :exec, :pumactl, "-S", state, "restart"
+      end
     end
   end
   after :publishing, :restart
