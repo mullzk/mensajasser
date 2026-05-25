@@ -36,7 +36,7 @@ gem 'turbolinks', '~> 5'
 
 # Use Capistrano for deployment
 group :development do
-  gem 'capistrano', '~> 3.18'
+  gem 'capistrano', '~> 3.20'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   # Required by net-ssh to authenticate with ED25519 SSH keys.
