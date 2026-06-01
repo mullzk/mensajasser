@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.3'
 # Use Puma as the app server
 gem 'puma', '>= 4.3.9'
 # Use SCSS for stylesheets
@@ -36,7 +36,7 @@ gem 'turbolinks', '~> 5'
 
 # Use Capistrano for deployment
 group :development do
-  gem 'capistrano', '~> 3.18'
+  gem 'capistrano', '~> 3.20'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   # Required by net-ssh to authenticate with ED25519 SSH keys.
@@ -59,7 +59,7 @@ gem 'jquery-rails' # Used for bootstrap
 gem 'will_paginate', git: 'https://github.com/mislav/will_paginate.git'
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 6.5'
 end
 
 group :development, :test do
@@ -70,7 +70,7 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '>= 3.0.5', '< 3.11'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -87,11 +87,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'bundle-audit', '~> 0.1.0'
+gem 'bundle-audit', '~> 0.2.0'
 
 gem 'rubocop', '~> 1.39'
 
-gem 'brakeman', '~> 5.4'
+gem 'brakeman', '~> 8.0'
 
 gem "annotate"
 
