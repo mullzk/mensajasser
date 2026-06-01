@@ -59,7 +59,7 @@ gem 'jquery-rails' # Used for bootstrap
 gem 'will_paginate', git: 'https://github.com/mislav/will_paginate.git'
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 6.5'
 end
 
 group :development, :test do
