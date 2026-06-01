@@ -91,7 +91,7 @@ gem 'bundle-audit', '~> 0.2.0'
 
 gem 'rubocop', '~> 1.39'
 
-gem 'brakeman', '~> 5.4'
+gem 'brakeman', '~> 8.0'
 
 gem "annotate"
 
