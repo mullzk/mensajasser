@@ -13,7 +13,8 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect_to controller: 'rounds', action: 'new'
     else
-      flash[:notice] = 'Ungültige user/passwort Kombination'
+      flash.now[:notice] = 'Ungültige user/passwort Kombination'
+      render :login, status: :unprocessable_entity
     end
   end
 
@@ -35,14 +36,16 @@ class UsersController < ApplicationController
           flash[:notice] = 'Password geändert'
           redirect_to root_path
         else
-          flash[:notice] = 'Passwort konnte nicht geändert werden, der Grund ist unklar'
+          flash.now[:notice] = 'Passwort konnte nicht geändert werden, der Grund ist unklar'
         end
       else
-        flash[:notice] = 'Passwort und Bestätigung stimmen nicht überein'
+        flash.now[:notice] = 'Passwort und Bestätigung stimmen nicht überein'
       end
     else
-      flash[:notice] = 'Altes Passwort ist ungültig'
+      flash.now[:notice] = 'Altes Passwort ist ungültig'
     end
+
+    render :change_own_password, status: :unprocessable_entity unless performed?
   end
 
   # GET /users
@@ -68,7 +71,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user, notice: 'User was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -77,7 +80,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, notice: 'User was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

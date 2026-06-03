@@ -34,7 +34,7 @@ class RoundsController < ApplicationController
     if @round.save
       redirect_to controller: 'ranking', action: 'day', date: @round.day
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +43,7 @@ class RoundsController < ApplicationController
     if @round.update(round_params)
       redirect_to @round, notice: 'Round was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
