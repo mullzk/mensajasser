@@ -28,9 +28,9 @@ class Result < ApplicationRecord
   validates_presence_of :spiele, :differenz, :jasser_id
 
   scope :in_date_range, lambda { |from_date, to_date|
-                          joins(:round).where('rounds.day >= ? AND rounds.day<= ?', from_date, to_date)
+                          joins(:round).where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
                         }
-  scope :with_jasser, ->(jasser) { where('jasser_id=?', jasser.id) }
+  scope :with_jasser, ->(jasser) { where("jasser_id=?", jasser.id) }
   scope :summed_up, lambda {
                       select("jasser_id, sum(spiele) spiele,
                                     sum(differenz) differenz,
@@ -40,10 +40,10 @@ class Result < ApplicationRecord
                                     sum(versenkt) versenkt,
                                     sum(gematcht) gematcht,
                                     sum(huebimatch) huebimatch,
-                                    sum(chimiris) chimiris").group('jasser_id').order('jasser_id')
+                                    sum(chimiris) chimiris").group("jasser_id").order("jasser_id")
                     }
   scope :daily_sum_for_all_users, lambda {
-                                    select('sum(spiele) spiele, sum(differenz) differenz, rounds.day as day').group('day').order('day')
+                                    select("sum(spiele) spiele, sum(differenz) differenz, rounds.day as day").group("day").order("day")
                                   }
 
   def schnitt

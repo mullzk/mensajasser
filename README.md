@@ -58,9 +58,23 @@ v2.2 (2026, this version): New Deployment, cleaner environment
 
 ### What happens automatically
 
-- **Tests & linting** run on every push and every pull request (GitHub Actions: Rails test suite, Brakeman, bundler-audit).
+- **Tests** run on every pull request (GitHub Actions: Rails test suite against MariaDB).
+- **Linting** runs on every pull request: bundler-audit, Brakeman, RuboCop (omakase) and Biome (JS/CSS).
 - **Deploy to integration** happens automatically when a push or merged PR lands on `main`.
 - **Dependabot** opens pull requests for outdated gems; CI runs on those PRs as well.
+
+### Linting & git hooks
+
+Style and security checks run both locally (git hooks) and in CI:
+
+- **RuboCop** (`rubocop-rails-omakase`) for Ruby, **Biome** for JS/CSS.
+- Git hooks live in `.githooks/` (committed). `bin/setup` wires them up via
+  `git config core.hooksPath .githooks`; run it once after cloning.
+  - `pre-commit`: RuboCop on staged Ruby + Biome on staged JS/CSS.
+  - `pre-push`: bundler-audit + Brakeman.
+- Biome is a single binary managed by mise (pinned in `.tool-versions`); run
+  `mise install` to get it. No npm project is involved.
+- Manual runs: `bin/rubocop` and `biome check`.
 
 ### Code changes by the developer
 

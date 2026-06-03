@@ -29,7 +29,7 @@ class StatisticTablePerJasser
     sortorder = sort_order_for_key(sortkey)
 
     unless @jasser_results&.size&.positive? && @jasser_results[0].respond_to?(sortkey)
-      raise 'Trying to sort results with an invalid Sortkey'
+      raise "Trying to sort results with an invalid Sortkey"
     end
 
     results_with_sortkey = @jasser_results.select { |stat| stat.send(sortkey) }
@@ -51,7 +51,7 @@ class StatisticTablePerJasser
     %i[spiele differenz roesi droesi versenkt gematcht huebimatch chimiris].each do |col|
       totals[col] = jasser_results.inject(0) { |acc, single_result| acc += single_result.send(col) }
     end
-    totals[:max] = jasser_results.inject(0) { |acc, single_result| acc = [acc, single_result.max].max }
+    totals[:max] = jasser_results.inject(0) { |acc, single_result| acc = [ acc, single_result.max ].max }
     totals[:schnitt] = nil
     %i[versenkt_pro_spiel roesi_pro_spiel droesi_pro_spiel roesi_quote].each do |col|
       totals[col] = nil
@@ -79,9 +79,9 @@ class StatisticTablePerJasser
 
   def sort_order_for_key(sortkey)
     case sortkey
-    when 'spiele', 'differenz', 'maximum', 'droesi', 'versenkt', 'gematcht', 'chimiris', 'versenkt_pro_spiel', 'droesi_pro_spiel', 'roesi_quote'
+    when "spiele", "differenz", "maximum", "droesi", "versenkt", "gematcht", "chimiris", "versenkt_pro_spiel", "droesi_pro_spiel", "roesi_quote"
       -1 # ascending
-    when 'schnitt', 'roesi', 'roesi_ps', 'huebimatch'
+    when "schnitt", "roesi", "roesi_ps", "huebimatch"
       1 # descending
     else
       1

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   helper :all # include all helpers, all the time
-  layout 'mensajasser'
+  layout "mensajasser"
 
   private
 
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def authorize
     return unless session[:user_id].nil? || User.find_by(id: session[:user_id].nil?) && User.count.positive?
 
-    flash[:notice] = 'Bitte einloggen'
-    redirect_to controller: 'users', action: 'login'
+    flash[:notice] = "Bitte einloggen"
+    redirect_to controller: "users", action: "login"
   end
 end

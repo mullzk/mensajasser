@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class ResultTest < ActiveSupport::TestCase
   setup do
     setup_jassers_rounds_and_results
   end
 
-  test 'Scopes of Rounds' do
+  test "Scopes of Rounds" do
     t = Round.in_date_range(@d2017_jan_20, @d2017_jan_20)
     assert t.size == 1, "There should be one round on 2017-01-20, but there were #{t.size}"
     assert t.first.results.size == 4, "Round should have 4 results, but has #{t.first.results.size}"
@@ -16,7 +16,7 @@ class ResultTest < ActiveSupport::TestCase
 
     t = Round.in_date_range(@d2018_start, @d2018_end)
     assert t.size == 6, "There should be 6 rounds in 2018, but there were #{t.size}"
-    t = Round.with_jasser(Jasser.find_by(name: 'jasser5'))
+    t = Round.with_jasser(Jasser.find_by(name: "jasser5"))
     assert t.size == 3, "There should be 3 rounds with jasser5, but there were #{t.size}"
     t = Round.in_date_range(@d2018_start, @d2018_end).with_jasser(@j5)
     assert t.size == 2, "There should two rounds with jasser5 in 2018, but there were #{t.size}"
@@ -27,20 +27,20 @@ class ResultTest < ActiveSupport::TestCase
     assert t.size.zero?, "There should be no rounds with jasser8 in 2018, but there were #{t.size}"
   end
 
-  test 'Scopes of Results' do
+  test "Scopes of Results" do
     t = Result.in_date_range(@d2017_jan_20, @d2017_jan_20)
     assert t.size == 4, "There should be 4 results on 2017-01-20, but there are #{t.size}"
 
     t = Result.in_date_range(@d2018_mar_21, @d2018_mar_21)
     assert t.size == 8, "There should be 8 results on 2018-03-21, but there are #{t.size}"
 
-    t = Result.with_jasser(Jasser.find_by(name: 'jasser5'))
+    t = Result.with_jasser(Jasser.find_by(name: "jasser5"))
     assert t.size == 3, "There should be 3 results with jasser5, but there were #{t.size}"
     t = Result.in_date_range(@d2018_start, @d2018_end).with_jasser(@j5)
     assert t.size == 2, "There should two results with jasser5 in 2018, but there were #{t.size}"
   end
 
-  test 'Summing up Results' do
+  test "Summing up Results" do
     t = Result.in_date_range(@d2017_start, @d2017_end).with_jasser(@j1).summed_up.first
     assert(t.spiele == 30, "Jasser1 should have 30 Spiele in 2017, but has #{t.spiele}")
     assert(t.maximum == 30, "Jasser1's maximum in 2017 should be 30, but is #{t.maximum}")
@@ -52,16 +52,16 @@ class ResultTest < ActiveSupport::TestCase
     assert_nil t, "Summed up Results for jasser6 in 2017 should return nil, but returned #{t.inspect}"
   end
 
-  test 'Create Statistic-Table for Year 2017' do
-    statistic_table = StatisticTablePerJasser.new(@d2017_start, @d2017_end, 'schnitt')
+  test "Create Statistic-Table for Year 2017" do
+    statistic_table = StatisticTablePerJasser.new(@d2017_start, @d2017_end, "schnitt")
     assert(statistic_table.jasser_results && statistic_table.totals && statistic_table.averages)
 
     assert(statistic_table.jasser_results.size == 5)
     result1 = statistic_table.jasser_results[0]
-    assert(result1.rank == 1, 'Rank should be 1')
-    assert(result1.jasser, 'Jasser should be present')
+    assert(result1.rank == 1, "Rank should be 1")
+    assert(result1.jasser, "Jasser should be present")
     assert(result1.jasser.id == @j1.id)
-    assert(result1.jasser.name == 'jasser1')
+    assert(result1.jasser.name == "jasser1")
     assert(result1.spiele == 30)
     assert(result1.differenz == 300)
     assert(result1.schnitt == 10)
@@ -81,7 +81,7 @@ class ResultTest < ActiveSupport::TestCase
     assert(result2.rank == 2)
     assert(result2.jasser)
     assert(result2.jasser.id == @j4.id)
-    assert(result2.jasser.name == 'jasser4')
+    assert(result2.jasser.name == "jasser4")
     assert(result2.spiele == 20)
     assert(result2.differenz == 220)
     assert(result2.schnitt == 11)
@@ -114,7 +114,7 @@ class ResultTest < ActiveSupport::TestCase
     assert_nil(averages.max)
   end
 
-  test 'Create Berseker-Stat' do
+  test "Create Berseker-Stat" do
     statistic_table = BersekerStatisticTable.new(@d2017_start, @d2017_end, :schaedling_index)
     assert(statistic_table && statistic_table.jasser_results)
     assert(statistic_table.jasser_results.size == 5)
@@ -149,7 +149,7 @@ class ResultTest < ActiveSupport::TestCase
     assert(jasser5_stat.schaedling_index == 1020.0 / 3.0 / 30.0 / 20.0)
   end
 
-  test 'Create Angstgegner-Stat' do
+  test "Create Angstgegner-Stat" do
     statistic_table = AngstgegnerTable.new(@j1, @d2018_mar_start, @d2018_mar_end, :schaedling_index)
     assert(statistic_table && statistic_table.jasser_results)
     assert(statistic_table.jasser_results.size == 5)
@@ -181,7 +181,7 @@ class ResultTest < ActiveSupport::TestCase
     assert(jasser3_stat.schaedling_index == 10.0 / 11.0)
   end
 
-  test 'Create Time-Series' do
+  test "Create Time-Series" do
     t_year_j1 = @j1.timeseries_for_year(@d2018_mar_21)
     t_run_j1  = @j1.timeseries_running
     t_ewig_j1 = @j1.timeseries_ewig
@@ -208,7 +208,7 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(t_ewig_j1[@d2018_mar_21], 1140 / 100.0)
   end
 
-  test 'Accept Empty Timeseries' do
+  test "Accept Empty Timeseries" do
     t_year_j8 = @j8.timeseries_for_year(@d2018_mar_21)
     t_run_j8  = @j8.timeseries_running
     t_ewig_j8 = @j8.timeseries_ewig
@@ -218,7 +218,7 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(t_ewig_j8, {})
   end
 
-  test 'Calculate Overall-Schnitt' do
+  test "Calculate Overall-Schnitt" do
     all_results = Result.in_date_range(@d2017_start, @d2018_end).daily_sum_for_all_users
 
     assert_equal(all_results.length, 8)
@@ -235,10 +235,10 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal(timeseries[@d2018_jan_22], 2180 / 160.0)
   end
 
-  test 'Get Best and Worst Rounds' do
-    assert_equal(@t5.id, Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order('schnitt desc').first.id)
-    assert_equal(@t3.id, Round.in_date_range(@d2017_start, @d2017_end).summed_on_ris.order('schnitt desc').first.id)
-    assert_equal(@t7.id, Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order('schnitt asc').first.id)
+  test "Get Best and Worst Rounds" do
+    assert_equal(@t5.id, Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order("schnitt desc").first.id)
+    assert_equal(@t3.id, Round.in_date_range(@d2017_start, @d2017_end).summed_on_ris.order("schnitt desc").first.id)
+    assert_equal(@t7.id, Round.in_date_range(@d2017_start, @d2018_end).summed_on_ris.order("schnitt asc").first.id)
   end
 
   private
@@ -268,14 +268,14 @@ class ResultTest < ActiveSupport::TestCase
     @d2018_mar_20   = Date.new(2018, 3, 20)
     @d2018_mar_21   = Date.new(2018, 3, 21)
 
-    @j1 = FactoryBot.create(:jasser, name: 'jasser1', disqualifiziert: false)
-    @j2 = FactoryBot.create(:jasser, name: 'jasser2', disqualifiziert: false)
-    @j3 = FactoryBot.create(:jasser, name: 'jasser3', disqualifiziert: false)
-    @j4 = FactoryBot.create(:jasser, name: 'jasser4', disqualifiziert: false)
-    @j5 = FactoryBot.create(:jasser, name: 'jasser5', disqualifiziert: false)
-    @j6 = FactoryBot.create(:jasser, name: 'jasser6')
-    @j7 = FactoryBot.create(:jasser, name: 'jasser7')
-    @j8 = FactoryBot.create(:jasser, name: 'jasser8')
+    @j1 = FactoryBot.create(:jasser, name: "jasser1", disqualifiziert: false)
+    @j2 = FactoryBot.create(:jasser, name: "jasser2", disqualifiziert: false)
+    @j3 = FactoryBot.create(:jasser, name: "jasser3", disqualifiziert: false)
+    @j4 = FactoryBot.create(:jasser, name: "jasser4", disqualifiziert: false)
+    @j5 = FactoryBot.create(:jasser, name: "jasser5", disqualifiziert: false)
+    @j6 = FactoryBot.create(:jasser, name: "jasser6")
+    @j7 = FactoryBot.create(:jasser, name: "jasser7")
+    @j8 = FactoryBot.create(:jasser, name: "jasser8")
 
     @t1 = FactoryBot.create(:round, day: @d2017_jan_20)
     @t2 = FactoryBot.create(:round, day: @d2017_jan_21)

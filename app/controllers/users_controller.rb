@@ -11,9 +11,9 @@ class UsersController < ApplicationController
     user = User.authenticate(params[:name], params[:password])
     if user
       session[:user_id] = user.id
-      redirect_to controller: 'rounds', action: 'new'
+      redirect_to controller: "rounds", action: "new"
     else
-      flash.now[:notice] = 'Ungültige user/passwort Kombination'
+      flash.now[:notice] = "Ungültige user/passwort Kombination"
       render :login, status: :unprocessable_entity
     end
   end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def logout
     session[:user_id] = nil
     session[:user_is_admin] = nil
-    flash[:notice] = 'Logged out'
+    flash[:notice] = "Logged out"
     redirect_to controller: :ranking, action: :year
   end
 
@@ -33,16 +33,16 @@ class UsersController < ApplicationController
     if user
       if params[:user][:password] == params[:user][:password_confirmation]
         if @user.update_attribute(:password, params[:user][:password])
-          flash[:notice] = 'Password geändert'
+          flash[:notice] = "Password geändert"
           redirect_to root_path
         else
-          flash.now[:notice] = 'Passwort konnte nicht geändert werden, der Grund ist unklar'
+          flash.now[:notice] = "Passwort konnte nicht geändert werden, der Grund ist unklar"
         end
       else
-        flash.now[:notice] = 'Passwort und Bestätigung stimmen nicht überein'
+        flash.now[:notice] = "Passwort und Bestätigung stimmen nicht überein"
       end
     else
-      flash.now[:notice] = 'Altes Passwort ist ungültig'
+      flash.now[:notice] = "Altes Passwort ist ungültig"
     end
 
     render :change_own_password, status: :unprocessable_entity unless performed?
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to @user, notice: "User was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to @user, notice: "User was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to users_url, notice: "User was successfully destroyed."
   end
 
   private

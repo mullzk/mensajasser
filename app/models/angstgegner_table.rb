@@ -40,7 +40,7 @@ class AngstgegnerTable
     sortorder = sort_order_for_key(sortkey)
 
     unless @jasser_results&.size&.positive? && @jasser_results[0].respond_to?(sortkey)
-      raise 'Trying to sort results with an invalid Sortkey'
+      raise "Trying to sort results with an invalid Sortkey"
     end
 
     results_with_sortkey = @jasser_results.select { |stat| stat.send(sortkey) }

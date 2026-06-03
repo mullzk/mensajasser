@@ -7,7 +7,7 @@ class RoundsController < ApplicationController
   # GET /rounds
   def index
     @user_is_authorized = User.find_by(id: session[:user_id]) ? true : false
-    @rounds = Round.order('day desc').page(params[:page])
+    @rounds = Round.order("day desc").page(params[:page])
   end
 
   # GET /rounds/1
@@ -32,7 +32,7 @@ class RoundsController < ApplicationController
     @round = Round.new(round_params)
     @jassers = Jasser.where(active: true).sort { |a, b| a.name <=> b.name }
     if @round.save
-      redirect_to controller: 'ranking', action: 'day', date: @round.day
+      redirect_to controller: "ranking", action: "day", date: @round.day
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class RoundsController < ApplicationController
   # PATCH/PUT /rounds/1
   def update
     if @round.update(round_params)
-      redirect_to @round, notice: 'Round was successfully updated.'
+      redirect_to @round, notice: "Round was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class RoundsController < ApplicationController
   # DELETE /rounds/1
   def destroy
     @round.destroy
-    redirect_to rounds_url, notice: 'Round was successfully destroyed.'
+    redirect_to rounds_url, notice: "Round was successfully destroyed."
   end
 
   private

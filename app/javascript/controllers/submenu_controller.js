@@ -5,8 +5,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   toggle(event) {
     const submenu = event.currentTarget.nextElementSibling
-    if (submenu && submenu.hasAttribute("toggle-view")) {
-      submenu.style.display = submenu.style.display !== "block" ? "block" : "none"
+    if (submenu?.hasAttribute("toggle-view")) {
+      submenu.style.display =
+        submenu.style.display !== "block" ? "block" : "none"
     }
     event.preventDefault()
     event.stopPropagation()

@@ -43,6 +43,14 @@ jobs:
         run: bin/bundler-audit --update
       - name: Security audit application code
         run: bin/brakeman -q -w2
+      - name: Lint Ruby code
+        run: bin/rubocop -f github
+      - name: Set up Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: 2.4.16
+      - name: Lint JS/CSS with Biome
+        run: biome ci
 
   deploy_integration:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

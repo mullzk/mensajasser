@@ -27,8 +27,8 @@ class User < ApplicationRecord
   def validate
     return unless privilege.positive?
 
-    errors.add_to_base('Für User und Admins wird ein Username benötigt') if username.blank?
-    errors.add_to_base('Für User und Admins wird ein Passwort benötigt') if hashed_password.blank?
+    errors.add_to_base("Für User und Admins wird ein Username benötigt") if username.blank?
+    errors.add_to_base("Für User und Admins wird ein Passwort benötigt") if hashed_password.blank?
   end
 
   attr_reader :password
