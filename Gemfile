@@ -18,7 +18,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
 
 gem 'trilogy'
-gem "sqlite3", "~> 2.0"  # temporär für SQLite-Migration, danach entfernen
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
@@ -56,7 +55,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Gems for this project, added by mullzk
 gem 'bootstrap'
 gem 'jquery-rails' # Used for bootstrap
-gem 'will_paginate', git: 'https://github.com/mislav/will_paginate.git'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.5'
