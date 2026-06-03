@@ -6,9 +6,11 @@ import { Controller } from "@hotwired/stimulus"
 //          <button data-action="click->navbar-toggle#toggle">…</button>
 export default class extends Controller {
   toggle(event) {
-    document.querySelectorAll(".navbar .navbar-collapse").forEach((collapse) => {
-      collapse.classList.toggle("show")
-    })
+    document
+      .querySelectorAll(".navbar .navbar-collapse")
+      .forEach((collapse) => {
+        collapse.classList.toggle("show")
+      })
     event.preventDefault()
     event.stopPropagation()
   }

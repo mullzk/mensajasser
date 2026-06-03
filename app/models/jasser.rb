@@ -17,24 +17,24 @@ class Jasser < ApplicationRecord
   has_many :results
   has_many :rounds, through: :results
 
-  scope :valid, -> { where('disqualifiziert=false') }
+  scope :valid, -> { where("disqualifiziert=false") }
 
   def self.having_results_in_time_interval(from_date, to_date)
     jasser_ids = Result.joins(:round)
-                       .where('rounds.day >= ? AND rounds.day<= ?', from_date, to_date)
-                       .select('jasser_id')
-                       .group('jasser_id')
+                       .where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
+                       .select("jasser_id")
+                       .group("jasser_id")
                        .collect { |result| result[:jasser_id] }
-    Jasser.where('id IN (?)', jasser_ids)
+    Jasser.where("id IN (?)", jasser_ids)
   end
 
   def rounds_spiele_and_differenz(from_date, to_date)
     spiele_and_differenz = {}
     results_in_time_range = Result.joins(:round)
-                                  .select('rounds.day, results.spiele, results.differenz')
-                                  .where('results.jasser_id=?', id)
-                                  .where('rounds.day >= ? AND rounds.day<= ?', from_date, to_date)
-                                  .order('rounds.day')
+                                  .select("rounds.day, results.spiele, results.differenz")
+                                  .where("results.jasser_id=?", id)
+                                  .where("rounds.day >= ? AND rounds.day<= ?", from_date, to_date)
+                                  .order("rounds.day")
     results_in_time_range.each do |result|
       result.day = result.day.is_a?(String) ? Date.parse(result.day) : result.day
       if spiele_and_differenz[result.day]
@@ -52,7 +52,7 @@ class Jasser < ApplicationRecord
   end
 
   def first_round
-    rounds.order('rounds.day').first
+    rounds.order("rounds.day").first
   end
 
   def timeseries_running

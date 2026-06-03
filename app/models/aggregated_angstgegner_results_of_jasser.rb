@@ -29,7 +29,7 @@ class AggregatedAngstgegnerResultsOfJasser
     @gematcht  += named_arguments[:own_result].gematcht
     @huebimatch += named_arguments[:own_result].huebimatch
     @chimiris += named_arguments[:own_result].chimiris
-    @max = [@max, named_arguments[:own_result].max].max
+    @max = [ @max, named_arguments[:own_result].max ].max
   end
 
   def eigener_schnitt

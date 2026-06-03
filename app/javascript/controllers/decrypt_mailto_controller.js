@@ -6,7 +6,7 @@ export default class extends Controller {
   static values = { address: String }
 
   connect() {
-    this.element.href = "mailto:" + this.decrypt(this.addressValue)
+    this.element.href = `mailto:${this.decrypt(this.addressValue)}`
   }
 
   decrypt(string) {

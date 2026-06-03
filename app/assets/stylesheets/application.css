@@ -8,7 +8,7 @@
 .tableau th div {
   writing-mode: tb-rl;
 }
-.tableau td input[type=number] {
+.tableau td input[type="number"] {
   width: 4em;
   margin: 2px;
 }
@@ -37,7 +37,7 @@
   color: #fff;
 }
 tr.list-line-odd {
-  background-color: #AdA;
+  background-color: #ada;
 }
 tr.list-line-even {
   background-color: white;
@@ -47,20 +47,24 @@ tr.list-line-even {
 }
 
 tr.new_entry_row {
-  background-color: #D8D8D8;
+  background-color: #d8d8d8;
   border-top: black thin dotted;
 }
 
 th {
   text-align: left;
 }
-table.simple, table.simple tr, table.simple td, table.simple th {
+table.simple,
+table.simple tr,
+table.simple td,
+table.simple th {
   border: black thin solid;
   border-collapse: collapse;
   padding: 2px;
   vertical-align: top;
 }
-table.simple tr.total, table.simple tr.total td {
+table.simple tr.total,
+table.simple tr.total td {
   border-bottom: black thick solid;
   border-top: black 3px double;
   font-weight: bold;
@@ -87,11 +91,15 @@ tr.space_above_and_beyond td {
 /* ---- Navigation, headings, rankings (formerly mensajasser_styles.scss) ---- */
 
 /* Links in Heading, on Table-Headings and non-prominent-Links like the Last-Round-Link on the bottom */
-.headlinks a, a.decent, table.ranking a {
+.headlinks a,
+a.decent,
+table.ranking a {
   color: black;
   text-decoration: none;
 }
-span.headlinks a:before, a.decent:before, table.ranking th a:before {
+span.headlinks a:before,
+a.decent:before,
+table.ranking th a:before {
   content: ">";
 }
 
@@ -109,7 +117,6 @@ span.headlinks a:before, a.decent:before, table.ranking th a:before {
   overflow-y: scroll;
 }
 .dropdown-submenu .dropdown-menu a.nav-link {
-  margin-left: 3em;
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   margin: 0;
@@ -126,15 +133,36 @@ span.headlinks a:before, a.decent:before, table.ranking th a:before {
 	only the previous and the next period (hiding the hierarchy 2).
 	On bigger devices, we provide more links to periods and differentiate them by font-size
 */
-h1 { font-size: 1em; }
-.headlinks-hierarchy-0 { font-weight: bold; }
-.headlinks-hierarchy-1 { padding: 10px; font-size: 60%; }
-.headlinks-hierarchy-2 { display: none; }
+h1 {
+  font-size: 1em;
+}
+.headlinks-hierarchy-0 {
+  font-weight: bold;
+}
+.headlinks-hierarchy-1 {
+  padding: 10px;
+  font-size: 60%;
+}
+.headlinks-hierarchy-2 {
+  display: none;
+}
 @media (min-width: 768px) {
-  h1 { font-size: 2em; }
-  .headlinks-hierarchy-0 { padding: 20px; font-weight: normal; }
-  .headlinks-hierarchy-1 { padding: 15px; font-size: 60%; }
-  .headlinks-hierarchy-2 { padding: 10px; font-size: 40%; display: inline; }
+  h1 {
+    font-size: 2em;
+  }
+  .headlinks-hierarchy-0 {
+    padding: 20px;
+    font-weight: normal;
+  }
+  .headlinks-hierarchy-1 {
+    padding: 15px;
+    font-size: 60%;
+  }
+  .headlinks-hierarchy-2 {
+    padding: 10px;
+    font-size: 40%;
+    display: inline;
+  }
 }
 
 /* Rails flash[:notice] */
@@ -146,17 +174,35 @@ h1 { font-size: 1em; }
   font: bold smaller sans-serif;
 }
 
-table.ranking td, table.ranking th { text-align: right; }
-table.ranking td.string, table.ranking th.string { text-align: left; }
+table.ranking td,
+table.ranking th {
+  text-align: right;
+}
+table.ranking td.string,
+table.ranking th.string {
+  text-align: left;
+}
 table.ranking tr {
   border-top: solid gray 1px;
   border-bottom: solid gray 1px;
 }
-table.ranking tr.trennung_top { border-top: solid black 2px; }
+table.ranking tr.trennung_top {
+  border-top: solid black 2px;
+}
 
 /* Color-Definitions used for cycling of Row-Background in Ranking-Tables */
-.color_silver { background-color: silver; }
-.color_blue { background-color: rgb(165, 148, 247); }
-.color_green { background-color: rgb(125, 209, 137); }
-.color_yellow { background-color: rgb(219, 233, 140); }
-.color_red { background-color: rgb(214, 69, 43); }
+.color_silver {
+  background-color: silver;
+}
+.color_blue {
+  background-color: rgb(165, 148, 247);
+}
+.color_green {
+  background-color: rgb(125, 209, 137);
+}
+.color_yellow {
+  background-color: rgb(219, 233, 140);
+}
+.color_red {
+  background-color: rgb(214, 69, 43);
+}
