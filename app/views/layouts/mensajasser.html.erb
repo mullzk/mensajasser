@@ -16,7 +16,7 @@
     <%= javascript_importmap_tags %>
 	
 	<%- if (@page_specific_js_libraries || []).include?('plotly') %>
-	    <script type="text/javascript" src="/plotly-latest.min.js"></script>
+	    <script type="text/javascript" src="/plotly-latest.min.js" data-turbo-track="reload"></script>
 	<% end -%>
   </head>
 
