@@ -106,7 +106,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch '/change_password',
           params: { old_password: 'wrong_password', "user[password]": newpass,
                     "user[password_confirmation]": newpass }
-    assert_response :success # On wrong password, we stay on the change_own_password-page and therefor get a success
+    assert_response :unprocessable_entity # On wrong password we re-render the form with a 422 so Turbo shows the error
     patch '/change_password',
           params: { old_password: @admin.password, "user[password]": newpass,
                     "user[password_confirmation]": newpass }

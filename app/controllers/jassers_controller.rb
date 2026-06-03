@@ -26,7 +26,7 @@ class JassersController < ApplicationController
     if @jasser.save
       redirect_to @jasser, notice: 'Jasser was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -35,7 +35,7 @@ class JassersController < ApplicationController
     if @jasser.update(jasser_params)
       redirect_to @jasser, notice: 'Jasser was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

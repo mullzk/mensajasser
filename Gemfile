@@ -9,20 +9,13 @@ ruby '3.3.5'
 gem 'rails', '~> 8.1.3'
 # Use Puma as the app server
 gem 'puma', '>= 4.3.9'
-# Use SCSS for stylesheets
-# gem 'sass-rails', '~> 5.0'
-gem 'sassc-rails'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'mini_racer', platforms: :ruby
+# Asset pipeline and Hotwire (propshaft + importmap + Turbo/Stimulus)
+gem 'propshaft'
+gem 'importmap-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
 
 gem 'trilogy'
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'         ## Commented out by Mullzk. Mensajasser is HTML only.
 # Use Redis adapter to run Action Cable in production
@@ -53,8 +46,6 @@ end
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Gems for this project, added by mullzk
-gem 'bootstrap'
-gem 'jquery-rails' # Used for bootstrap
 gem 'will_paginate'
 
 group :development, :test do

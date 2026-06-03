@@ -29,7 +29,7 @@ module ApplicationHelper
 
   def encrypted_mailto_link_for_adresses(array_of_mail_adresses)
     mail_adresses = encrypt_mails_adresses(array_of_mail_adresses.join(', '))
-    "<a href='' data-js-decrypt-mailto-links='#{mail_adresses}' class='decent'>Mail an alle Jasser</a>"
+    "<a href='' data-controller='decrypt-mailto' data-decrypt-mailto-address-value='#{mail_adresses}' class='decent'>Mail an alle Jasser</a>"
   end
 
   private

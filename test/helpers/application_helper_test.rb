@@ -15,7 +15,7 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal(encoded_string, expected_string, 'Encoded Mail Addresses was not as expected')
 
     assert_dom_equal(
-      "<a href='' data-js-decrypt-mailto-links='#{expected_string}' class='decent'>Mail an alle Jasser</a>", encrypted_mailto_link_for_adresses(@all_active_jassers_email)
+      "<a href='' data-controller='decrypt-mailto' data-decrypt-mailto-address-value='#{expected_string}' class='decent'>Mail an alle Jasser</a>", encrypted_mailto_link_for_adresses(@all_active_jassers_email)
     )
   end
 end
