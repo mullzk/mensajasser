@@ -24,25 +24,25 @@ class JassersController < ApplicationController
     @jasser = Jasser.new(jasser_params)
 
     if @jasser.save
-      redirect_to @jasser, notice: 'Jasser was successfully created.'
+      redirect_to @jasser, notice: "Jasser was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /jassers/1
   def update
     if @jasser.update(jasser_params)
-      redirect_to @jasser, notice: 'Jasser was successfully updated.'
+      redirect_to @jasser, notice: "Jasser was successfully updated."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /jassers/1
   def destroy
     @jasser.destroy
-    redirect_to jassers_url, notice: 'Jasser was successfully destroyed.'
+    redirect_to jassers_url, notice: "Jasser was successfully destroyed."
   end
 
   private

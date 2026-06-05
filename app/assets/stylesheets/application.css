@@ -1,0 +1,208 @@
+/*
+ * Application styles. Bootstrap is loaded separately as a vendored, compiled
+ * stylesheet (bootstrap.min.css) ahead of this file.
+ */
+
+/* ---- General tables / forms (formerly mensajasser.scss) ---- */
+
+.tableau th div {
+  writing-mode: tb-rl;
+}
+.tableau td input[type="number"] {
+  width: 4em;
+  margin: 2px;
+}
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px -7px 0;
+  background-color: #c00;
+  color: #fff;
+}
+tr.list-line-odd {
+  background-color: #ada;
+}
+tr.list-line-even {
+  background-color: white;
+}
+.currency {
+  text-align: right;
+}
+
+tr.new_entry_row {
+  background-color: #d8d8d8;
+  border-top: black thin dotted;
+}
+
+th {
+  text-align: left;
+}
+table.simple,
+table.simple tr,
+table.simple td,
+table.simple th {
+  border: black thin solid;
+  border-collapse: collapse;
+  padding: 2px;
+  vertical-align: top;
+}
+table.simple tr.total,
+table.simple tr.total td {
+  border-bottom: black thick solid;
+  border-top: black 3px double;
+  font-weight: bold;
+}
+table a {
+  color: black;
+}
+table.decent a {
+  color: black;
+  text-decoration: none;
+}
+table.decent a:before {
+  content: ">";
+}
+.number {
+  text-align: right;
+}
+
+tr.space_above_and_beyond td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* ---- Navigation, headings, rankings (formerly mensajasser_styles.scss) ---- */
+
+/* Links in Heading, on Table-Headings and non-prominent-Links like the Last-Round-Link on the bottom */
+.headlinks a,
+a.decent,
+table.ranking a {
+  color: black;
+  text-decoration: none;
+}
+span.headlinks a:before,
+a.decent:before,
+table.ranking th a:before {
+  content: ">";
+}
+
+.nav-item.dropdown {
+  min-width: 12em;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  max-height: 7em;
+  overflow-y: scroll;
+}
+.dropdown-submenu .dropdown-menu a.nav-link {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  margin: 0;
+}
+@media (min-width: 992px) {
+  .dropdown-submenu .dropdown-menu {
+    max-height: 20em;
+  }
+}
+
+/*	Headings above Ranking-Tables
+	On Small Devices, h1 should not be all that big, as the focus should be on the table.
+	Therefor we reduce the font-size, the padding between the YearXY-Links and we show
+	only the previous and the next period (hiding the hierarchy 2).
+	On bigger devices, we provide more links to periods and differentiate them by font-size
+*/
+h1 {
+  font-size: 1em;
+}
+.headlinks-hierarchy-0 {
+  font-weight: bold;
+}
+.headlinks-hierarchy-1 {
+  padding: 10px;
+  font-size: 60%;
+}
+.headlinks-hierarchy-2 {
+  display: none;
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+  .headlinks-hierarchy-0 {
+    padding: 20px;
+    font-weight: normal;
+  }
+  .headlinks-hierarchy-1 {
+    padding: 15px;
+    font-size: 60%;
+  }
+  .headlinks-hierarchy-2 {
+    padding: 10px;
+    font-size: 40%;
+    display: inline;
+  }
+}
+
+/* Rails flash[:notice] */
+#notice {
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+  font: bold smaller sans-serif;
+}
+
+table.ranking td,
+table.ranking th {
+  text-align: right;
+}
+table.ranking td.string,
+table.ranking th.string {
+  text-align: left;
+}
+table.ranking tr {
+  border-top: solid gray 1px;
+  border-bottom: solid gray 1px;
+}
+table.ranking tr.trennung_top {
+  border-top: solid black 2px;
+}
+
+/* Color-Definitions used for cycling of Row-Background in Ranking-Tables */
+.color_silver {
+  background-color: silver;
+}
+.color_blue {
+  background-color: rgb(165, 148, 247);
+}
+.color_green {
+  background-color: rgb(125, 209, 137);
+}
+.color_yellow {
+  background-color: rgb(219, 233, 140);
+}
+.color_red {
+  background-color: rgb(214, 69, 43);
+}

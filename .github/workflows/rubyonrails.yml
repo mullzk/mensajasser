@@ -7,6 +7,7 @@ on:
       - production
 jobs:
   test:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
@@ -42,9 +43,16 @@ jobs:
         run: bin/bundler-audit --update
       - name: Security audit application code
         run: bin/brakeman -q -w2
+      - name: Lint Ruby code
+        run: bin/rubocop -f github
+      - name: Set up Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: 2.4.16
+      - name: Lint JS/CSS with Biome
+        run: biome ci
 
   deploy_integration:
-    needs: [test]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     uses: ./.github/workflows/deploy.yml
     with:
@@ -52,7 +60,6 @@ jobs:
     secrets: inherit
 
   deploy_production:
-    needs: [test]
     if: github.ref == 'refs/heads/production' && github.event_name == 'push'
     uses: ./.github/workflows/deploy.yml
     with:

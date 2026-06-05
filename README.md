@@ -10,16 +10,19 @@ Although publicly accessible, the Mensajasser-Project is not meant for wide dist
 
 ## System dependencies & Configuration
 To run this project, you need: 
-- Ruby, at least version 2.5.1 (I use rvm for keeping track of ruby versions)
-- Rails 5.2.1  (gem install rails)
+- Ruby 3.3.5 (I use mise for keeping track of ruby versions)
+- Rails 8 (installed via `bundle install`)
 - Bundler (gem install bundler)
-- Postgres  
+- MariaDB (MySQL-compatible; the app talks to it via the Trilogy adapter)
 everything else should get installed when running "bundle install"
 
 ## Database 
-Once Postgres is installed, you should create the databases according to config/database.yml.  
-`createdb mensajasser_development`
-`createdb mensajasser_test``
+The app reads its connection from `DATABASE_URL` (see `config/database.yml`), kept
+in a local, uncommitted `.env` file:
+```
+DATABASE_URL=trilogy://user:pass@127.0.0.1/mensajasser_development
+```
+Create the development and test databases in MariaDB, then run `rails db:schema:load`.
 
 ## Testing
 Testing is rudimentary, but running  
@@ -39,9 +42,10 @@ v2.0  (2018):
 - Improved Form for adding new rounds
 - Favicon
 - Encoding Email-Adresses
-v2.1 (2019, this version);
+v2.1 (2019);
 - Graph for overall-Average
 - Tables for worst Games
+v2.2 (2026, this version): New Deployment, cleaner environment
 
 ## Todo
 - A better form for adding new rounds (multi-page-form?)
@@ -54,9 +58,23 @@ v2.1 (2019, this version);
 
 ### What happens automatically
 
-- **Tests & linting** run on every push and every pull request (GitHub Actions: Rails test suite, Brakeman, bundler-audit).
+- **Tests** run on every pull request (GitHub Actions: Rails test suite against MariaDB).
+- **Linting** runs on every pull request: bundler-audit, Brakeman, RuboCop (omakase) and Biome (JS/CSS).
 - **Deploy to integration** happens automatically when a push or merged PR lands on `main`.
 - **Dependabot** opens pull requests for outdated gems; CI runs on those PRs as well.
+
+### Linting & git hooks
+
+Style and security checks run both locally (git hooks) and in CI:
+
+- **RuboCop** (`rubocop-rails-omakase`) for Ruby, **Biome** for JS/CSS.
+- Git hooks live in `.githooks/` (committed). `bin/setup` wires them up via
+  `git config core.hooksPath .githooks`; run it once after cloning.
+  - `pre-commit`: RuboCop on staged Ruby + Biome on staged JS/CSS.
+  - `pre-push`: bundler-audit + Brakeman.
+- Biome is a single binary managed by mise (pinned in `.tool-versions`); run
+  `mise install` to get it. No npm project is involved.
+- Manual runs: `bin/rubocop` and `biome check`.
 
 ### Code changes by the developer
 

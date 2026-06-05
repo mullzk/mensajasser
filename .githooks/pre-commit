@@ -1,0 +1,21 @@
+#!/bin/sh
+# Fast style feedback before each commit:
+#   - RuboCop on staged Ruby files
+#   - Biome on staged JS/CSS files
+# Heavier security checks (Brakeman, bundler-audit) live in the pre-push hook.
+
+ruby_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(rb|rake|builder)$|(^|/)Gemfile$')
+if [ -n "$ruby_files" ]; then
+  bin/rubocop --force-exclusion $ruby_files || exit 1
+fi
+
+asset_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|css)$')
+if [ -n "$asset_files" ]; then
+  # Resolve biome from PATH, falling back to the mise-managed binary.
+  biome_bin=$(command -v biome 2>/dev/null || mise which biome 2>/dev/null)
+  if [ -n "$biome_bin" ]; then
+    "$biome_bin" check --files-ignore-unknown=true $asset_files || exit 1
+  else
+    echo "pre-commit: biome not found (run 'mise install'); skipping JS/CSS lint" >&2
+  fi
+fi

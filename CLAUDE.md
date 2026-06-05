@@ -25,15 +25,14 @@ Mensajasser is a Ruby on Rails application for tracking statistics for a group o
 - Mobile-friendly responsive design
 
 ### Database
-- Uses SQLite for development and testing
+- Uses MariaDB (via the Trilogy adapter) in all environments
 - Database schema includes rounds, jassers, results, and users tables
 - Complex statistical calculations are performed via model methods and SQL queries
 
 ### Frontend
-- Uses Rails asset pipeline with SCSS for styling
-- Bootstrap for responsive design
-- CoffeeScript for JavaScript functionality
-- jQuery for DOM manipulation
+- Propshaft asset pipeline with importmap-rails (no bundler/transpiler)
+- Hotwire (Turbo + Stimulus) for JavaScript behavior
+- Plain CSS, with a vendored, compiled Bootstrap 5 stylesheet for responsive design
 
 ## Development Notes
 
@@ -46,8 +45,8 @@ Mensajasser is a Ruby on Rails application for tracking statistics for a group o
 ### Dependencies
 - Rails 8.0
 - Ruby 3.3.5
-- Bootstrap for styling
-- jQuery for JavaScript
+- Bootstrap 5 (vendored compiled CSS) for styling
+- Hotwire (Turbo + Stimulus) for JavaScript
 - Will_paginate for pagination
 
 ### Deployment

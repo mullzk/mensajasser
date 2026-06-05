@@ -319,7 +319,7 @@ Result (Individual Performance)
 - **Query Optimization**: Efficient SQL queries with proper joins and scopes
 
 ## Integration Points
-- **Heroku Deployment**: Configured for Heroku hosting
+- **Deployment**: Capistrano-based deploy to a VPS, Puma under systemd
 - **Asset Pipeline**: Rails asset pipeline for CSS/JS management
-- **Database**: SQLite for development, PostgreSQL for production
+- **Database**: MariaDB in all environments, accessed via the Trilogy adapter
 - **Email Integration**: Basic email field capture for players

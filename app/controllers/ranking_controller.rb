@@ -4,71 +4,71 @@ class RankingController < ApplicationController
   def year
     @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
     @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_year, @date.end_of_year, sortkey)
   end
 
   def month
     @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
     @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_month, @date.end_of_month, sortkey)
   end
 
   def versenker_und_roesis
     @date = parse_day_param(params[:date])
-    params[:order] ||= 'versenkt_pro_spiel'
+    params[:order] ||= "versenkt_pro_spiel"
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', versenkt: 'Versenkt', versenkt_pro_spiel: 'Versenker p.Spiel', roesi: 'Rösi',
-                 roesi_pro_spiel: 'Rösi p.Spiel', droesi: '2xRösi', droesi_pro_spiel: '2xRösi p.Spiel', roesi_quote: 'Rösi-Quote' }
+    @columns = { spiele: "Spiele", versenkt: "Versenkt", versenkt_pro_spiel: "Versenker p.Spiel", roesi: "Rösi",
+                 roesi_pro_spiel: "Rösi p.Spiel", droesi: "2xRösi", droesi_pro_spiel: "2xRösi p.Spiel", roesi_quote: "Rösi-Quote" }
     @statistic_table = StatisticTablePerJasser.new(@date.beginning_of_year, @date.end_of_year, sortkey)
   end
 
   def last_12_months
     @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
     @statistic_table = StatisticTablePerJasser.new((@date - 1.year), @date, sortkey)
   end
 
   def last_3_months
     @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
     @statistic_table = StatisticTablePerJasser.new((@date - 3.months), @date, sortkey)
   end
 
   def ewig
     @date = parse_day_param(params[:date])
     sortkey = permit_sort_key(params[:order])
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
     @statistic_table = StatisticTablePerJasser.new(Date.new(1980, 1, 1), Date.today, sortkey)
   end
 
   def berseker
     sortkey = permit_sort_key_berseker(params[:order])
     @date = parse_day_param(params[:date])
-    @columns = { spiele: 'Spiele', eigener_schnitt: 'Eigener Schnitt', gegner_schnitt: 'Gegner Schnitt',
-                 schaedling_index: 'Schaedling' }
+    @columns = { spiele: "Spiele", eigener_schnitt: "Eigener Schnitt", gegner_schnitt: "Gegner Schnitt",
+                 schaedling_index: "Schaedling" }
     @statistic_table = BersekerStatisticTable.new(@date.beginning_of_year, @date.end_of_year, sortkey)
   end
 
   def day
     @date = parse_day_param(params[:date])
-    @rounds = Round.where('day = ?', @date)
+    @rounds = Round.where("day = ?", @date)
     if @rounds.empty?
       @date = Round.order(created_at: :desc).first.day
-      @rounds = Round.where('day = ?', @date)
+      @rounds = Round.where("day = ?", @date)
     end
 
-    @columns = { spiele: 'Spiele', differenz: 'Differenz', schnitt: 'Schnitt', max: 'Max', roesi: 'Rösi',
-                 droesi: '2xRösi', versenkt: 'Versenkt', gematcht: 'Match', huebimatch: 'H.Match', chimiris: 'Dähler-Ris' }
-    @statistic_table = StatisticTablePerJasser.new(@date, @date, 'schnitt')
+    @columns = { spiele: "Spiele", differenz: "Differenz", schnitt: "Schnitt", max: "Max", roesi: "Rösi",
+                 droesi: "2xRösi", versenkt: "Versenkt", gematcht: "Match", huebimatch: "H.Match", chimiris: "Dähler-Ris" }
+    @statistic_table = StatisticTablePerJasser.new(@date, @date, "schnitt")
     @rangverschiebung = Round.calculate_rangeverschiebungs_table(@date)
   end
 
@@ -78,10 +78,10 @@ class RankingController < ApplicationController
     begin
       @jasser = Jasser.find(params[:id])
     rescue StandardError
-      redirect_to '/ranking#year', notice: "User for id #{params[:id]} could not be found" and return
+      redirect_to "/ranking#year", notice: "User for id #{params[:id]} could not be found" and return
     end
-    @columns = { spiele: 'Spiele', eigener_schnitt: 'Eigener Schnitt', gegner_schnitt: 'Gegner Schnitt',
-                 schaedling_index: 'Schaedling' }
+    @columns = { spiele: "Spiele", eigener_schnitt: "Eigener Schnitt", gegner_schnitt: "Gegner Schnitt",
+                 schaedling_index: "Schaedling" }
     @statistic_table = AngstgegnerTable.new(@jasser, @date - 1.year, @date, sortkey)
   end
 
@@ -98,7 +98,7 @@ class RankingController < ApplicationController
           versenkt_pro_spiel roesi_pro_spiel droesi_pro_spiel roesi_quote].include?(suggested_key)
       suggested_key
     else # if no permitted sortkey is provided, sort by schnitt
-      'schnitt'
+      "schnitt"
     end
   end
 
