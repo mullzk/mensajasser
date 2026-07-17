@@ -14,6 +14,18 @@ updates:
     open-pull-requests-limit: 10
     assignees:
       - mullzk
+    # Bundle minor/patch bumps into a single PR. bundler-audit in CI
+    # checks the whole lockfile, so a lone gem bump can stay red while
+    # an unrelated transitive advisory is still open; one grouped PR
+    # keeps the audit all-or-nothing check satisfiable. Majors stay
+    # separate for deliberate review.
+    groups:
+      ruby-deps:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: github-actions
     directory: "/"
@@ -22,3 +34,7 @@ updates:
     open-pull-requests-limit: 10
     assignees:
       - mullzk
+    groups:
+      github-actions:
+        patterns:
+          - "*"
