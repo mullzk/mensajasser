@@ -82,7 +82,7 @@ gem "bundle-audit", "~> 0.2.0"
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase]
 gem "rubocop-rails-omakase", require: false
 
-gem "brakeman", "~> 8.0"
+gem "brakeman", "~> 8.1"
 
 gem "annotate"
 
