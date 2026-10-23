@@ -27,6 +27,7 @@ jobs:
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - run: bundle exec rake
+    - run: bin/rails test:system
 
   lint:
     if: github.event_name == 'pull_request'
