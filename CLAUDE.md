@@ -43,8 +43,8 @@ Mensajasser is a Ruby on Rails application for tracking statistics for a group o
 - Test coverage focuses on models and controllers
 
 ### Dependencies
-- Rails 8.0
-- Ruby 3.3.5
+- Rails 8
+- Ruby 3
 - Bootstrap 5 (vendored compiled CSS) for styling
 - Hotwire (Turbo + Stimulus) for JavaScript
 - Will_paginate for pagination
