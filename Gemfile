@@ -3,10 +3,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.5"
+ruby file: ".tool-versions"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 8.1.3"
+gem "rails", "~> 8.1.4"
 # Use Puma as the app server
 gem "puma", ">= 4.3.9"
 # Asset pipeline and Hotwire (propshaft + importmap + Turbo/Stimulus)
@@ -77,13 +77,13 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "bundle-audit", "~> 0.2.0"
+gem "bundler-audit", require: false
 
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase]
 gem "rubocop-rails-omakase", require: false
 
-gem "brakeman", "~> 8.0"
+gem "brakeman", "~> 8.1"
 
-gem "annotate"
+gem "annotaterb"
 
 gem "ostruct", "~> 0.6.1"

@@ -2,11 +2,11 @@
 #
 # Table name: jassers
 #
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
+#  id              :bigint           not null, primary key
+#  active          :boolean          default(TRUE)
 #  disqualifiziert :boolean
-#  active          :boolean          default("true")
+#  email           :string(255)
+#  name            :string(255)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

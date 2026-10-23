@@ -2,11 +2,11 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  username        :string
-#  hashed_password :string
-#  salt            :string
-#  privilege       :integer          default("0")
+#  id              :bigint           not null, primary key
+#  hashed_password :string(255)
+#  privilege       :integer          default(0)
+#  salt            :string(255)
+#  username        :string(255)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
