@@ -4,10 +4,10 @@
 #
 # Table name: rounds
 #
-#  id         :integer          not null, primary key
-#  day        :date
-#  creator    :string(255)
+#  id         :bigint           not null, primary key
 #  comment    :string(255)
+#  creator    :string(255)
+#  day        :date
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
