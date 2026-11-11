@@ -44,12 +44,12 @@ Mensajasser is a Ruby on Rails application for tracking statistics for a group o
 
 ### Dependencies
 - Rails 8
-- Ruby 3
+- Ruby 4
 - Bootstrap 5 (vendored compiled CSS) for styling
 - Hotwire (Turbo + Stimulus) for JavaScript
 - Will_paginate for pagination
 
 ### Deployment
-- Designed for Heroku deployment
-- Uses separate dev and production branches
+- Deployed with Capistrano via GitHub Actions to Hetzner servers (mise-managed Ruby, Puma behind nginx)
+- `main` deploys to integration, `production` deploys to production
 - Maintenance workflow documented in README.md
