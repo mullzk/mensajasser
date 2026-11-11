@@ -10,7 +10,7 @@ Although publicly accessible, the Mensajasser-Project is not meant for wide dist
 
 ## System dependencies & Configuration
 To run this project, you need: 
-- Ruby 3.3.5 (I use mise for keeping track of ruby versions)
+- Ruby as pinned in `.tool-versions` (installed via `mise install`)
 - Rails 8 (installed via `bundle install`)
 - Bundler (gem install bundler)
 - MariaDB (MySQL-compatible; the app talks to it via the Trilogy adapter)
@@ -81,17 +81,19 @@ Style and security checks run both locally (git hooks) and in CI:
 1. Work on a feature branch, push to GitHub.
 2. Open a pull request against `main` — CI runs tests and linting automatically.
 3. Merge the PR. CI deploys the new code to integration automatically.
-4. Review the change on integration, then deploy to production manually:
-   ```
-   bundle exec cap production deploy
-   ```
+4. Review the change on integration, then push `main` to the `production`
+   branch. CI deploys production automatically.
+5. If the change bumps Ruby in `.tool-versions`, restart Puma on each server
+   after its deploy (`sudo systemctl restart puma-jasserdev` /
+   `puma-jasserprod`): the deploy installs the new Ruby via mise, but
+   `pumactl restart` keeps running the old Ruby binary.
 
 ### Dependabot gem updates
 
 1. Dependabot opens a PR; CI runs tests automatically.
 2. Review the diff and the test results in GitHub.
 3. Merge if green — integration is deployed automatically.
-4. Deploy to production manually (see above) once you've verified integration.
+4. Push to `production` (see above) once you've verified integration.
 
 For major version bumps, test locally first:
 ```
@@ -128,7 +130,7 @@ The `db:pull` and `db:push` rake tasks copy **data rows only** (no schema) betwe
 
 **Prerequisites** — a local `.env` file (not committed) containing:
 ```
-DATABASE_URL=mysql2://user:pass@127.0.0.1/mensajasser_development
+DATABASE_URL=trilogy://user:pass@127.0.0.1/mensajasser_development
 DEPLOY_INTEGRATION_HOST=<host>
 DEPLOY_INTEGRATION_USER=<user>
 DEPLOY_PRODUCTION_HOST=<host>
