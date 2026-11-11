@@ -48,6 +48,3 @@ unless puma_dir.empty?
 end
 
 plugin :tmp_restart
-
-# ssl_bind '127.0.0.1', '3000',
-#         { key: 'config/ssl/localhost.mullzk.key', cert: 'config/ssl/localhost.mullzk.crt', verify_mode: 'none' }
