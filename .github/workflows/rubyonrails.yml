@@ -48,7 +48,7 @@ jobs:
       - name: Set up Biome
         uses: biomejs/setup-biome@v2
         with:
-          version: 2.4.16
+          version: 2.6.6
       - name: Lint JS/CSS with Biome
         run: biome ci
 
